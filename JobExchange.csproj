@@ -15,6 +15,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.14" />
+    <PackageReference Include="Select2.js" Version="4.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\RepositoryInterfaces\" />
+    <Folder Include="Repository\" />
   </ItemGroup>
 
 </Project>

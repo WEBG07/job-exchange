@@ -4,42 +4,306 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - JobExchange</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min3f71.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JobExchange.styles.css" asp-append-version="true" />
+
+    @*<link rel="stylesheet" href="v2/bootstrap/css/bootstrap.min3f71.css?v=1.1.1">*@
+    <link rel="stylesheet" as="style" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/css/app.min.99dbaee6ec838d8e.css">
+    <link rel="stylesheet" href="~/css/index.min.9bda2482a644ab4e.css">
+    <link rel="stylesheet" href="~/lib/icon/icon-verified-employer.min.b79f9d8bd7063f2f.css">
+    <link rel="stylesheet" href="~/lib/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/hot-companies.min.95148e937b41ca2f.css">
+    <style>
+        #toast-container>div {
+            opacity: unset;
+        }
+
+        [v-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">JobExchange</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <nav class="navbar ta-top">
+        <div class="container-fluid px-30">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index944d.html?ref=you">
+                    <img src="~/images/logo/Logo_ABCG07_OK.png" alt="TopCV tuyen dung tai TopCV"
+                         title="TopCV tuyển dụng tại TopCV" class="">
+                </a>
             </div>
-        </nav>
-    </header>
+            <ul class="nav navbar-nav navbar-left">
+                <li class="navbar-left__item group active">
+                    <a href="viec-lam.html">
+                        Việc làm
+                    </a>
+                    <div class="group-hover:menu navbar__item__dropdown-menu">
+                        <ul class="nav navbar-menu">
+                            <li class="navbar-menu__item  active  tag-border">
+                                <a href="viec-lam.html" class="text-sm">
+                                    <i class="icon fa-regular fa-magnifying-glass"></i>
+                                    Tìm việc làm
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="login.html" class="text-sm">
+                                    <i class="icon fa-regular fa-check-to-slot"></i>
+                                    Việc làm phù hợp
+                                    <span class="badge badge__hot">Hot</span>
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="viec-lam-it.html" class="text-sm">
+                                    <i class="fa-regular fa-laptop-code icon"></i>
+                                    Việc làm IT <span class="badge badge__new">Mới</span>
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="viec-lam-senior.html" class="text-sm">
+                                    <i class="icon fa-regular fa-medal"></i>
+                                    Việc làm Senior <span class="badge badge__new">Mới</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="navbar-left__item group
+                    ">
+                    <a href="mau-cv.html" title="Hồ sơ & CV">
+                        Hồ sơ & CV
+                    </a>
+                    <div class="group-hover:menu navbar__item__dropdown-menu">
+                        <ul class="nav navbar-menu">
+                            <li class="navbar-menu__item ">
+                                <a href="mau-cv.html" class="text-sm">
+                                    <i class="icon fa-regular fa-file-user"></i>
+                                    Mẫu CV
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item  tag-border">
+                                <a href="mau-cover-letter-thu-xin-viec.html" class="text-sm">
+                                    <i class="icon fa-regular fa-file-lines"></i>
+                                    Mẫu Cover Letter
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item">
+                                <a href="../reviewcv.topcv.vn/index.html" target="_blank" class="text-sm">
+                                    <i class="icon fa-regular fa-file-user"></i>
+                                    Dịch vụ tư vấn CV
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="huong-dan-viet-cv-chi-tiet-theo-nganh.html" target="_blank" class="text-sm">
+                                    <i class="icon fa-regular fa-file-pen"></i>
+                                    Hướng dẫn viết CV theo ngành nghề
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item  tag-border">
+                                <a href="mau-cv-theo-nganh-nghe.html" class="text-sm">
+                                    <i class="icon fa-regular fa-file-check"></i>
+                                    Thư viện CV theo ngành nghề
+                                    <span class="badge badge__new">Mới</span>
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="profile.html" class="text-sm">
+                                    <i class="icon fa-regular fa-square-user"></i>
+                                    TopCV Profile
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="navbar-left__item group
+                    ">
+                    <a href="cong-ty.html" title="Công ty">
+                        Công ty
+                    </a>
+                    <div class="group-hover:menu navbar__item__dropdown-menu">
+                        <ul class="nav navbar-menu">
+                            <li class="navbar-menu__item ">
+                                <a href="cong-ty.html" class="text-sm">
+                                    <i class="icon fa-regular fa-buildings"></i>
+                                    Danh sách công ty
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="top-cong-ty.html" class="text-sm">
+                                    <i class="icon fa-regular fa-stars"></i>
+                                    Top công ty
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="navbar-left__item group
+                    ">
+                    <a href="javascript:void(0)">
+                        Phát triển sự nghiệp
+                    </a>
+                    <div class="group-hover:menu navbar__item__dropdown-menu">
+                        <ul class="nav navbar-menu">
+                            <li class="navbar-menu__item">
+                                <a href="../contest.topcv.vn/index.html" target="_blank" class="text-sm">
+                                    <i class="icon fa-regular fa-file-certificate"></i>
+                                    TopCV Contest
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item  tag-border">
+                                <a href="danh-gia-nang-luc.html" class="text-sm">
+                                    <i class="icon fa-regular fa-pencil"></i>
+                                    TopCV Skills <span class="badge badge__new">Mới</span>
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="trac-nghiem-tinh-cach-mbti.html" class="text-sm">
+                                    <i class="icon fa-regular fa-chart-user"></i>
+                                    Trắc nghiệm tính cách MBTI
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="trac-nghiem-da-tri-thong-minh-multiple-intelligences-test.html"
+                                   class="text-sm">
+                                    <i class="icon fa-regular fa-chart-user"></i>
+                                    Trắc nghiệm MI
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="navbar-left__item group
+                    ">
+                    <a href="javascript:void(0)">
+                        Công cụ
+                    </a>
+                    <div class="group-hover:menu navbar__item__dropdown-menu">
+                        <ul class="nav navbar-menu">
+                            <li class="navbar-menu__item ">
+                                <a href="tinh-luong-gross-net.html" class="text-sm ">
+                                    <i class="icon fa-regular fa-scale-balanced"></i>
+                                    Tính lương GROSS - NET
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item  tag-border">
+                                <a href="tinh-thue-thu-nhap-ca-nhan.html" class="text-sm ">
+                                    <i class="icon fa-regular fa-chart-mixed"></i>
+                                    Tính thuế thu nhập cá nhân
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="tinh-lai-kep.html" class="text-sm ">
+                                    <i class="icon fa-regular fa-coins"></i>
+                                    Tính lãi suất kép
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item  tag-border">
+                                <a href="lap-ke-hoach-tiet-kiem.html" class="text-sm ">
+                                    <i class="icon fa-regular fa-sack-dollar"></i>
+                                    Lập kế hoạch tiết kiệm
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="cong-cu-tinh-muc-huong-bao-hiem-that-nghiep.html" class="text-sm">
+                                    <i class="icon fa-regular fa-shield-xmark"></i>
+                                    Tính Bảo hiểm thất nghiệp
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item  tag-border">
+                                <a href="tinh-bao-hiem-xa-hoi-mot-lan.html" class="text-sm">
+                                    <i class="icon fa-regular fa-shield-check"></i>
+                                    Tính bảo hiểm xã hội một lần
+                                </a>
+                            </li>
+                            <li class="navbar-menu__item ">
+                                <a href="app.html" class="text-sm">
+                                    <i class="icon fa-regular fa-mobile"></i>
+                                    Mobile App TopCV
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="navbar-right__item">
+                    <a class="btn btn-outline-primary" href="login.html">
+                        Đăng nhập
+                    </a>
+                </li>
+                <li class="navbar-right__item">
+                    <a class="btn btn-primary" href="sign-up.html">
+                        Đăng ký
+                    </a>
+                </li>
+                <li class="navbar-right__item">
+                    <a type="button" class="btn btn-dark"
+                       href="../tuyendung.topcv.vn/indexf986.html?utm_source=epl-btn&amp;utm_medium=nav-button&amp;utm_campaign=click-tracking"
+                       target="_blank">
+                        Đăng tuyển & tìm hồ sơ
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - JobExchange - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <link rel="stylesheet" href="~/css/footer-desktop.min.c66148e4f814e85c.css">
+
+    <footer id="footer-desktop">
+        <div class="footer-main">
+            <div class="footer-info">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h4 class="name-company">
+                                Job Exchange ABCG07
+                            </h4>
+                            <div class="box-tax-code">
+                                <div class="group-top">
+                                    <div class="item">
+                                        <i class="fa-solid fa-calculator"></i>
+                                        <span>Số điện thoại: </span>
+                                        <strong>0999999999</strong>
+                                    </div>
+                                    <!-- <div class="item">
+                                        <i class="fa-solid fa-file"></i>
+                                        <span>Giấy phép hoạt động dịch vụ việc làm số: </span>
+                                        <strong>18/SLĐTBXH-GP</strong>
+                                    </div> -->
+                                </div>
+                                <div class="item">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>Địa chỉ: </span>
+                                    <strong>96B Định Công, Hoàng Mai, Hà Nội</strong>
+                                </div>
+                                <div class="item">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <span>Email: </span>
+                                    <strong>test@gmail.com</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 box-qr">
+                            <div class="box-qr">
+                                <img class="img-responsive" src="~/images/qrABCG07.png">
+                                <a target="_blank" href="https://github.com/WEBG07/job-exchange">github.com/WEBG07/job-exchange</a>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-20">
+                            <p class="copyright">
+                                © 2023-2023 Job Exchange ABCG07
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
