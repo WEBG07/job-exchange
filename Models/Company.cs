@@ -19,6 +19,7 @@ namespace JobExchange.Models
         public string? Scale { get; set; }
         public string? Phone { get; set; }
         public string? Avatar { get; set; }
+        public string? CoverImage { get; set; }
 
         public virtual Account? Account { get; set; }
         public virtual Industry? Industry { get; set; }

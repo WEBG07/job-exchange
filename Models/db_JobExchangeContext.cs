@@ -218,6 +218,8 @@ namespace JobExchange.Models
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CoverImage).IsUnicode(false);
+
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Companies)
                     .HasForeignKey(d => d.AccountId)
