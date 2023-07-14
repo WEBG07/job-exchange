@@ -20,7 +20,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("JobExchange_Conn
 
 //builder.Services.AddDefaultIdentity<JobExchangeUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<JobExchangeContext>();
 
-builder.Services.AddIdentity<JobExchangeUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddIdentity<JobExchangeUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<JobExchangeContext>()
     .AddDefaultTokenProviders();
 
