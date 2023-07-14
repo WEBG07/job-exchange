@@ -24,6 +24,8 @@
             display: none !important;
         }
     </style>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min3f71.js?v=1.1.1"></script>
 </head>
 <body>
     <nav class="navbar ta-top">
@@ -67,7 +69,7 @@
                 
                 <li class="navbar-left__item group
                     ">
-                    <a href="cong-ty.html" title="Công ty">
+                    <a href="#" title="Công ty">
                         Công ty
                     </a>
                     <div class="group-hover:menu navbar__item__dropdown-menu">
@@ -169,8 +171,8 @@
         </div>
 
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
+   
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

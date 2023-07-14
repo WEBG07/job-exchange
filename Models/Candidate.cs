@@ -1,5 +1,7 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace JobExchange.Models
 {
@@ -20,9 +22,15 @@ namespace JobExchange.Models
 
         public string CandidateId { get; set; } = null!;
         public string? AccountId { get; set; }
+        [Required]
         public string? FullName { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập ngày sinh")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Birthday { get; set; }
+        [Required]
         public string? Gender { get; set; }
+        [Required]
         public string? Phone { get; set; }
         public string? Avatar { get; set; }
 
