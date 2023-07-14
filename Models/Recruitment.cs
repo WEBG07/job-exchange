@@ -1,18 +1,16 @@
-﻿using System;
+﻿using JobExchange.Areas.Identity.Data;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobExchange.Models
 {
     public partial class Recruitment
     {
-        public Recruitment()
-        {
-            CandidateRecruitments = new HashSet<CandidateRecruitment>();
-            SaveRecruitments = new HashSet<SaveRecruitment>();
-        }
-
+        [Key]
         public string RecruitmentId { get; set; } = null!;
-        public string? CompanyId { get; set; }
         public int? Salary { get; set; }
         public string? WorkType { get; set; }
         public string? GenderRequirement { get; set; }
@@ -28,9 +26,9 @@ namespace JobExchange.Models
         public string? Slug { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public string CompanyId { get; set; } = null!;
 
-        public virtual Company? Company { get; set; }
-        public virtual ICollection<CandidateRecruitment> CandidateRecruitments { get; set; }
-        public virtual ICollection<SaveRecruitment> SaveRecruitments { get; set; }
+        [ForeignKey("CompanyId")]
+        public Company Company { get; set; } = null!;
     }
 }
