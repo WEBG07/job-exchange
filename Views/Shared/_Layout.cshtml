@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using JobExchange.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<JobExchangeUser> SignInManager
+@inject UserManager<JobExchangeUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -89,27 +95,111 @@
                         </ul>
                     </div>
                 </li>
-                
-                
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="navbar-right__item">
-                    <a class="btn btn-outline-primary" href="#">
-                        Đăng nhập
-                    </a>
-                </li>
-                <li class="navbar-right__item">
-                    <a class="btn btn-primary" href="#">
-                        Đăng ký
-                    </a>
-                </li>
-                <li class="navbar-right__item">
-                    <a type="button" class="btn btn-dark"
-                       href="#"
-                       target="_blank">
-                        Đăng tuyển & tìm hồ sơ
-                    </a>
-                </li>
+                @if (SignInManager.IsSignedIn(User))
+                {
+@*                    <li class="nav-item">
+                        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                        </form>
+                    </li>*@
+
+                    <li class="navbar-right__item group">
+                        <div class="title">
+                            <a href="javascript:void(0)">
+                                <img src="https://www.topcv.vn/images/avatar-default.jpg" onerror="this.src='https://www.topcv.vn/images/avatar-default.jpg'" alt="Văn Mạnh Nguyễn">
+                                <span class="fullname">Hello @UserManager.GetUserName(User)!</span>
+                            </a>
+                        </div>
+                        <div class="group-hover:menu navbar__item__dropdown-menu">
+                            <ul class="nav navbar-menu">
+                                <li class="dropdown-menu__info  tag-border">
+                                    <img src="https://www.topcv.vn/images/avatar-default.jpg" onerror="this.src='https://www.topcv.vn/images/avatar-default.jpg'" alt="">
+                                    <div class="caption">
+                                        <p class="name">Văn Mạnh Nguyễn</p>
+                                        <p class="description">Mã ứng viên: <span class="code">#6702689</span></p>
+                                        <p class="description">manhnv291201@gmail.com</p>
+                                    </div>
+                                </li>
+                                <li class="navbar-menu__item ">
+                                    <a href="#" class="text-sm">
+                                        <i class="icon fa-regular fa-pen-to-square"></i>
+                                        Cài đặt thông tin cá nhân
+                                    </a>
+                                </li>
+                                <li class="navbar-menu__item ">
+                                    <a href="#" class="text-sm">
+                                        <i class="icon fa-regular fa-eye"></i>
+                                        Nhà tuyển dụng xem hồ sơ
+                                    </a>
+                                </li>
+                                <li class="navbar-menu__item ">
+                                    <a href="#" class="text-sm">
+                                        <i class="icon fa-regular fa-gear"></i>
+                                        Cài đặt gợi ý việc làm
+                                    </a>
+                                </li>
+                                <li class="navbar-menu__item  tag-border">
+                                    <a href="#" class="text-sm">
+                                        <i class="icon fa-regular fa-envelope-dot"></i>
+                                        Cài đặt nhận email
+                                    </a>
+                                </li>
+                                <li class="navbar-menu__item ">
+                                    <a href="#" class="text-sm">
+                                        <i class="icon fa-regular fa-shield-check"></i>
+                                        Cài đặt bảo mật
+                                    </a>
+                                </li>
+                                <li class="navbar-menu__item  tag-border">
+                                    <a href="#" class="text-sm">
+                                        <i class="icon fa-regular fa-lock"></i>
+                                        Đổi mật khẩu
+                                    </a>
+                                </li>
+@*                                <li class="navbar-menu__item logout">
+                                    <a href="javascript:void(0)" onclick="document.getElementById('user-logout-form').submit();" class="text-sm">
+                                        <i class="icon fa-regular fa-arrow-right-from-bracket"></i>
+                                        Đăng xuất
+                                    </a>
+                                    <form action="https://www.topcv.vn/sign-out" id="user-logout-form" method="POST">
+                                        <input type="hidden" name="_token" value="NJCke0KkDM7caPaWn6IhitLop3Evs7P1E1ctv1Yi">
+                                    </form>
+                                </li>*@
+                                <li class="navbar-menu__item logout">
+                                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <i class="icon fa-regular fa-arrow-right-from-bracket"></i>
+                                        <button id="logout" type="submit" class="text-sm">Đăng xuất</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li class="navbar-right__item">
+                        <a class="btn btn-outline-primary" id="login" asp-area="Identity" asp-page="/Account/Login">
+                            Đăng nhập
+                        </a>
+                    </li>
+                    <li class="navbar-right__item">
+                        <a class="btn btn-primary" id="register" asp-area="Identity" asp-page="/Account/Register">
+                            Đăng ký
+                        </a>
+                    </li>
+                    @*<li class="navbar-right__item">
+                        <a type="button" class="btn btn-dark" href="#" target="_blank">
+                            Đăng tuyển & tìm hồ sơ
+                        </a>
+                    </li>*@
+                    <li class="navbar-right__item">
+                        <a class="btn btn-dark" asp-area="Identity" asp-page="/Account/RegisterCompany">
+                            Đăng tuyển & tìm hồ sơ
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
     </nav>
@@ -163,7 +253,7 @@
                         </div>
                         <div class="col-md-12 mt-20">
                             <p class="copyright">
-                                © 2023-2023 Job Exchange ABCG07
+                                © 2023-2023 Job Exchange ABCG07.
                         </div>
                     </div>
                 </div>
