@@ -8,10 +8,15 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JobExchange.styles.css" asp-append-version="true" />
 
-    @*<link rel="stylesheet" href="v2/bootstrap/css/bootstrap.min3f71.css?v=1.1.1">*@
+    <link rel="stylesheet" href="v2/bootstrap/css/bootstrap.min3f71.css?v=1.1.1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=vietnamese" rel="stylesheet">
     <link rel="stylesheet" as="style" href="~/lib/select2/css/select2.min.css" />
     <link rel="stylesheet" href="~/css/app.min.99dbaee6ec838d8e.css">
     <link rel="stylesheet" href="~/css/index.min.9bda2482a644ab4e.css">
+    <link rel="stylesheet" href="~/css/navbar_bs.48a14966e2c4f3ce.css">
+    <link rel="stylesheet" href="~/css/company.min.b8f0b44f77db74bf.css">
+    <link rel="stylesheet" href="~/css/company.detail.min.788394eb39bb5e15.css">
+    <link rel="stylesheet" href="~/css/support-ticket.366d2944250542b2.css">
     <link rel="stylesheet" href="~/lib/icon/icon-verified-employer.min.b79f9d8bd7063f2f.css">
     <link rel="stylesheet" href="~/lib/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/hot-companies.min.95148e937b41ca2f.css">
@@ -67,13 +72,13 @@
                 
                 <li class="navbar-left__item group
                     ">
-                    <a href="cong-ty.html" title="Công ty">
+                    <a asp-controller="Company" asp-action="Index" title="Công ty">
                         Công ty
                     </a>
                     <div class="group-hover:menu navbar__item__dropdown-menu">
                         <ul class="nav navbar-menu">
                             <li class="navbar-menu__item ">
-                                <a href="#" class="text-sm">
+                                <a asp-controller="Company" asp-action="Index" class="text-sm">
                                     <i class="icon fa-regular fa-buildings"></i>
                                     Danh sách công ty
                                 </a>

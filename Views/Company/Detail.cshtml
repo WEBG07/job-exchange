@@ -1,0 +1,547 @@
+@{
+    ViewData["Title"] = "Detail Company Page";
+}
+<div>
+    <div id="breadcrumb" class="breadcrumb">
+            <div class="container">
+                <ul class="nav d-flex">
+                    <li class="nav-item">
+                        <a class="text-highlight bold" href="https://www.topcv.vn/cong-ty">Danh sách Công ty</a>
+                    </li>
+                    <li class="nav-item">Thông tin công ty &amp; tin tuyển dụng từ TỔ CHỨC GIÁO DỤC FPT</li>
+                </ul>
+            </div>
+        </div>
+        <div class="company-cover">
+            <div class="container">
+                <div class="company-cover-inner">
+                    <div class="cover-wrapper">
+                        <img draggable="false" src="https://static.topcv.vn/company_covers/lUyQdNAmxJZv1BohmAOa.jpg"
+                            alt="" class="img-responsive cover-img" width="100%">
+                    </div>
+                    <div class="company-logo">
+                        <div class="company-image-logo">
+                            <img draggable="false"
+                                src="https://cdn-new.topcv.vn/unsafe/140x/filters:format(webp)/https://static.topcv.vn/company_logos/dai-hoc-fpt-5e6cd019948cb.jpg"
+                                alt="TỔ CHỨC GIÁO DỤC FPT" class="img-responsive">
+                        </div>
+                    </div>
+                    <div class="company-detail-overview">
+                        <div class="box-detail">
+                            <h1 data-toggle="tooltip" title="TỔ CHỨC GIÁO DỤC FPT"
+                                class="company-detail-name text-highlight">TỔ CHỨC GIÁO DỤC FPT</h1>
+                            <div class="company-subdetail">
+                                <div class="company-subdetail-label">
+                                    <label class="v1000">v1000</label>
+                                </div>
+                                <div class="company-subdetail-info">
+                                    <span class="company-subdetail-info-icon">
+                                        <i class="fa-solid fa-buildings"></i>
+                                    </span>
+                                    <span class="company-subdetail-info-text">100-499 nhân viên</span>
+                                </div>
+                                <div class="company-subdetail-info">
+                                    <span class="company-subdetail-info-icon">
+                                        <i class="fa-solid fa-users"></i>
+                                    </span>
+                                    <span class="company-subdetail-info-text">695 người theo dõi</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-follow">
+                            <a href="javascript:showLoginPopup(null, null);" class="btn btn-follow">
+                                <span><i class="fa-regular fa-plus"></i></span>
+                                Theo dõi công ty
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="unfollow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Bỏ theo dõi</h4>
+                        <button type="button" class="btn-close" data-dismiss="modal">
+                            <span><i class="fa-regular fa-xmark"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body-text">
+                            Bỏ theo dõi sẽ không tiếp tục nhận được thông tin tuyển dụng từ <span>TỔ CHỨC GIÁO DỤC
+                                FPT</span>.
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="https://www.topcv.vn/cong-ty/bo-theo-doi" method="POST">
+                            <input type="hidden" name="company_id" value="68">
+                            <input type="hidden" name="_token" value="lX3f40HcHTTmYpHFF25xSJfNyxEBlrbepjtbeR3U">
+                            <button type="button" class="btn btn-sm btn-cancel" data-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-sm btn-unfollow" id="btn-remove-follow">Bỏ theo
+                                dõi</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div id="section-introduce">
+                            <div class="company-info">
+                                <h4 class="title">Giới thiệu công ty</h4>
+                                <div class="box-body">
+                                    <div class="content">
+                                        <p>Tổ chức Giáo dục FPT (FPT Education) là một hệ thống trường thuộc các khối
+                                            đào tạo khác nhau từ cấp trung học phổ thông, cao đẳng, đại học và sau đại
+                                            học, các khối liên kết và trao đổi sinh viên quốc tế.
+                                        </p>
+                                        <p>
+                                        </p>
+                                        <p>Thành lập năm 1999, trải qua 15 năm hình thành – xây dựng – phát triển, Khối
+                                            Giáo dục FPT đã trở thành hệ thống giáo dục lớn của Việt Nam, gồm các hệ
+                                            giáo dục đào tạo THPT, Cao đẳng, Đại học, sau Đại học, đào tạo nghề, đào tạo
+                                            dành cho khối doanh nghiệp… và các dự án ươm tạo. Hiện Khối đã đạt quy mô
+                                            gần 1.000 cán bộ, giảng viên và gần 15.000 học sinh, sinh viên, học viên ở
+                                            tất cả các hệ đào tạo.
+                                        </p>
+                                        <p>
+                                        </p>
+                                        <p>Với định hướng iGSM – [Industry Relevant – Global – Smart Education – Mega],
+                                            Khối Giáo dục FPT kỳ vọng đưa giáo dục Việt Nam cạnh tranh trên tầm khu vực
+                                            và thế giới. Mục tiêu đến năm 2020 có 100.000 sinh viên, trong đó sinh viên
+                                            nước ngoài chiếm 15%.
+                                        </p>
+                                        <p>
+                                        </p>
+                                        <p>Xem thêm thông tin về Tổ chức giáo dục FPT Education tại: www.fpt.edu.vn</p>
+                                        <div class="temp"></div>
+                                    </div>
+                                    <a href="javascript:void(0)" class="load-more">Xem thêm <i
+                                            class="fa-solid fa-angle-down"></i></a>
+                                    <a href="javascript:void(0)" class="show-less">Thu gọn <i
+                                            class="fa-solid fa-angle-up"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-listing box-white" id="box-job-listing">
+                            <div class="job-listing__header">
+                                <h4 class="title">Tuyển dụng</h4>
+                            </div>
+                            <div class="box-body">
+                                <div class="box-search">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M11.5 21.75C5.85 21.75 1.25 17.15 1.25 11.5C1.25 5.85 5.85 1.25 11.5 1.25C17.15 1.25 21.75 5.85 21.75 11.5C21.75 17.15 17.15 21.75 11.5 21.75ZM11.5 2.75C6.67 2.75 2.75 6.68 2.75 11.5C2.75 16.32 6.67 20.25 11.5 20.25C16.33 20.25 20.25 16.32 20.25 11.5C20.25 6.68 16.33 2.75 11.5 2.75Z"
+                                                    fill="#6F7882" />
+                                                <path
+                                                    d="M22.0004 22.7504C21.8104 22.7504 21.6204 22.6804 21.4704 22.5304L19.4704 20.5304C19.1804 20.2404 19.1804 19.7604 19.4704 19.4704C19.7604 19.1804 20.2404 19.1804 20.5304 19.4704L22.5304 21.4704C22.8204 21.7604 22.8204 22.2404 22.5304 22.5304C22.3804 22.6804 22.1904 22.7504 22.0004 22.7504Z"
+                                                    fill="#6F7882" />
+                                            </svg>
+                                        </div>
+                                        <input type="text" class="form-control" id="job-listing-name"
+                                            placeholder="Tên công việc, vị trí ứng tuyển..." aria-label="Username"
+                                            aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group" id="select-cities-container">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M11.9999 14.1704C9.86988 14.1704 8.12988 12.4404 8.12988 10.3004C8.12988 8.16043 9.86988 6.44043 11.9999 6.44043C14.1299 6.44043 15.8699 8.17043 15.8699 10.3104C15.8699 12.4504 14.1299 14.1704 11.9999 14.1704ZM11.9999 7.94043C10.6999 7.94043 9.62988 9.00043 9.62988 10.3104C9.62988 11.6204 10.6899 12.6804 11.9999 12.6804C13.3099 12.6804 14.3699 11.6204 14.3699 10.3104C14.3699 9.00043 13.2999 7.94043 11.9999 7.94043Z"
+                                                        fill="#6F7882" />
+                                                    <path
+                                                        d="M11.9997 22.76C10.5197 22.76 9.02969 22.2 7.86969 21.09C4.91969 18.25 1.65969 13.72 2.88969 8.33C3.99969 3.44 8.26969 1.25 11.9997 1.25C11.9997 1.25 11.9997 1.25 12.0097 1.25C15.7397 1.25 20.0097 3.44 21.1197 8.34C22.3397 13.73 19.0797 18.25 16.1297 21.09C14.9697 22.2 13.4797 22.76 11.9997 22.76ZM11.9997 2.75C9.08969 2.75 5.34969 4.3 4.35969 8.66C3.27969 13.37 6.23969 17.43 8.91969 20C10.6497 21.67 13.3597 21.67 15.0897 20C17.7597 17.43 20.7197 13.37 19.6597 8.66C18.6597 4.3 14.9097 2.75 11.9997 2.75Z"
+                                                        fill="#6F7882" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <select id="select-cities" class="form-control">
+                                            <option value="0">Tất cả tỉnh/thành phố</option>
+                                            <option class="" value="1">
+                                                Hà Nội
+                                            </option>
+                                            <option class="" value="2">
+                                                Hồ Chí Minh
+                                            </option>
+                                            <option class="" value="3">
+                                                Bình Dương
+                                            </option>
+                                            <option class="" value="4">
+                                                Bắc Ninh
+                                            </option>
+                                            <option class="" value="5">
+                                                Đồng Nai
+                                            </option>
+                                            <option class="" value="6">
+                                                Hưng Yên
+                                            </option>
+                                            <option class="" value="7">
+                                                Hải Dương
+                                            </option>
+                                            <option class="" value="8">
+                                                Đà Nẵng
+                                            </option>
+                                            <option class="" value="9">
+                                                Hải Phòng
+                                            </option>
+                                            <option class="" value="10">
+                                                An Giang
+                                            </option>
+                                            <option class="" value="11">
+                                                Bà Rịa-Vũng Tàu
+                                            </option>
+                                            <option class="" value="12">
+                                                Bắc Giang
+                                            </option>
+                                            <option class="" value="13">
+                                                Bắc Kạn
+                                            </option>
+                                            <option class="" value="14">
+                                                Bạc Liêu
+                                            </option>
+                                            <option class="" value="15">
+                                                Bến Tre
+                                            </option>
+                                            <option class="" value="16">
+                                                Bình Định
+                                            </option>
+                                            <option class="" value="17">
+                                                Bình Phước
+                                            </option>
+                                            <option class="" value="18">
+                                                Bình Thuận
+                                            </option>
+                                            <option class="" value="19">
+                                                Cà Mau
+                                            </option>
+                                            <option class="" value="20">
+                                                Cần Thơ
+                                            </option>
+                                            <option class="" value="21">
+                                                Cao Bằng
+                                            </option>
+                                            <option class="" value="22">
+                                                Cửu Long
+                                            </option>
+                                            <option class="" value="23">
+                                                Đắk Lắk
+                                            </option>
+                                            <option class="" value="24">
+                                                Đắc Nông
+                                            </option>
+                                            <option class="" value="25">
+                                                Điện Biên
+                                            </option>
+                                            <option class="" value="26">
+                                                Đồng Tháp
+                                            </option>
+                                            <option class="" value="27">
+                                                Gia Lai
+                                            </option>
+                                            <option class="" value="28">
+                                                Hà Giang
+                                            </option>
+                                            <option class="" value="29">
+                                                Hà Nam
+                                            </option>
+                                            <option class="" value="30">
+                                                Hà Tĩnh
+                                            </option>
+                                            <option class="" value="31">
+                                                Hậu Giang
+                                            </option>
+                                            <option class="" value="32">
+                                                Hoà Bình
+                                            </option>
+                                            <option class="" value="33">
+                                                Khánh Hoà
+                                            </option>
+                                            <option class="" value="34">
+                                                Kiên Giang
+                                            </option>
+                                            <option class="" value="35">
+                                                Kon Tum
+                                            </option>
+                                            <option class="" value="36">
+                                                Lai Châu
+                                            </option>
+                                            <option class="" value="37">
+                                                Lâm Đồng
+                                            </option>
+                                            <option class="" value="38">
+                                                Lạng Sơn
+                                            </option>
+                                            <option class="" value="39">
+                                                Lào Cai
+                                            </option>
+                                            <option class="" value="40">
+                                                Long An
+                                            </option>
+                                            <option class="" value="41">
+                                                Miền Bắc
+                                            </option>
+                                            <option class="" value="42">
+                                                Miền Nam
+                                            </option>
+                                            <option class="" value="43">
+                                                Miền Trung
+                                            </option>
+                                            <option class="" value="44">
+                                                Nam Định
+                                            </option>
+                                            <option class="" value="45">
+                                                Nghệ An
+                                            </option>
+                                            <option class="" value="46">
+                                                Ninh Bình
+                                            </option>
+                                            <option class="" value="47">
+                                                Ninh Thuận
+                                            </option>
+                                            <option class="" value="48">
+                                                Phú Thọ
+                                            </option>
+                                            <option class="" value="49">
+                                                Phú Yên
+                                            </option>
+                                            <option class="" value="50">
+                                                Quảng Bình
+                                            </option>
+                                            <option class="" value="51">
+                                                Quảng Nam
+                                            </option>
+                                            <option class="" value="52">
+                                                Quảng Ngãi
+                                            </option>
+                                            <option class="" value="53">
+                                                Quảng Ninh
+                                            </option>
+                                            <option class="" value="54">
+                                                Quảng Trị
+                                            </option>
+                                            <option class="" value="55">
+                                                Sóc Trăng
+                                            </option>
+                                            <option class="" value="56">
+                                                Sơn La
+                                            </option>
+                                            <option class="" value="57">
+                                                Tây Ninh
+                                            </option>
+                                            <option class="" value="58">
+                                                Thái Bình
+                                            </option>
+                                            <option class="" value="59">
+                                                Thái Nguyên
+                                            </option>
+                                            <option class="" value="60">
+                                                Thanh Hoá
+                                            </option>
+                                            <option class="" value="61">
+                                                Thừa Thiên Huế
+                                            </option>
+                                            <option class="" value="62">
+                                                Tiền Giang
+                                            </option>
+                                            <option class="" value="63">
+                                                Toàn Quốc
+                                            </option>
+                                            <option class="" value="64">
+                                                Trà Vinh
+                                            </option>
+                                            <option class="" value="65">
+                                                Tuyên Quang
+                                            </option>
+                                            <option class="" value="66">
+                                                Vĩnh Long
+                                            </option>
+                                            <option class="" value="67">
+                                                Vĩnh Phúc
+                                            </option>
+                                            <option class="" value="68">
+                                                Yên Bái
+                                            </option>
+                                            <option class="" value="100">
+                                                Nước Ngoài
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <a href="javascript:void(0)" class="btn btn-search btn-search-job-company">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                        <span>
+                                            Tìm kiếm
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="loading-job" id="loading-box">
+                                    <div class="loading-item">
+                                    </div>
+                                    <div class="loading-item">
+                                    </div>
+                                    <div class="loading-item">
+                                    </div>
+                                    <div class="loading-item">
+                                    </div>
+                                    <div class="loading-item">
+                                    </div>
+                                    <div class="loading-item">
+                                    </div>
+                                </div>
+                                <div class="box-content" id="job-listing-content">
+                                </div>
+                                <div class="text-center">
+                                    <div class="box-paginate" id="job-listing-paginate">
+                                        <a href="javascript:void(0)" class="btn btn-paginate btn-prev" data-page="1"
+                                            data-id="11111">
+                                            <i class="fa-solid fa-chevron-left"></i>
+                                        </a>
+                                        <span id="job-listing-paginate-text">
+                                            <span class="hight-light">1</span>/12 trang
+                                        </span>
+                                        <a href="javascript:void(0)" class="btn btn-paginate btn-next" data-page="1"
+                                            data-id="11111">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <link rel="stylesheet"
+                            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+                            referrerpolicy="no-referrer" />
+                        <div id="section-top-company-field">
+                            <h3 class="title">
+                                Top công ty cùng lĩnh vực
+                            </h3>
+                            <div id="slider-company" v-cloak>
+                                <div class="owl-carousel owl-theme top-company">
+                                    <div v-for="company of companies" class="top-company--item">
+                                        <div class="box-logo">
+                                            <label v-if="company.label"
+                                                :class="company.label + ' top-company__label'">{{ company.label
+                                                }}</label>
+                                            <label v-else class="top-company__label"></label>
+                                            <a :href="company.url">
+                                                <img :src="company.logo" alt="Logo">
+                                            </a>
+                                        </div>
+                                        <div class="box-content">
+                                            <a :href="company.url">
+                                                <h4 class="top-company__title">
+                                                    <span data-container="body" data-toggle="tooltip"
+                                                        :title="company.name">
+                                                        {{ company.name }}
+                                                    </span>
+                                                </h4>
+                                            </a>
+                                            <label for="" class="top-company__badge">{{ company.totalActiveJobs }} việc
+                                                làm</label>
+                                        </div>
+                                        <a href="javascript:showLoginPopup(null, 'Đăng nhập hoặc Đăng ký để lưu tin tuyển dụng')"
+                                            class="top-company__btn-follow" :data-id="company.id">
+                                            <i class="fa-light fa-plus"></i>
+                                            Theo dõi
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="section-contact">
+                            <h4 class="title">Thông tin liên hệ</h4>
+                            <div class="box-body">
+                                <div class="item">
+                                    <div class="box-caption">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span>Địa chỉ công ty</span>
+                                    </div>
+                                    <div class="desc">
+                                        HN: Khu Giáo dục và Đào tạo - Khu Công nghệ cao Hòa Lạc, Km29 Đại lộ Thăng Long,
+                                        huyện Thạch Thất, TP. Hà NộiHCM: Lầu 2. Tòa nhà Innovation, lô 24, CVPM Quang
+                                        Trung, P.Tân Chánh Hiệp, Quận 12, TP. Hồ Chí Minh. ĐN: khu đô thị FPT city, Ngũ
+                                        Hành Sơn, Đà Nẵn
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="box-caption">
+                                        <i class="fa-solid fa-map"></i>
+                                        <span>Xem bản đồ</span>
+                                    </div>
+                                    <div class="desc">
+                                        <iframe width="100%" height="297" frameborder="0" style="border:0"
+                                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCVgO8KzHQ8iKcfqXgrMnUIGlD-piWiPpo&amp;q=HN:+Khu+Giao+duc+va+Dao+tao+-+Khu+Cong+nghe+cao+Hoa+Lac,Km29+Dai+lo+Thang+Long,huyen+Thach+That,TP.+Ha+NoiHCM:+Lau+2.+Toa+nha+Innovation,lo+24,CVPM+Quang+Trung,P.Tan+Chanh+Hiep,Quan+12,TP.+Ho+Chi+Minh.+DN:+khu+do+thi+FPT+city,Ngu+Hanh+Son,Da+Nan&amp;zoom=15&amp;language=vi"
+                                            allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-sharing box-white">
+                            <h4 class="title bg-header">Chia sẻ công ty tới bạn bè</h4>
+                            <div class="box-body">
+                                <p>Sao chép đường dẫn</p>
+                                <div class="box-copy">
+                                    <input readonly type="text"
+                                        value="https://www.topcv.vn/cong-ty/to-chuc-giao-duc-fpt/68.html"
+                                        class="url-copy" readonly>
+                                    <div class="btn-copy">
+                                        <button class="btn-copy-url"><i class="fa-regular fa-copy"></i></button>
+                                    </div>
+                                </div>
+                                <p>Chia sẻ qua mạng xã hội</p>
+                                <div class="box-share">
+                                    <a href="http://www.facebook.com/sharer/sharer.php?u=https://www.topcv.vn/cong-ty/to-chuc-giao-duc-fpt/68.html"
+                                        target="_blank"><img
+                                            src="https://www.topcv.vn/v4/image/normal-company/share/facebook.png"
+                                            alt=""></a>
+                                    <a href="https://twitter.com/intent/tweet?url=https://www.topcv.vn/cong-ty/to-chuc-giao-duc-fpt/68.html"
+                                        target="_blank"><img
+                                            src="https://www.topcv.vn/v4/image/normal-company/share/twitter.png"
+                                            alt=""></a>
+                                    <a href="https://www.linkedin.com/cws/share?url=https://www.topcv.vn/cong-ty/to-chuc-giao-duc-fpt/68.html"
+                                        target="_blank"><img
+                                            src="https://www.topcv.vn/v4/image/normal-company/share/linked.png"
+                                            alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="unfollow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Xác nhận</h4>
+                    </div>
+                    <div class="modal-body">
+                        Bỏ theo dõi sẽ không tiếp tục nhận được thông tin tuyển dụng từ <span
+                            style="color:#00B14F;font-weight:600">TỔ CHỨC GIÁO DỤC FPT</span>.
+                    </div>
+                    <div class="modal-footer">
+                        <form action="https://www.topcv.vn/cong-ty/bo-theo-doi" method="POST">
+                            <input type="hidden" name="company_id" value="68">
+                            <input type="hidden" name="_token" value="lX3f40HcHTTmYpHFF25xSJfNyxEBlrbepjtbeR3U">
+                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng lại</button>
+                            <button type="submit" class="btn btn-sm btn-danger" id="btn-remove-follow">Bỏ theo
+                                dõi</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
