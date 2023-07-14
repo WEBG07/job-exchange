@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JobExchange.Migrations
 {
     /// <inheritdoc />
-    public partial class OneToOne : Migration
+    public partial class db_JobExchange : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

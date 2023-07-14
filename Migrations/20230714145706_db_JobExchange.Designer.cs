@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobExchange.Migrations
 {
     [DbContext(typeof(JobExchangeContext))]
-    [Migration("20230713161104_OneToOne")]
-    partial class OneToOne
+    [Migration("20230714145706_db_JobExchange")]
+    partial class db_JobExchange
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
