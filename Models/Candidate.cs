@@ -11,6 +11,7 @@ namespace JobExchange.Models
     {
         [Key]
         public string CandidateId { get; set; } = null!;
+        [Required]
         public string? FullName { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập ngày sinh")]
         [DataType(DataType.Date)]
