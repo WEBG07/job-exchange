@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using JobExchange.Repository;
+using JobExchange.Models;
 
 namespace JobExchange.Areas.Identity.Pages.Account
 {
@@ -30,13 +32,15 @@ namespace JobExchange.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<JobExchangeUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ICandidateRepository _candidateRepository;
 
         public RegisterModel(
             UserManager<JobExchangeUser> userManager,
             IUserStore<JobExchangeUser> userStore,
             SignInManager<JobExchangeUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICandidateRepository candidateRepository)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +48,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _candidateRepository = candidateRepository;
         }
 
         [BindProperty]
@@ -106,6 +111,12 @@ namespace JobExchange.Areas.Identity.Pages.Account
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
                     await _userManager.AddToRoleAsync(user, "ROLE_CANDIDATE");
+
+                    Candidate candidate = new Candidate();
+                    candidate.CandidateId = userId;
+                    candidate.AccountId = userId;
+                    candidate.FullName = user.AccountName;
+                    _candidateRepository.Create(candidate);
 
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",

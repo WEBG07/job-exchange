@@ -7,6 +7,8 @@ using JobExchange.Areas.Identity.Data;
 using JobExchange.Helper;
 using Stripe;
 using Microsoft.Extensions.DependencyInjection;
+using JobExchange.Repository;
+using JobExchange.Repository.RepositoryInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,12 +20,9 @@ builder.Services.AddRouting();
 builder.Services.AddDbContext<JobExchangeContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("JobExchange_Connection")));
 
-//builder.Services.AddDefaultIdentity<JobExchangeUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<JobExchangeContext>();
-
 builder.Services.AddIdentity<JobExchangeUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<JobExchangeContext>()
     .AddDefaultTokenProviders();
-
 
 var mailsettings = builder.Configuration.GetSection("MailSettings");
 builder.Services.AddOptions();  // Kích hoạt Options
@@ -31,11 +30,10 @@ builder.Services.Configure<MailSettings>(mailsettings);  // đăng ký để Inj
 
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-//builder.Services.Configure<MailSettings>(builder.Configuration);
 
-//builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
 
-//?ng d?ng s? chuy?n h??ng ng??i d�ng ??n khi h? c?n ??ng nh?p, ??ng xu?t ho?c khi h? b? t? ch?i truy c?p.
+// Chuyển hướng người dùng
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = $"/Identity/Account/Login";

@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Options;
 using System.Net.Mail;
 using System.Net;
-using SendGrid.Helpers.Mail;
-using SendGrid;
 using MimeKit;
 using MailKit.Security;
 
