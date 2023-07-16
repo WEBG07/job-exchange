@@ -36,9 +36,9 @@ builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
 // Chuyển hướng người dùng
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = $"/Identity/Account/Login";
+    options.LoginPath = $"/Login";
     options.LogoutPath = $"/Identity/Account/Logout";
-    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+    options.AccessDeniedPath = $"/AccessDenied";
 });
 
 var app = builder.Build();

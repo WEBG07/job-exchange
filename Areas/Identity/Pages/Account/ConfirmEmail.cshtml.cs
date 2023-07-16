@@ -41,7 +41,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            StatusMessage = result.Succeeded ? "Cảm ơn bạn đã xác minh." : "Xảy ra lỗi khi xác minh.";
             return Page();
         }
     }
