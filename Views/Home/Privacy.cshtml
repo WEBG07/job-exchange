@@ -1,6 +1,165 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container-fluid p-0">
+
+    <div class="mb-3">
+        <h1 class="h3 d-inline align-middle">Responsive DataTables</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @*<div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+            <div class="alert-message">
+            <h4 class="alert-heading">jQuery required</h4>
+            <p>
+            Unlike all other components included in this template, DataTables requires jQuery as a dependency. If you want to use
+            DataTables in your application, add the following script element to your HTML code. The file includes both jQuery and
+            DataTables.
+            </p>
+            <pre class="h6 text-danger mb-0">&lt;script src="js/datatables.js"&gt;&lt;/script&gt;</pre>
+            </div>
+            </div>*@
+            <div class="card">
+                <div class="card-body">
+                    <div id="datatables-reponsive_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_length" id="datatables-reponsive_length">
+                                    <label>
+                                        Show
+                                        <select name="datatables-reponsive_length" aria-controls="datatables-reponsive" class="form-select form-select-sm">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select> entries
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div id="datatables-reponsive_filter" class="dataTables_filter">
+                                    <label>
+                                        Search:
+                                        <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatables-reponsive">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row dt-row">
+                            <div class="col-sm-12">
+                                <table id="datatables-reponsive" class="table table-striped dataTable no-footer dtr-inline" style="width: 100%;" aria-describedby="datatables-reponsive_info">
+                                    <thead>
+                                        <tr>
+                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 187px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 281px;" aria-label="Position: activate to sort column ascending">Position</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 137px;" aria-label="Office: activate to sort column ascending">Office</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 60px;" aria-label="Age: activate to sort column ascending">Age</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 120px;" aria-label="Start date: activate to sort column ascending">Start date</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 109px;" aria-label="Salary: activate to sort column ascending">Salary</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 109px;" aria-label="Salary: activate to sort column ascending">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="odd">
+                                            <td class="dtr-control sorting_1" tabindex="0">Airi Satou</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td>33</td>
+                                            <td>2018/11/28</td>
+                                            <td>$162,700</td>
+                                            <td>
+                                                <a href="#">
+                                                    <i class="fal fa-info-circle" style="color: black"></i>
+                                                </a>
+                                                <a href="#">
+                                                    <i class="fal fa-edit" style="color: black"></i>
+                                                </a>
+                                                <a href="#">
+                                                    <i class="fal fa-trash-alt" style="color: black"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="datatables-reponsive_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="datatables-reponsive_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="datatables-reponsive_previous"><a aria-controls="datatables-reponsive" aria-disabled="true" aria-role="link" data-dt-idx="previous" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="datatables-reponsive" aria-role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="datatables-reponsive" aria-role="link" data-dt-idx="1" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="datatables-reponsive" aria-role="link" data-dt-idx="2" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="datatables-reponsive" aria-role="link" data-dt-idx="3" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="datatables-reponsive" aria-role="link" data-dt-idx="4" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="datatables-reponsive" aria-role="link" data-dt-idx="5" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="datatables-reponsive_next"><a href="#" aria-controls="datatables-reponsive" aria-role="link" data-dt-idx="next" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Striped Rows</h5>
+                            <h6 class="card-subtitle text-muted">
+                                Use <code>.table-striped</code> to add zebra-striping to any table row within the
+                                <code>&lt;tbody&gt;</code>.
+                            </h6>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:40%;">Name</th>
+                                    <th style="width:25%">Phone Number</th>
+                                    <th class="d-none d-md-table-cell" style="width:25%">Date of Birth</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Vanessa Tucker</td>
+                                    <td>864-348-0485</td>
+                                    <td class="d-none d-md-table-cell">June 21, 1961</td>
+                                    <td class="table-action">
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>William Harris</td>
+                                    <td>914-939-2458</td>
+                                    <td class="d-none d-md-table-cell">May 15, 1948</td>
+                                    <td class="table-action">
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sharon Lessman</td>
+                                    <td>704-993-5435</td>
+                                    <td class="d-none d-md-table-cell">September 14, 1965</td>
+                                    <td class="table-action">
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Christina Mason</td>
+                                    <td>765-382-8195</td>
+                                    <td class="d-none d-md-table-cell">April 2, 1971</td>
+                                    <td class="table-action">
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Robin Schneiders</td>
+                                    <td>202-672-1407</td>
+                                    <td class="d-none d-md-table-cell">October 12, 1966</td>
+                                    <td class="table-action">
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

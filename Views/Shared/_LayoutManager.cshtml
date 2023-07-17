@@ -10,234 +10,252 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - JobExchange</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min3f71.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/JobExchange.styles.css" asp-append-version="true" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>@ViewData["Title"] - JobExchange</title>
 
-    @*<link rel="stylesheet" href="v2/bootstrap/css/bootstrap.min3f71.css?v=1.1.1">*@
-    <link rel="stylesheet" as="style" href="~/lib/select2/css/select2.min.css" />
-    <link rel="stylesheet" href="~/css/app.min.99dbaee6ec838d8e.css">
-    <link rel="stylesheet" href="~/css/index.min.9bda2482a644ab4e.css">
-    <link rel="stylesheet" href="~/lib/icon/icon-verified-employer.min.b79f9d8bd7063f2f.css">
-    <link rel="stylesheet" href="~/lib/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="~/css/hot-companies.min.95148e937b41ca2f.css">
-    <style>
-        #toast-container>div {
-            opacity: unset;
-        }
-
-        [v-cloak] {
-            display: none !important;
-        }
-    </style>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min3f71.js?v=1.1.1"></script>
+	<link href="~/css/app.css" rel="stylesheet">
+	<link href="~/css/all.min.css" rel="stylesheet">
+	<link class="js-stylesheet" href="~/css/light.css" rel="stylesheet">
 </head>
+
 <body>
-    <nav class="navbar ta-top">
-        <div class="container-fluid px-30">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="index944d.html?ref=you">
-                    <img src="~/images/logo/Logo_ABCG07_OK.png" alt=""
-                         title="" class="">
-                </a>
-            </div>
-            <ul class="nav navbar-nav navbar-left">
-                <li class="navbar-left__item group active">
-                    <a href="#">
-                        Việc làm
-                    </a>
-                    <div class="group-hover:menu navbar__item__dropdown-menu">
-                        <ul class="nav navbar-menu">
-                            <li class="navbar-menu__item  active  tag-border">
-                                <a href="#" class="text-sm">
-                                    <i class="icon fa-regular fa-magnifying-glass"></i>
-                                    Tìm việc làm
-                                </a>
-                            </li>
-                            <li class="navbar-menu__item ">
-                                <a href="#" class="text-sm">
-                                    <i class="icon fa-regular fa-check-to-slot"></i>
-                                    Việc làm đã ứng tuyển
-                                    
-                                </a>
-                            </li>
-                            <li class="navbar-menu__item ">
-                                <a href="#" class="text-sm">
-                                    <i class="fa-regular fa-laptop-code icon"></i>
-                                    Việc làm đã lưu
-                                </a>
-                            </li>
-                           
-                        </ul>
-                    </div>
-                </li>
-                
-                <li class="navbar-left__item group
-                    ">
-                    <a href="#" title="Công ty">
-                        Công ty
-                    </a>
-                    <div class="group-hover:menu navbar__item__dropdown-menu">
-                        <ul class="nav navbar-menu">
-                            <li class="navbar-menu__item ">
-                                <a href="#" class="text-sm">
-                                    <i class="icon fa-regular fa-buildings"></i>
-                                    Danh sách công ty
-                                </a>
-                            </li>
-                            <li class="navbar-menu__item ">
-                                <a href="#" class="text-sm">
-                                    <i class="icon fa-regular fa-stars"></i>
-                                    Top công ty
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                @if (SignInManager.IsSignedIn(User))
-                {
-@*                    <li class="nav-item">
-                        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                        </form>
-                    </li>*@
+	<div class="wrapper">
 
-                    <li class="navbar-right__item group">
-                        <div class="title">
-                            <a href="javascript:void(0)">
-                                <img src="https://localhost:7126/images/avatar-default.jpg" onerror="this.src='https://www.topcv.vn/images/avatar-default.jpg'" alt="Avatar">
-                                <span class="fullname">Hello @Account?.AccountName !</span>
-                            </a>
-                        </div>
-                        <div class="group-hover:menu navbar__item__dropdown-menu">
-                            <ul class="nav navbar-menu">
-                                <li class="dropdown-menu__info  tag-border">
-                                    <img src="https://www.topcv.vn/images/avatar-default.jpg" onerror="this.src='https://www.topcv.vn/images/avatar-default.jpg'" alt="Avatar">
-                                    <div class="caption">
-                                        <p class="name">@Account?.AccountName</p>
-                                        <p class="description">Mã ứng viên: <span class="code">#6702689</span></p>
-                                        <p class="description">@UserManager.GetUserName(User)</p>
-                                    </div>
-                                </li>
-                                <li class="navbar-menu__item ">
-                                    <a asp-controller="candidate" asp-action="index" class="text-sm">
-                                        <i class="icon fa-regular fa-pen-to-square"></i>
-                                        Cài đặt thông tin cá nhân
-                                    </a>
-                                </li>
-                                <li class="navbar-menu__item ">
-                                    <a href="#" class="text-sm">
-                                        <i class="icon fa-regular fa-eye"></i>
-                                        Nhà tuyển dụng xem hồ sơ
-                                    </a>
-                                </li>
-                                <li class="navbar-menu__item  tag-border">
-                                    <a href="#" class="text-sm">
-                                        <i class="icon fa-regular fa-lock"></i>
-                                        Đổi mật khẩu
-                                    </a>
-                                </li>
-                                <li class="navbar-menu__item logout">
-                                    <a href="javascript:void(0)" id="logout" onclick="document.getElementById('logoutForm').submit()" class="text-sm">
-                                        <i class="icon fa-regular fa-arrow-right-from-bracket"></i>
-                                        Đăng xuất
-                                    </a>
-                                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="POST">
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                }
-                else
-                {
-                    <li class="navbar-right__item">
-                        <a class="btn btn-outline-primary" id="login" asp-area="Identity" asp-page="/Account/Login">
-                            Đăng nhập
-                        </a>
-                    </li>
-                    <li class="navbar-right__item">
-                        <a class="btn btn-primary" id="register" asp-area="Identity" asp-page="/Account/Register">
-                            Đăng ký
-                        </a>
-                    </li>
-                    @*<li class="navbar-right__item">
-                        <a type="button" class="btn btn-dark" href="#" target="_blank">
-                            Đăng tuyển & tìm hồ sơ
-                        </a>
-                    </li>*@
-                    <li class="navbar-right__item">
-                        <a class="btn btn-dark" asp-area="Identity" asp-page="/Account/RegisterCompany">
-                            Đăng tuyển & tìm hồ sơ
-                        </a>
-                    </li>
-                }
-            </ul>
-        </div>
-    </nav>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+		@*sidebar*@
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+					<span class="align-middle">JobExchange ABCG07</span>
+				</a>
 
-    <link rel="stylesheet" href="~/css/footer-desktop.min.c66148e4f814e85c.css">
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Quản trị viên
+					</li>
 
-    <footer id="footer-desktop">
-        <div class="footer-main">
-            <div class="footer-info">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h4 class="name-company">
-                                Job Exchange ABCG07
-                            </h4>
-                            <div class="box-tax-code">
-                                <div class="group-top">
-                                    <div class="item">
-                                        <i class="fa-solid fa-calculator"></i>
-                                        <span>Số điện thoại: </span>
-                                        <strong>0999999999</strong>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                    <span>Địa chỉ: </span>
-                                    <strong>96B Định Công, Hoàng Mai, Hà Nội</strong>
-                                </div>
-                                <div class="item">
-                                    <i class="fa-solid fa-envelope"></i>
-                                    <span>Email: </span>
-                                    <strong>test@gmail.com</strong>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2 box-qr">
-                            <div class="box-qr">
-                                <img class="img-responsive" src="~/images/qrABCG07.png">
-                                <a target="_blank" href="https://github.com/WEBG07/job-exchange">github.com/WEBG07/job-exchange</a>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mt-20">
-                            <p class="copyright">
-                                © 2023-2023 Job Exchange ABCG07.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="index.html">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Bảng điều khiển</span>
+						</a>
+					</li>
 
-    </footer>
-   
-    <script src="~/js/account.js" asp-append-version="true"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="pages-profile.html">
+							<i class="align-middle" data-feather="users"></i> <span class="align-middle">Profile</span>
+						</a>
+					</li>
+
+					<li class="sidebar-header">
+						Nhà tuyển dụng
+					</li>
+
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="index.html">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Bảng điều khiển</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="ui-typography.html">
+							<i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Typography</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="main">
+
+			@*header*@
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+								<div class="position-relative">
+									<i class="align-middle" data-feather="bell"></i>
+									<span class="indicator">4</span>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+								<div class="dropdown-menu-header">
+									4 New Notifications
+								</div>
+								<div class="list-group">
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-danger" data-feather="alert-circle"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Update completed</div>
+												<div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
+												<div class="text-muted small mt-1">30m ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-warning" data-feather="bell"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Lorem ipsum</div>
+												<div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>
+												<div class="text-muted small mt-1">2h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-primary" data-feather="home"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">Login from 192.186.1.8</div>
+												<div class="text-muted small mt-1">5h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<i class="text-success" data-feather="user-plus"></i>
+											</div>
+											<div class="col-10">
+												<div class="text-dark">New connection</div>
+												<div class="text-muted small mt-1">Christina accepted your request.</div>
+												<div class="text-muted small mt-1">14h ago</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all notifications</a>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
+								<div class="position-relative">
+									<i class="align-middle" data-feather="message-square"></i>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">
+								<div class="dropdown-menu-header">
+									<div class="position-relative">
+										4 New Messages
+									</div>
+								</div>
+								<div class="list-group">
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">Vanessa Tucker</div>
+												<div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>
+												<div class="text-muted small mt-1">15m ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="~/images/logo/Logo_ABCG07_OK.png" class="avatar img-fluid rounded-circle" alt="William Harris">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">William Harris</div>
+												<div class="text-muted small mt-1">Curabitur ligula sapien euismod vitae.</div>
+												<div class="text-muted small mt-1">2h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Christina Mason">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">Christina Mason</div>
+												<div class="text-muted small mt-1">Pellentesque auctor neque nec urna.</div>
+												<div class="text-muted small mt-1">4h ago</div>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col-2">
+												<img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
+											</div>
+											<div class="col-10 ps-2">
+												<div class="text-dark">Sharon Lessman</div>
+												<div class="text-muted small mt-1">Aenean tellus metus, bibendum sed, posuere ac, mattis non.</div>
+												<div class="text-muted small mt-1">5h ago</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="dropdown-menu-footer">
+									<a href="#" class="text-muted">Show all messages</a>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+								<i class="align-middle" data-feather="settings"></i>
+							</a>
+
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+								<img src="https://www.topcv.vn/images/avatar-default.jpg" onerror="this.src='https://www.topcv.vn/images/avatar-default.jpg'" alt="Avatar" class="avatar img-fluid rounded me-1"/> 
+								<span class="text-dark">@Account?.AccountName</span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
+								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
+								<div class="dropdown-divider"></div>
+
+								<a class="dropdown-item" href="javascript:void(0)" id="logout" onclick="document.getElementById('logoutForm').submit()">Đăng xuất</a>
+								<form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="POST">
+								</form>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="content">
+				@RenderBody();
+			</main>
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-12 text-center">
+							<p class="mb-0">
+								<a class="text-muted" href="#" target="_blank"><strong>© 2023-2023 Job Exchange ABCG07.</strong>
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script src="~/js/app.js"></script>
+	<script src="~/js/datatable.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
