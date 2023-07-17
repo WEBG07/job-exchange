@@ -1,22 +1,45 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using JobExchange.Models;
+using JobExchange.Repository;
+using System.Security.Claims;
 
 namespace JobExchange.Controllers
 {
     public class CandidateController : Controller
     {
+        private readonly CandidateRepository candidateRepository;
+        public CandidateController(CandidateRepository candidateRepository)
+        {
+            this.candidateRepository = candidateRepository;
+        }
         public IActionResult Index()
         {
-            Candidate candidate = new Candidate();
-            candidate.CandidateId = "812";
-            candidate.FullName = "Vu Van The";
-            candidate.Birthday = new DateTime(2002, 10, 8);
-            candidate.Gender = "Nam";
-            candidate.Phone = "097520371";
-            candidate.Avatar = "";
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var userIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = userIdClaim != null ? userIdClaim.Value : null;
+            Console.WriteLine(userId);
+            Candidate? candidate = candidateRepository.GetCandidate(userId);
 
-            //ViewData["candidate"] = candidate;
+            if (candidate == null)
+            {
+                Console.WriteLine("Candidate nulll");
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(candidate);
+        }
+        [HttpPost]
+        public IActionResult UpdateInfoPersonal(Candidate candidate)
+        {
+                Console.WriteLine(candidate.ToString());
+            if (ModelState.IsValid)
+            {
+                candidateRepository.UpdateInfoPersonal(candidate);
+                return RedirectToAction("Index");
+            } else
+            {
+            }
+            return RedirectToAction("Index", candidate);
         }
     }
 }
