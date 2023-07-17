@@ -1,15 +1,26 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobExchange.Models
 {
     public partial class SaveRecruitment
     {
-        public string RecruitmentId { get; set; } = null!;
-        public string CandidateId { get; set; } = null!;
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SaveRecruitmentId { get; set; }
+        public string? RecruitmentId { get; set; }
+        public string? CandidateId { get; set; }
         public DateTime? CreateDate { get; set; }
 
-        public virtual Candidate Candidate { get; set; } = null!;
-        public virtual Recruitment Recruitment { get; set; } = null!;
+        [ForeignKey("CandidateId")]
+        [ValidateNever]
+        public Candidate? Candidate { get; set; }
+
+        [ForeignKey("RecruitmentId")]
+        [ValidateNever]
+        public Recruitment? Recruitment { get; set; }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using JobExchange.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace JobExchange.Controllers
 {
+    //[Authorize(Roles = "ROLE_CANDIDATE")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,6 +18,9 @@ namespace JobExchange.Controllers
 
         public IActionResult Index()
         {
+            //var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //Console.WriteLine("đây là id: " + userId);
             return View();
         }
 

@@ -1,0 +1,33 @@
+﻿@page "/RegisterConfirmation"
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Xác minh Email đăng ký";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+<div class="header">
+    <div class="logo">
+        <a href="#">
+            <img src="~/images/logo/Logo_ABCG07_OK.png">
+        </a>
+    </div>
+    <h2 class="title">@ViewData["Title"]</h2>
+    <div class="text-muted caption">
+        @{
+            if (@Model.DisplayConfirmAccountLink)
+            {
+                <p>
+                    Có lỗi không mong muốn xảy ra khi gửi Email xác minh cho bạn, chúng tôi sẽ yêu cầu bạn xác minh sau !
+                    <a id="confirm-link" href="@Model.EmailConfirmationUrl">Nhấn vào đây để tiếp tục</a>
+                </p>
+            }
+            else
+            {
+                <p>
+                    Vui lòng kiểm tra email của bạn để xác minh tài khoản của bạn.
+                </p>
+            }
+        }
+    </div>
+</div>
+

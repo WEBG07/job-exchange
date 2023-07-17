@@ -1,14 +1,46 @@
 using JobExchange.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using JobExchange.Areas.Identity.Data;
+using JobExchange.Helper;
+using Stripe;
+using Microsoft.Extensions.DependencyInjection;
+using JobExchange.Repository;
+using JobExchange.Repository.RepositoryInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-builder.Services.AddDbContext<db_JobExchangeContext>(options =>
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddRazorPages();
+builder.Services.AddRouting();
+
+builder.Services.AddDbContext<JobExchangeContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("JobExchange_Connection")));
+
+builder.Services.AddIdentity<JobExchangeUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<JobExchangeContext>()
+    .AddDefaultTokenProviders();
+
+var mailsettings = builder.Configuration.GetSection("MailSettings");
+builder.Services.AddOptions();  // Kích hoạt Options
+builder.Services.Configure<MailSettings>(mailsettings);  // đăng ký để Inject
+
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
+
+// Chuyển hướng người dùng
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
 
 var app = builder.Build();
 
@@ -25,10 +57,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
