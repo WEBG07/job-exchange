@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="https://static.topcv.vn/v4/css/pages/profile.min.1e9a8dacbee8e8c2.css">
+<div>
+    <button class="btn btn-pink" id="show-toast">Show stacked toasts</button>
+</div>
 
 <div id="profile" style="margin-top: 20px;">
     <div class="container">
@@ -87,9 +90,10 @@
                                             <h4 class="modal-title title">Thông tin cá nhân</h4>
                                         </div>
                                         <div class="modal-body body">
-                                            <form asp-action="Index">
+                                            <form asp-action="UpdateInfoPersonal">
                                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                                 <input type="hidden" asp-for="CandidateId" />
+                                                <input type="hidden" asp-for="AccountId" />
                                                 <div class="form-group">
                                                     <label>Họ và tên <span>*</span></label>
                                                     <input asp-for="FullName" placeholder="Họ và tên" class="form-control">
@@ -108,10 +112,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Ngày sinh</label>
+                                                    <label>Ngày sinh *</label>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <input type="date" class="form-control" id="Birthday" name="Birthday" asp-for="Birthday.Value" />
+                                                            <input asp-for="Birthday" placeholder="Ngày sinh" class="form-control" type="date">
                                                             <span asp-validation-for="Birthday" class="text-danger"></span>
                                                         </div>
                                                     </div>

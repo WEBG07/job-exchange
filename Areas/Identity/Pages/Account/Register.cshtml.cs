@@ -19,8 +19,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using JobExchange.Repository;
 using JobExchange.Models;
+using JobExchange.Repository.RepositoryInterfaces;
 
 namespace JobExchange.Areas.Identity.Pages.Account
 {
