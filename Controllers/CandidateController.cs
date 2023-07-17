@@ -17,7 +17,7 @@ namespace JobExchange.Controllers
             var claimsIdentity = User.Identity as ClaimsIdentity;
             var userIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? userIdClaim.Value : null;
-            Console.WriteLine(userId);
+
             Candidate? candidate = candidateRepository.GetCandidate(userId);
 
             if (candidate == null)
