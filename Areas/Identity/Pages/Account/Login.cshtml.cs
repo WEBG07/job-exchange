@@ -21,11 +21,13 @@ namespace JobExchange.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<JobExchangeUser> _signInManager;
+        private readonly UserManager<JobExchangeUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<JobExchangeUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<JobExchangeUser> signInManager, UserManager<JobExchangeUser> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -81,10 +83,46 @@ namespace JobExchange.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+                var roles = await _userManager.GetRolesAsync(user);
+
+              
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("Người dùng đã đăng nhập!");
-                    return LocalRedirect(returnUrl);
+                    if (returnUrl == null)
+                    {
+                        if (roles.Contains("ROLE_ADMIN"))
+                        {
+                            return Redirect("/Candidate/Index");
+                        }
+                        else if (roles.Contains("ROLE_CANDIDATE"))
+                        {
+                            return Redirect("/Home/Privacy");
+                        }
+                        else if (roles.Contains("ROLE_COMPANY"))
+                        {
+                            return Redirect("/Home/Privacy");
+                        }
+                    }
+                    //// Kiểm tra và chuyển hướng người dùng đến giao diện phù hợp dựa trên vai trò
+                    //if (roles.Contains("ROLE_ADMIN"))
+                    //{
+                    //    return Redirect("/Candidate/Index");
+                    //}
+                    //else if (roles.Contains("ROLE_CANDIDATE"))
+                    //{
+                    //    return Redirect("/Home/Privacy");
+                    //}
+                    //else if (roles.Contains("ROLE_COMPANY"))
+                    //{
+                    //    return Redirect("/Home/Privacy");
+                    //}
+                    else
+                    {
+                        _logger.LogInformation("Người dùng đã đăng nhập!");
+                        return LocalRedirect(returnUrl);
+                    }    
+                    
                 }
                 if (result.RequiresTwoFactor)
                 {

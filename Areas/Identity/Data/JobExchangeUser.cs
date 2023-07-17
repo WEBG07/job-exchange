@@ -10,6 +10,7 @@ namespace JobExchange.Areas.Identity.Data;
 public class JobExchangeUser : IdentityUser
 {
     [Required]
+
     public string? AccountName { get; set; }
 }
 

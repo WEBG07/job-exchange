@@ -67,7 +67,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required(ErrorMessage = "Vui lòng nhập Mật khẩu.")]
-            //[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", ErrorMessage = "Mật khẩu phải có 8 ký tự trở lên bao gồm chữ hoa, chữ thường, chữ số và ký tự đặc biệt!")]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -78,6 +78,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required (ErrorMessage = "Hãy cho chúng tôi biết tên của bạn.")]
+            [MaxLength(50, ErrorMessage = "Độ dài tối đa là 50 ký tự.")]
             [DataType(DataType.Text)]
             public string AccountName { get; set; }
         }

@@ -18,14 +18,7 @@
     </style>
 </head>
 <body>
-    <div class="wrap-auth-section">
-        <div class="auth row">
-            <div class="auth-form">
-                @RenderBody()
-            </div>
-        </div>
-    </div>
-    <p class="auth-copy-right">© 2023-2023 Job Exchange ABCG07.</p>
+    @RenderBody()
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

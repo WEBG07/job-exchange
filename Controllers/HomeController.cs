@@ -24,6 +24,8 @@ namespace JobExchange.Controllers
             return View();
         }
 
+        //[Authorize(Roles = "ROLE_CANDIDATE")]
+        //[Authorize]
         public IActionResult Privacy()
         {
             return View();
