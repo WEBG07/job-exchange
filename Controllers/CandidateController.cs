@@ -2,6 +2,7 @@
 using JobExchange.Models;
 using JobExchange.Repository;
 using System.Security.Claims;
+using MimeKit;
 
 namespace JobExchange.Controllers
 {
@@ -14,6 +15,17 @@ namespace JobExchange.Controllers
         }
         public IActionResult Index()
         {
+            var messageInfo = new Dictionary<string, string>
+            {
+                { "text", "This is a success message" },
+                { "type", "success" },
+                { "title", "Thông báo" },
+                { "icon", "glyphicon-ok" },
+                { "delay", "5000" }
+            };
+
+            TempData["messageInfo"] = messageInfo;
+
             var claimsIdentity = User.Identity as ClaimsIdentity;
             var userIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? userIdClaim.Value : null;

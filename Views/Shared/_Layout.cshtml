@@ -250,7 +250,18 @@
     <script src="~/js/account.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
+    @{
+        var messageInfo = TempData["messageInfo"] as Dictionary<string, string>;
 
+        if (TempData["messageInfo"] != null)
+        {
+            <script>
+                $(document).ready(function () {
+                    showMessage("@messageInfo["text"]", "@messageInfo["type"]", "@messageInfo["title"]", "@messageInfo["icon"]", @messageInfo["delay"]);
+                });
+            </script>
+        }
+    }
    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
