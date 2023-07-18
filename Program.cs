@@ -33,7 +33,8 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
 builder.Services.AddScoped<CandidateRepository>();
-
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IRecruitmentRepository, RecruitmentRepository>();
 // Chuyển hướng người dùng
 builder.Services.ConfigureApplicationCookie(options =>
 {
