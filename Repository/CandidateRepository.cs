@@ -40,5 +40,18 @@ namespace JobExchange.Repository
 
             return candidate;
         }
+        public bool UpdateAvatar(string candidateId, string filename)
+        {
+            var existingCandidate = _jobExchangeContext.Candidates.Find(candidateId);
+
+            if (existingCandidate != null && filename != null)
+            {
+                existingCandidate.Avatar = filename;
+
+                _jobExchangeContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

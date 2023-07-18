@@ -5,10 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="https://static.topcv.vn/v4/css/pages/profile.min.1e9a8dacbee8e8c2.css">
-<div>
-    <button class="btn btn-pink" id="show-toast">Show stacked toasts</button>
-</div>
-
 <div id="profile" style="margin-top: 20px;">
     <div class="container">
         <div class="row">
@@ -26,8 +22,8 @@
                                 <div class="col-md-3 col-xs-6">
                                     <div style="padding: 5px; position: relative;">
                                         <div class="avatar"
-                                             style=" top: -155px; left: 0px; width: 100%; background-size: cover; padding-bottom: 100%; background-image: url(&quot;https://www.topcv.vn/images/avatar-default.jpg&quot;);">
-                                            <div role="button" class="btn-upload-avatar"
+                                             style=" top: -155px; left: 0px; width: 100%; background-size: cover; padding-bottom: 100%; background-image: url(&quot;./images/avatar/@Html.DisplayFor(c => c.Avatar)&quot;);">
+                                            <div role="button" id="change-avatar" class="btn-upload-avatar"
                                                  style="top: 55%; height: 115px; padding-top: 30px;">
                                                 <i aria-hidden="true" class="fa fa-camera"></i><br>
                                                 <p style="color: rgb(255, 255, 255);">Upload Avatar</p>
@@ -36,23 +32,23 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-xs-5">
-                                    <div class="row">
+                                    <div class="row" id="profile-name">
                                         <!---->
                                         <div class="col-12">
-                                            <div class="profile-name">@Html.DisplayFor(c => c.FullName)</div>
+                                            <div class="profile-name" id="text-fullname">@Html.DisplayFor(c => c.FullName)</div>
                                             <p class="position-name"></p>
                                         </div>
                                          <div class="col-12 d-flex align-items-center">
                                         <i style="width: 2rem;" class="fa-solid fa-cake-candles"></i>
-                                            <span class="">@Html.DisplayFor(c => c.Birthday)</span>
+                                            <span class="" id="text-birthday">@Html.DisplayFor(c => c.Birthday)</span>
                                         </div>
                                         <div class="col-12 d-flex align-items-center">
                                         <i style="width: 2rem;" class="fa-solid fa-venus-mars"></i>
-                                        <span>@Html.DisplayFor(c => c.Gender)</span>
+                                        <span id="text-gender">@Html.DisplayFor(c => c.Gender)</span>
                                         </div>
                                         <div class="col-12 d-flex align-items-center">
                                         <i style="width: 2rem;" class="fa-solid fa-phone"></i>
-                                        <span>@Html.DisplayFor(c => c.Phone)</span>
+                                        <span id="text-phone">@Html.DisplayFor(c => c.Phone)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -90,7 +86,7 @@
                                             <h4 class="modal-title title">Thông tin cá nhân</h4>
                                         </div>
                                         <div class="modal-body body">
-                                            <form asp-action="UpdateInfoPersonal">
+                                            <form id="form-update-info-personal">
                                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                                 <input type="hidden" asp-for="CandidateId" />
                                                 <input type="hidden" asp-for="AccountId" />
@@ -136,7 +132,7 @@
                                                               class="form-control fixed-width"></textarea>
                                                 </div>
                                                 <div class="text-center">
-                                                    <button type="submit"
+                                                    <button type="submit" id="button-update-info-personal"
                                                             class="btn btn-green">
                                                         Cập nhật
                                                     </button>
@@ -2102,7 +2098,6 @@
         </div>
     </div>
 </div>
-<script src="~/js/candidate.js"></script>
 
 @section Scripts {
     @{

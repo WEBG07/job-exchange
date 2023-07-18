@@ -15,17 +15,8 @@ namespace JobExchange.Controllers
         }
         public IActionResult Index()
         {
-            var messageInfo = new Dictionary<string, string>
-            {
-                { "text", "This is a success message" },
-                { "type", "success" },
-                { "title", "Thông báo" },
-                { "icon", "glyphicon-ok" },
-                { "delay", "5000" }
-            };
 
-            TempData["messageInfo"] = messageInfo;
-
+ 
             var claimsIdentity = User.Identity as ClaimsIdentity;
             var userIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? userIdClaim.Value : null;
@@ -41,17 +32,51 @@ namespace JobExchange.Controllers
             return View(candidate);
         }
         [HttpPost]
-        public IActionResult UpdateInfoPersonal(Candidate candidate)
+        public IActionResult UpdateInfoPersonal([FromBody] Candidate candidate)
         {
-                Console.WriteLine(candidate.ToString());
-            if (ModelState.IsValid)
-            {
-                candidateRepository.UpdateInfoPersonal(candidate);
-                return RedirectToAction("Index");
-            } else
-            {
-            }
-            return RedirectToAction("Index", candidate);
+
+            candidateRepository.UpdateInfoPersonal(candidate);
+            return Json(candidate);
+
         }
+        [HttpPost]
+        public string UploadAvatar(IFormFile avatar_file)
+        {
+            if (avatar_file != null && avatar_file.Length > 0)
+            {
+                var claimsIdentity = User.Identity as ClaimsIdentity;
+                var userIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                var userId = userIdClaim != null ? userIdClaim.Value : null;
+
+                string fileName = userId + Path.GetExtension(Path.GetFileName(avatar_file.FileName));
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "avatar");
+                string filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    avatar_file.CopyTo(stream);
+                }
+                if (candidateRepository.UpdateAvatar(userId, fileName))
+                {
+                    return fileName;
+                }
+                return "error";
+                // Tiếp tục xử lý và trả về phản hồi tùy ý
+
+            }
+
+            return "empty";
+        }
+
     }
 }
+//var messageInfo = new Dictionary<string, string>
+//{
+//    { "text", "Cập nhật thông tin thành công" },
+//    { "type", "success" },
+//    { "title", "Thông báo" },
+//    { "icon", "glyphicon-ok" },
+//    { "delay", "3000" }
+//};
+
+//TempData["messageInfo"] = messageInfo;

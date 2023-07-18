@@ -25,6 +25,7 @@
   <ItemGroup>
     <Folder Include="Views\Manager\Company\" />
     <Folder Include="Views\Manager\Admin\" />
+    <Folder Include="wwwroot\images\avatar\" />
   </ItemGroup>
 
 </Project>
