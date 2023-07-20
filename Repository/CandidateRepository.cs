@@ -40,5 +40,32 @@ namespace JobExchange.Repository
 
             return candidate;
         }
+        public bool UpdateAvatar(string candidateId, string filename)
+        {
+            var existingCandidate = _jobExchangeContext.Candidates.Find(candidateId);
+
+            if (existingCandidate != null && filename != null)
+            {
+                existingCandidate.Avatar = filename;
+
+                _jobExchangeContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        //education
+        public List<Education> GetAllEducation(string candidateId)
+        {
+            var filteredJobs = _jobExchangeContext.Educations.Where(e => e.CandidateId == candidateId);
+            return filteredJobs.ToList();
+        }
+        public Education AddEdudation(Education education)
+        {
+            _jobExchangeContext.Educations.Add(education);
+            _jobExchangeContext.SaveChanges();
+
+            return education;
+        }
     }
 }
