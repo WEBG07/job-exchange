@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobExchange.Migrations
 {
     [DbContext(typeof(JobExchangeContext))]
-    [Migration("20230714145706_db_JobExchange")]
-    partial class db_JobExchange
+    [Migration("20230717032859_AddIndustryImage")]
+    partial class AddIndustryImage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,15 +70,18 @@ namespace JobExchange.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Birthday")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CandidateId");
@@ -292,6 +295,9 @@ namespace JobExchange.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IndustryId"));
+
+                    b.Property<string>("IndustryImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IndustryName")
                         .HasColumnType("nvarchar(max)");
