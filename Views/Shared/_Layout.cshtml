@@ -111,7 +111,7 @@
                     <li class="navbar-right__item group">
                         <div class="title">
                             <a href="javascript:void(0)">
-                                <img src="https://localhost:7126/images/avatar-default.jpg" onerror="this.src='https://www.topcv.vn/images/avatar-default.jpg'" alt="Avatar">
+                                <img src="https://www.topcv.vn/images/avatar-default.jpg" onerror="this.src='https://www.topcv.vn/images/avatar-default.jpg'" alt="Avatar">
                                 <span class="fullname">Hello @Account?.AccountName !</span>
                             </a>
                         </div>
@@ -124,6 +124,12 @@
                                         <p class="description">Mã ứng viên: <span class="code">#6702689</span></p>
                                         <p class="description">@UserManager.GetUserName(User)</p>
                                     </div>
+                                </li>
+                                <li class="navbar-menu__item ">
+                                    <a asp-controller="Industry" asp-action="Index" class="text-sm">
+                                        <i class="icon fa-light fa-screwdriver-wrench"></i>
+                                        Chế độ quản trị viên
+                                    </a>
                                 </li>
                                 <li class="navbar-menu__item ">
                                     <a asp-controller="candidate" asp-action="index" class="text-sm">
@@ -235,6 +241,7 @@
 
     </footer>
    
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/js/account.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

@@ -19,14 +19,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using JobExchange.Repository;
 using JobExchange.Models;
+using JobExchange.Repository.RepositoryInterfaces;
 
 namespace JobExchange.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<JobExchangeUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<JobExchangeUser> _userManager;
         private readonly IUserStore<JobExchangeUser> _userStore;
         private readonly IUserEmailStore<JobExchangeUser> _emailStore;
@@ -36,6 +37,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
 
         public RegisterModel(
             UserManager<JobExchangeUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             IUserStore<JobExchangeUser> userStore,
             SignInManager<JobExchangeUser> signInManager,
             ILogger<RegisterModel> logger,
@@ -43,6 +45,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
             ICandidateRepository candidateRepository)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
@@ -86,6 +89,14 @@ namespace JobExchange.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if (!_roleManager.RoleExistsAsync("ROLE_ADMIN").GetAwaiter().GetResult())
+            {
+                _roleManager.CreateAsync(new IdentityRole("ROLE_ADMIN")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole("ROLE_CANDIDATE")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole("ROLE_MANAGER")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole("ROLE_COMPANY")).GetAwaiter().GetResult();
+            }
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }

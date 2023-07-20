@@ -13,7 +13,7 @@ namespace JobExchange.Repository.RepositoryInterfaces
         public Candidate Create (Candidate candidate)
         {
             _jobExchangeContext.Candidates.Add(candidate);
-            _jobExchangeContext.SaveChangesAsync();
+            _jobExchangeContext.SaveChanges();
 
             return candidate;
         }

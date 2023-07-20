@@ -1,6 +1,10 @@
-﻿@{
+﻿@model PagedList.IPagedList<Industry>
+@using JobExchange.Models
+@using PagedList;
+@{
     ViewData["Title"] = "Home";
 }
+
 
 
 <div class="top-category">
@@ -13,12 +17,18 @@
                 <p>Bạn muốn tìm việc mới? Xem danh sách việc làm <a target="_blank" href="https://www.topcv.vn/viec-lam" class="text-highlight text-underline">tại đây</a></p>
             </div>
             <div class="top-category__navigation">
-                <button disabled="disabled" class="btn btn-prev btn-navigation">
+                <a href="@Url.Action("Index", new { page = Model.PageNumber - 1 })" class="btn btn-prev btn-navigation" @(Model.HasPreviousPage ? "" : "disabled")>
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+                <a href="@Url.Action("Index", new { page = Model.PageNumber + 1 })" class="btn btn-next btn-navigation" @(Model.HasNextPage ? "" : "disabled")>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                @*<button disabled="disabled" class="btn btn-prev btn-navigation">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
                 <button class="btn btn-next btn-navigation">
                     <i class="fa-solid fa-chevron-right"></i>
-                </button>
+                </button>*@
             </div>
         </div>
 
@@ -29,110 +39,30 @@
                     <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 10530px;">
                         <div class="owl-item active" style="width: 1140px; margin-right: 30px;">
                             <div class="row mx-2">
-                                <div class="col-md-3">
-                                    <div class="top-category--item">
-                                        <div class="top-category__image">
-                                            <a href="/tim-viec-lam-kinh-doanh-ban-hang-c10001" target="_blank">
-                                                <img src="/v4/image/welcome/top-categories/kinh-doanh-ban-hang.png?v=2" alt="Kinh doanh / Bán hàng">
-                                            </a>
+                                @foreach (var item in Model)
+                                {
+                                    <div class="col-md-3">
+                                        <div class="top-category--item">
+                                            @*<div class="top-category__image">
+                                                <a href="/tim-viec-lam-kinh-doanh-ban-hang-c10001" target="_blank">
+                                                    <img src="@item.IndustryImage" alt="@item.IndustryName" title="@item.IndustryName">
+                                                </a>
+                                            </div>*@
+                                            <h4 class="top-category__name">
+                                                <a href="/tim-viec-lam-kinh-doanh-ban-hang-c10001" title="Kinh doanh / Bán hàng" target="_blank">@item.IndustryName</a>
+                                            </h4>
+                                            <p class="top-category__caption">@item.IndustryId</p>
                                         </div>
-                                        <h4 class="top-category__name">
-                                            <a href="/tim-viec-lam-kinh-doanh-ban-hang-c10001" title="Kinh doanh / Bán hàng" target="_blank">Kinh doanh / Bán hàng</a>
-                                        </h4>
-                                        <p class="top-category__caption">11.890 việc làm</p>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="top-category--item">
-                                        <div class="top-category__image">
-                                            <a href="/tim-viec-lam-it-phan-mem-c10026" target="_blank">
-                                                <img src="/v4/image/welcome/top-categories/it-phan-mem.png?v=2" alt="IT phần mềm">
-                                            </a>
-                                        </div>
-                                        <h4 class="top-category__name">
-                                            <a href="/tim-viec-lam-it-phan-mem-c10026" title="IT phần mềm" target="_blank">IT phần mềm</a>
-                                        </h4> <p class="top-category__caption">3.209 việc làm</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="top-category--item">
-                                        <div class="top-category__image">
-                                            <a href="/tim-viec-lam-hanh-chinh-van-phong-c10023" target="_blank">
-                                                <img src="/v4/image/welcome/top-categories/hanh-chinh-van-phong.png?v=2" alt="Hành chính / Văn phòng">
-                                            </a>
-                                        </div>
-                                        <h4 class="top-category__name"><a href="/tim-viec-lam-hanh-chinh-van-phong-c10023" title="Hành chính / Văn phòng" target="_blank">Hành chính / Văn phòng</a></h4> <p class="top-category__caption">3.706 việc làm</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="top-category--item">
-                                        <div class="top-category__image">
-                                            <a href="/tim-viec-lam-giao-duc-dao-tao-c10017" target="_blank"><img src="/v4/image/welcome/top-categories/giao-duc-dao-tao.png?v=2" alt="Giáo dục / Đào tạo"></a>
-                                        </div>
-                                        <h4 class="top-category__name"><a href="/tim-viec-lam-giao-duc-dao-tao-c10017" title="Giáo dục / Đào tạo" target="_blank">Giáo dục / Đào tạo</a></h4> <p class="top-category__caption">3.089 việc làm</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="top-category--item">
-                                        <div class="top-category__image">
-                                            <a href="/tim-viec-lam-tu-van-c10045" target="_blank">
-                                                <img src="/v4/image/welcome/top-categories/tu-van.png?v=2" alt="Tư vấn">
-                                            </a>
-                                        </div>
-                                        <h4 class="top-category__name">
-                                            <a href="/tim-viec-lam-tu-van-c10045" title="Tư vấn" target="_blank">Tư vấn</a>
-                                        </h4>
-                                        <p class="top-category__caption">4.143 việc làm</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="top-category--item">
-                                        <div class="top-category__image">
-                                            <a href="/tim-viec-lam-marketing-truyen-thong-quang-cao-c10029" target="_blank">
-                                                <img src="/v4/image/welcome/top-categories/marketing-truyen-thong-quang-cao.png?v=2" alt="Marketing / Truyền thông / Quảng cáo">
-                                            </a>
-                                        </div> <h4 class="top-category__name"><a href="/tim-viec-lam-marketing-truyen-thong-quang-cao-c10029" title="Marketing / Truyền thông / Quảng cáo" target="_blank">Marketing / Truyền thông / Quảng cáo</a></h4> <p class="top-category__caption">5.704 việc làm</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="top-category--item">
-                                        <div class="top-category__image">
-                                            <a href="/tim-viec-lam-van-tai-kho-van-c10047" target="_blank">
-                                                <img src="/v4/image/welcome/top-categories/van-tai-kho-van.png?v=2" alt="Vận tải / Kho vận">
-                                            </a>
-                                        </div> <h4 class="top-category__name"><a href="/tim-viec-lam-van-tai-kho-van-c10047" title="Vận tải / Kho vận" target="_blank">Vận tải / Kho vận</a></h4> <p class="top-category__caption">958 việc làm</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="top-category--item">
-                                        <div class="top-category__image">
-                                            <a href="/tim-viec-lam-ke-toan-kiem-toan-c10028" target="_blank">
-                                                <img src="/v4/image/welcome/top-categories/ke-toan-kiem-toan.png?v=2" alt="Kế toán / Kiểm toán">
-                                            </a>
-                                        </div>
-                                        <h4 class="top-category__name"><a href="/tim-viec-lam-ke-toan-kiem-toan-c10028" title="Kế toán / Kiểm toán" target="_blank">Kế toán / Kiểm toán</a></h4> <p class="top-category__caption">2.537 việc làm</p>
-                                    </div>
-                                </div>
+                                }
                             </div>
                         </div>
 
                         @*///*@
-                        <div class="owl-item" style="width: 1140px; margin-right: 30px;">
-                            <div class="row mx-2">
-                                <div class="col-md-3"><div class="top-category--item"><div class="top-category__image"><a href="/tim-viec-lam-quan-ly-chat-luong-qa-qc-c10037" target="_blank"><img src="/v4/image/welcome/top-categories/quan-ly-chat-luong-qa-qc.png?v=2" alt="Quản lý chất lượng (QA/QC)"></a></div> <h4 class="top-category__name"><a href="/tim-viec-lam-quan-ly-chat-luong-qa-qc-c10037" title="Quản lý chất lượng (QA/QC)" target="_blank">Quản lý chất lượng (QA/QC)</a></h4> <p class="top-category__caption">695 việc làm</p></div></div><div class="col-md-3"><div class="top-category--item"><div class="top-category__image"><a href="/tim-viec-lam-cong-nghe-thong-tin-c10131" target="_blank"><img src="/v4/image/welcome/top-categories/cong-nghe-thong-tin.png?v=2" alt="Công nghệ thông tin"></a></div> <h4 class="top-category__name"><a href="/tim-viec-lam-cong-nghe-thong-tin-c10131" title="Công nghệ thông tin" target="_blank">Công nghệ thông tin</a></h4> <p class="top-category__caption">2.908 việc làm</p></div></div><div class="col-md-3"><div class="top-category--item"><div class="top-category__image"><a href="/tim-viec-lam-thu-ky-tro-ly-c10129" target="_blank"><img src="/v4/image/welcome/top-categories/thu-ky-tro-ly.png?v=2" alt="Thư ký / Trợ lý"></a></div> <h4 class="top-category__name"><a href="/tim-viec-lam-thu-ky-tro-ly-c10129" title="Thư ký / Trợ lý" target="_blank">Thư ký / Trợ lý</a></h4> <p class="top-category__caption">717 việc làm</p></div></div><div class="col-md-3">
-                                    <div class="top-category--item">
-                                        <div class="top-category__image"><a href="/tim-viec-lam-thoi-trang-c10042" target="_blank"><img src="/v4/image/welcome/top-categories/thoi-trang.png?v=2" alt="Thời trang"></a></div> <h4 class="top-category__name"><a href="/tim-viec-lam-thoi-trang-c10042" title="Thời trang" target="_blank">Thời trang</a></h4> <p class="top-category__caption">844 việc làm</p>
-                                    </div>
-                                </div><div class="col-md-3"><div class="top-category--item"><div class="top-category__image"><a href="/tim-viec-lam-thiet-ke-do-hoa-c10039" target="_blank"><img src="/v4/image/welcome/top-categories/thiet-ke-do-hoa.png?v=2" alt="Thiết kế đồ họa"></a></div> <h4 class="top-category__name"><a href="/tim-viec-lam-thiet-ke-do-hoa-c10039" title="Thiết kế đồ họa" target="_blank">Thiết kế đồ họa</a></h4> <p class="top-category__caption">1.153 việc làm</p></div></div><div class="col-md-3"><div class="top-category--item"><div class="top-category__image"><a href="/tim-viec-lam-nhan-su-c10034" target="_blank"><img src="/v4/image/welcome/top-categories/nhan-su.png?v=2" alt="Nhân sự"></a></div> <h4 class="top-category__name"><a href="/tim-viec-lam-nhan-su-c10034" title="Nhân sự" target="_blank">Nhân sự</a></h4> <p class="top-category__caption">1.582 việc làm</p></div></div><div class="col-md-3"><div class="top-category--item"><div class="top-category__image"><a href="/tim-viec-lam-to-chuc-su-kien-qua-tang-c10046" target="_blank"><img src="/v4/image/welcome/top-categories/to-chuc-su-kien-qua-tang.png?v=2" alt="Tổ chức sự kiện / Quà tặng"></a></div> <h4 class="top-category__name"><a href="/tim-viec-lam-to-chuc-su-kien-qua-tang-c10046" title="Tổ chức sự kiện / Quà tặng" target="_blank">Tổ chức sự kiện / Quà tặng</a></h4> <p class="top-category__caption">386 việc làm</p></div></div><div class="col-md-3">
-                                    <div class="top-category--item">
-                                        <div class="top-category__image"><a href="/tim-viec-lam-xay-dung-c10050" target="_blank"><img src="/v4/image/welcome/top-categories/xay-dung.png?v=2" alt="Xây dựng"></a></div> <h4 class="top-category__name"><a href="/tim-viec-lam-xay-dung-c10050" title="Xây dựng" target="_blank">Xây dựng</a></h4> <p class="top-category__caption">1.272 việc làm</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>

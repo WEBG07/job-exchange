@@ -7,8 +7,8 @@ using JobExchange.Areas.Identity.Data;
 using JobExchange.Helper;
 using Stripe;
 using Microsoft.Extensions.DependencyInjection;
-using JobExchange.Repository;
 using JobExchange.Repository.RepositoryInterfaces;
+using JobExchange.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +32,7 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
+builder.Services.AddScoped<IIndustryRepository, IndustryRepository>();
 
 // Chuyển hướng người dùng
 builder.Services.ConfigureApplicationCookie(options =>
