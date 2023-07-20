@@ -27,7 +27,6 @@
   <ItemGroup>
     <Folder Include="Views\Manager\Admin\" />
     <Folder Include="Views\Manager\Company\" />
-    <Folder Include="wwwroot\images\industry\" />
   </ItemGroup>
 
 </Project>
