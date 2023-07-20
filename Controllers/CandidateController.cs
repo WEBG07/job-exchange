@@ -40,8 +40,11 @@ namespace JobExchange.Controllers
 
         }
         [HttpPost]
-        public string UploadAvatar(IFormFile avatar_file)
+        public string UploadAvatar(IFormFile avatar_file, string industryName)
         {
+            Industry industry = new Industry();
+            //string industryName = Request.Form["industryName"];
+            Console.WriteLine(industryName);
             if (avatar_file != null && avatar_file.Length > 0)
             {
                 var claimsIdentity = User.Identity as ClaimsIdentity;
@@ -68,6 +71,21 @@ namespace JobExchange.Controllers
             return "empty";
         }
 
+
+        //edudation
+        [HttpPost]
+        public IActionResult GetAllEducation([FromQuery] string candidateId)
+        {
+            List<Education> educations = candidateRepository.GetAllEducation(candidateId);
+            return Json(educations);
+        }
+
+        [HttpPost]
+        public IActionResult AddEdudation([FromBody] Education education)
+        {
+            candidateRepository.AddEdudation(education);
+            return Json(education);
+        }
     }
 }
 //var messageInfo = new Dictionary<string, string>

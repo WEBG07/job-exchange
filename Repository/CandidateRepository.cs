@@ -53,5 +53,19 @@ namespace JobExchange.Repository
             }
             return false;
         }
+
+        //education
+        public List<Education> GetAllEducation(string candidateId)
+        {
+            var filteredJobs = _jobExchangeContext.Educations.Where(e => e.CandidateId == candidateId);
+            return filteredJobs.ToList();
+        }
+        public Education AddEdudation(Education education)
+        {
+            _jobExchangeContext.Educations.Add(education);
+            _jobExchangeContext.SaveChanges();
+
+            return education;
+        }
     }
 }
