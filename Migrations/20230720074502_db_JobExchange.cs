@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JobExchange.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIndustryImage : Migration
+    public partial class db_JobExchange : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,7 +58,7 @@ namespace JobExchange.Migrations
                 {
                     IndustryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IndustryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IndustryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IndustryImage = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -425,21 +425,26 @@ namespace JobExchange.Migrations
                 columns: table => new
                 {
                     RecruitmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RecruitmentTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Salary = table.Column<int>(type: "int", nullable: true),
                     WorkType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GenderRequirement = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HiringCount = table.Column<int>(type: "int", nullable: true),
                     PositionLevel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Experience = table.Column<int>(type: "int", nullable: true),
-                    WorkLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressDetail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     JobDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CandidateRequirement = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Benefits = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Benefit = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IndustryId = table.Column<int>(type: "int", nullable: false),
                     CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -451,6 +456,12 @@ namespace JobExchange.Migrations
                         principalTable: "Companies",
                         principalColumn: "CompanyId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Recruitments_Industries_IndustryId",
+                        column: x => x.IndustryId,
+                        principalTable: "Industries",
+                        principalColumn: "IndustryId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -608,6 +619,11 @@ namespace JobExchange.Migrations
                 name: "IX_Recruitments_CompanyId",
                 table: "Recruitments",
                 column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recruitments_IndustryId",
+                table: "Recruitments",
+                column: "IndustryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SaveRecruitments_CandidateId",
