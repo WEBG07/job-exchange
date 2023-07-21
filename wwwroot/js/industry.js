@@ -25,33 +25,59 @@ function showModal() {
 
 function createIndustry() {
     var industryName = document.getElementById("IndustryName");
+
     var message = document.getElementById("message");
     if (industryName.value == "") {
         message.innerHTML = "Vui lòng nhập tên ngành nghề !";
         industryName.focus();
         return;
     }
+    var IndustryImage = document.getElementById("IndustryImage");
+    if (IndustryImage.files.length > 0) {
+        var file = IndustryImage.files[0];
 
-    var industryData = {
-        IndustryName: industryName.value
-    };
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var res = JSON.parse(this.responseText);
-            if (res.message != null) {
-                message.innerHTML = res.message;
-                return;
+        var formData = new FormData();
+        formData.append('IndustryImage', file);
+        formData.append('IndustryName', industryName.value);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Industry/Create', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var res = JSON.parse(this.responseText);
+                if (res.message != null) {
+                    message.innerHTML = res.message;
+                    return;
+                }
+                toastr.success("Thêm ngành nghề mới thành công !");
+                resetText();
+                addRowToTable(res.industryId, res.industryName, res.industryImage);
+                document.getElementById("btn-close").click();
             }
-            toastr.success("Thêm ngành nghề mới thành công !");
-            resetText();
-            addRowToTable(res.industryId, res.industryName);
-            document.getElementById("btn-close").click();
-        }
-    };
-    request.open("POST", "/Industry/Create", true);
-    request.setRequestHeader("Content-type", "application/json");
-    request.send(JSON.stringify(industryData));
+        };
+        xhr.send(formData);
+    }
+
+    //var industryData = {
+    //    IndustryName: industryName.value
+    //};
+    //var request = new XMLHttpRequest();
+    //request.onreadystatechange = function () {
+    //    if (this.readyState == 4 && this.status == 200) {
+    //        var res = JSON.parse(this.responseText);
+    //        if (res.message != null) {
+    //            message.innerHTML = res.message;
+    //            return;
+    //        }
+    //        toastr.success("Thêm ngành nghề mới thành công !");
+    //        resetText();
+    //        addRowToTable(res.industryId, res.industryName);
+    //        document.getElementById("btn-close").click();
+    //    }
+    //};
+    //request.open("POST", "/Industry/Create", true);
+    //request.setRequestHeader("Content-type", "application/json");
+    //request.send(JSON.stringify(industryData));
 }
 
 function updateIndustry() {
@@ -62,30 +88,36 @@ function updateIndustry() {
         industryName.focus();
         return;
     }
+    var IndustryImage = document.getElementById("IndustryImage");
+    if (IndustryImage.files.length > 0) {
+        var file = IndustryImage.files[0];
 
-    var industryData = {
-        IndustryName: industryName.value
+        var formData = new FormData();
+        formData.append('IndustryImage', file);
+        formData.append('IndustryName', industryName.value);
+        formData.append('IndustryId', idUpdate);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Industry/Update/' + idUpdate, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var res = JSON.parse(this.responseText);
+                if (res.message != null) {
+                    message.innerHTML = res.message;
+                    return;
+                }
+                toastr.success("Thêm ngành nghề mới thành công !");
+                resetText();
+                //$("tbody #2 td").eq(1).val(res.value.industryName);
+                //$("tbody #2 td img").attr("src", "./images/industry/" + res.value.industryImage);
+                document.getElementById(idUpdate).querySelector("td:nth-child(2)").textContent = res.value.industryName;
+                document.getElementById(idUpdate).querySelector("td:nth-child(3) img").src = "./images/industry/" + res.value.industryImage;
+
+                document.getElementById("btn-close").click();
+            }
+        };
+        xhr.send(formData);
     }
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var res = JSON.parse(this.responseText);
-            if (res.message != null) {
-                message.innerHTML = res.message;
-                return;
-            }
-            else {
-                toastr.error("Có lỗi khi sửa. Mã lỗi: " + request.status);
-            }
-            document.getElementById("industry-" + res.industryId).innerHTML = res.industryName;
-            toastr.success("Sửa ngành nghề thành công !");
-            resetText();
-            document.getElementById("btn-close").click();
-        }
-    };
-    request.open("POST", '/Industry/Update/' + idUpdate, true);
-    request.setRequestHeader("Content-type", "application/json");
-    request.send(JSON.stringify(industryData));
 }
 
 
@@ -113,26 +145,42 @@ function deleteIndustry(id) {
     }
 }
 
-function addRowToTable(id, name) {
+function addRowToTable(id, name, image) {
     var table = document.getElementById("tblIndustry");
     var row = table.insertRow();
     row.id = id;
 
     var cell1 = row.insertCell(0);
     cell1.innerHTML = table.rows.length - 1;
+    cell1.className = "col-1";
 
     var cell2 = row.insertCell(1);
     cell2.innerHTML = name;
+    cell2.className = "col-5";
 
     var cell3 = row.insertCell(2);
-    cell3.className = "table-action";
-    cell3.innerHTML = `<a href="#"><i class="fal fa-pen" style="color: #000000; margin-right: 25px;"></i></a>
+    cell3.className = "col-3";
+    var imgElement = document.createElement("img");
+    imgElement.classList.add("rounded");
+    imgElement.style.width = "250px";
+
+    // Đặt thuộc tính src cho thẻ <img>
+    imgElement.src = "./images/industry/" + image;
+
+    // Thêm thẻ <img> vào cell3
+    cell3.appendChild(imgElement);
+
+    var cell4 = row.insertCell(3);
+    cell4.classList.add("table-action");
+    cell4.classList.add("col-3");
+    cell4.innerHTML = `<a href="#"><i class="fal fa-pen" style="color: #000000; margin-right: 25px;"></i></a>
         <a onclick="deleteIndustry(` + id + `)"><i class="fal fa-trash" style="color: #000000;"></i></a>`;
 }
 
 function resetText() {
     document.getElementById("IndustryName").value = "";
     document.getElementById("message").innerHTML = "";
+    document.getElementById("IndustryImage").value = "";
 }
 
 function getIndustryById(id) {
@@ -149,6 +197,7 @@ function getIndustryById(id) {
     };
     request.open("GET", `/Industry/GetById/${id}`, true);
     request.send();
+
 }
 
 function createOrUpdate() {

@@ -10,11 +10,12 @@ using PagedList;
 using Stripe;
 using System;
 using System.Drawing;
+using System.Security.Claims;
 
 namespace JobExchange.Controllers
 {
     public class IndustryController : Controller
-	{
+    {
         private readonly IIndustryRepository _industryRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -26,7 +27,7 @@ namespace JobExchange.Controllers
 
         // GETALL
         public ActionResult Index(int page, int size)
-		{
+        {
             int pageSize = size > 0 ? size : 10;
             int pageNumber = page > 0 ? page : 1;
 
@@ -37,13 +38,17 @@ namespace JobExchange.Controllers
 
             // Return the paged list of products to the view.
             return View(pagedList);
-		}
+        }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Industry industry)
+        public IActionResult Create(IFormFile IndustryImage, string IndustryName)
         {
             try
             {
+                Industry industry = new Industry()
+                {
+                    IndustryName = IndustryName
+                };
                 if (_industryRepository.ExistsByName(industry.IndustryName))
                 {
                     return Ok(new
@@ -51,8 +56,30 @@ namespace JobExchange.Controllers
                         message = "Tên ngành nghề đã tồn tại !"
                     });
                 }
-                _industryRepository.Create(industry);
-                return Ok(industry);
+                if (IndustryImage != null && IndustryImage.Length > 0)
+                {
+                    string fileName = IndustryImage.FileName;
+                    string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "industry");
+                    string filePath = Path.Combine(uploadsFolder, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        IndustryImage.CopyTo(stream);
+                    }
+                    industry.IndustryImage = fileName;
+                    _industryRepository.Create(industry);
+                    return Ok(industry);
+
+                }
+                else
+                {
+                    return Ok(new
+                    {
+                        message = "Không có ảnh !"
+                    });
+                }
+
+
             }
             catch
             {
@@ -61,17 +88,21 @@ namespace JobExchange.Controllers
         }
 
         [HttpPost]
-		public ActionResult Update(int id, [FromBody] Industry industry)
-		{
+        public ActionResult Update(int IndustryId, IFormFile IndustryImage, string IndustryName)
+        {
             try
             {
-                var industryExists = _industryRepository.GetById(id);
+                Industry industry = new Industry()
+                {
+                    IndustryId = IndustryId,
+                    IndustryName = IndustryName
+                };
+                var industryExists = _industryRepository.GetById(IndustryId);
 
                 if (industryExists == null)
                 {
                     return NotFound();
                 }
-
                 if (industry.IndustryName != industryExists.IndustryName && _industryRepository.ExistsByName(industry.IndustryName))
                 {
                     return Ok(new
@@ -79,10 +110,29 @@ namespace JobExchange.Controllers
                         message = "Tên ngành nghề đã tồn tại !"
                     });
                 }
+                if (IndustryImage != null && IndustryImage.Length > 0)
+                {
+                    string fileName = IndustryImage.FileName;
+                    string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "industry");
+                    string filePath = Path.Combine(uploadsFolder, fileName);
 
-                industryExists.IndustryName = industry.IndustryName;
-                _industryRepository.Update(industryExists);
-                return Ok(industryExists);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        IndustryImage.CopyTo(stream);
+                    }
+                    industryExists.IndustryName = industry.IndustryName;
+                    industryExists.IndustryImage = fileName;
+                    _industryRepository.Update(industryExists);
+                    return Ok(Json(industryExists));
+
+                }
+                else
+                {
+                    return Ok(new
+                    {
+                        message = "Không có ảnh !"
+                    });
+                }
             }
             catch
             {
