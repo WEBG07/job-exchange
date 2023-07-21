@@ -3,23 +3,14 @@
 
 // Write your JavaScript code.
 
-function showMessage(text, type, title = "Thông báo", icon = "glyphicon-ok", delay = 3000) {
-    let type_r = "success";
-    if (type == 0) {
-        let type_r = "success";
-    } else if (type == 1) {
-        type_r = "error";
-    } else if (type == 2) {
-        type_r = "warning";
-    } else {
-        type_r = "info";
-    }
+function showMessage(text, type = "success", title = "Thông báo", icon = "glyphicon-ok", delay = 3000) {
+   
 
     $.pnotify_remove_all();
     var notice = $.pnotify({
         pnotify_title: title,
         pnotify_text: text,
-        type: type_r,
+        type: type,
         icon: 'glyphicon ' + icon,
         addclass: 'snotify',
         sticker: false,

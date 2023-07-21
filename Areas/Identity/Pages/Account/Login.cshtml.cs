@@ -89,11 +89,15 @@ namespace JobExchange.Areas.Identity.Pages.Account
               
                 if (result.Succeeded)
                 {
+                    if (roles.Contains("ROLE_ADMIN"))
+                    {
+                        return Redirect("/Industry/Index");
+                    }
                     if (returnUrl == null)
                     {
                         if (roles.Contains("ROLE_ADMIN"))
                         {
-                            return Redirect("/Candidate/Index");
+                            return Redirect("/Admin/Industry");
                         }
                         else if (roles.Contains("ROLE_CANDIDATE"))
                         {
