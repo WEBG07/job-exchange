@@ -11,9 +11,13 @@ namespace JobExchange.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EducationId { get; set; }
+        [Required]
         public string? SchoolName { get; set; }
+        [Required]
         public string? Major { get; set; }
+        [Required]
         public int? StartMonth { get; set; }
+        [Required]
         public int? StartYear { get; set; }
         public int? EndMonth { get; set; }
         public int? EndYear { get; set; }
