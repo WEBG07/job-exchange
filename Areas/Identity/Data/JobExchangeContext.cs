@@ -35,9 +35,11 @@ namespace JobExchange.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Sử dụng DeleteBehavior.Restrict thay cho mặc định là DeleteBehavior.Cascade
-            // Khi có dữ liệu bảng phụ không cho xóa bảng chính
-
+            modelBuilder.Entity<Recruitment>()
+                .HasOne(r => r.Industry)
+                .WithMany()
+                .HasForeignKey(r => r.IndustryId)
+                .OnDelete(DeleteBehavior.Restrict); // khi xóa Industry thì Recruitment không bị xóa
             OnModelCreatingPartial(modelBuilder);
         }
 

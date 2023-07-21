@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobExchange.Migrations
 {
     [DbContext(typeof(JobExchangeContext))]
-    [Migration("20230717032859_AddIndustryImage")]
-    partial class AddIndustryImage
+    [Migration("20230720074502_db_JobExchange")]
+    partial class db_JobExchange
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -300,6 +300,7 @@ namespace JobExchange.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IndustryName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IndustryId");
@@ -408,10 +409,16 @@ namespace JobExchange.Migrations
                     b.Property<string>("RecruitmentId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Benefits")
+                    b.Property<string>("AddressDetail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Benefit")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CandidateRequirement")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyId")
@@ -420,6 +427,9 @@ namespace JobExchange.Migrations
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Experience")
                         .HasColumnType("int");
@@ -433,10 +443,16 @@ namespace JobExchange.Migrations
                     b.Property<int?>("HiringCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("IndustryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("JobDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PositionLevel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecruitmentTitle")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Salary")
@@ -451,7 +467,7 @@ namespace JobExchange.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("WorkLocation")
+                    b.Property<string>("Ward")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WorkType")
@@ -460,6 +476,8 @@ namespace JobExchange.Migrations
                     b.HasKey("RecruitmentId");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("IndustryId");
 
                     b.ToTable("Recruitments");
                 });
@@ -862,7 +880,15 @@ namespace JobExchange.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("JobExchange.Models.Industry", "Industry")
+                        .WithMany()
+                        .HasForeignKey("IndustryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Company");
+
+                    b.Navigation("Industry");
                 });
 
             modelBuilder.Entity("JobExchange.Models.SaveRecruitment", b =>
