@@ -14,9 +14,12 @@ using JobExchange.Areas.Identity.Data;
 
 using System.Text.Json;
 using JobExchange.DataModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobExchange.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "ROLE_COMPANY")]
     public class RecruitmentController : Controller
     {
         private readonly JobExchangeContext _context;
@@ -31,6 +34,7 @@ namespace JobExchange.Controllers
             _vnCharacterUtils = new VNCharacterUtils();
             _userManager = userManager;
         }
+
 
         // GET: Recruitment
         public ActionResult Index(int page, int size)
@@ -102,8 +106,7 @@ namespace JobExchange.Controllers
             recruitment.RecruitmentId = DateTime.Now.Ticks.ToString();
             recruitment.CreatedAt = DateTime.Now;
             recruitment.UpdatedAt = DateTime.Now;
-            recruitment.CompanyId = "1";
-            //recruitment.CompanyId = _userManager.GetUserId(User);
+            recruitment.CompanyId = _userManager.GetUserId(User);
             recruitment.Status = Const.STATUS_ENABLE;
             recruitment.Slug = _vnCharacterUtils.ToSlug(recruitment.RecruitmentTitle) + "-" + recruitment.RecruitmentId;
             if (ModelState.IsValid)

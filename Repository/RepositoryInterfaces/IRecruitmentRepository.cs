@@ -9,6 +9,6 @@ namespace JobExchange.Repository.RepositoryInterfaces
         public void Delete(Recruitment recruitment);
         public void Update(Recruitment recruitment);
         public List<Recruitment> GetAll();
-        public List<Recruitment> Search(string search);
+		public List<Recruitment> Search(string search);
     }
 }

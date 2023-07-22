@@ -31,12 +31,9 @@ namespace JobExchange.Controllers
             int pageSize = size > 0 ? size : 10;
             int pageNumber = page > 0 ? page : 1;
 
-            // Get the list of products from the database.
             var industries = _industryRepository.GetAll();
-            // Create a PagedList from the list of products.
             var pagedList = new PagedList<Industry>(industries, pageNumber, pageSize);
 
-            // Return the paged list of products to the view.
             return View(pagedList);
         }
 

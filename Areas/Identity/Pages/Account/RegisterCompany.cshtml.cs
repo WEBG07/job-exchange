@@ -19,6 +19,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using JobExchange.Repository.RepositoryInterfaces;
+using JobExchange.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobExchange.Areas.Identity.Pages.Account
 {
@@ -30,8 +34,10 @@ namespace JobExchange.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<JobExchangeUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly JobExchangeContext _context;
 
         public RegisterCompanyModel(
+            JobExchangeContext context,
             UserManager<JobExchangeUser> userManager,
             IUserStore<JobExchangeUser> userStore,
             SignInManager<JobExchangeUser> signInManager,
@@ -44,6 +50,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
@@ -74,12 +81,26 @@ namespace JobExchange.Areas.Identity.Pages.Account
 
             [Required (ErrorMessage = "Hãy cho chúng tôi biết tên của bạn.")]
             public string AccountName { get; set; }
+
+            [Required(ErrorMessage = "Vui lòng nhập tên công ty.")]
+            public string CompanyName { get; set; }
+
+            [Required(ErrorMessage = "Vui lòng nhập địa chỉ công ty.")]
+            public string Address { get; set; }
+
+            [Required(ErrorMessage = "Vui lòng nhập số điện thoại công ty.")]
+            [RegularExpression(@"^((01(\d){8})|(03(\d){8})|(07(\d){8})|(08(\d){8})|(09(\d){8}))$", ErrorMessage = "Không phải số điện thoại Việt Nam!")]
+            public string Phone { get; set; }
+
+            [Range( 1, 100000000, ErrorMessage = "Vui lòng nhập lĩnh vực hoạt động.")]
+            public int IndustryId { get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            ViewData["IndustryId"] = new SelectList(_context.Industries, "IndustryId", "IndustryName");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -105,6 +126,16 @@ namespace JobExchange.Areas.Identity.Pages.Account
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
                     await _userManager.AddToRoleAsync(user, "ROLE_COMPANY");
+
+                    Company company = new Company();
+                    company.CompanyId = userId;
+                    company.AccountId = userId;
+                    company.CompanyName = Input.CompanyName;
+                    company.Address = Input.Address;
+                    company.Phone = Input.Phone;
+                    company.IndustryId = Input.IndustryId;
+                    _context.Add(company);
+                    _context.SaveChanges();
 
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",

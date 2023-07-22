@@ -46,7 +46,6 @@ namespace JobExchange.Repository
             || recruitment.Slug.Contains(search)
             || recruitment.Industry.IndustryName.Contains(search));
             //.OrderByDescending(recruitment => recruitment.CreatedAt).Take(10);
-
             return results.ToList();
         }
 
