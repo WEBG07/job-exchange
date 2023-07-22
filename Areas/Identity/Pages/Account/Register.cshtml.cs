@@ -127,6 +127,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
                     Candidate candidate = new Candidate();
                     candidate.CandidateId = userId;
                     candidate.AccountId = userId;
+                    candidate.Birthday = DateTime.Now;
                     candidate.FullName = user.AccountName;
                     _candidateRepository.Create(candidate);
 

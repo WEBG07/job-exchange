@@ -57,6 +57,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -86,47 +87,27 @@ namespace JobExchange.Areas.Identity.Pages.Account
                 var user = await _userManager.FindByEmailAsync(Input.Email);
                 var roles = await _userManager.GetRolesAsync(user);
 
-              
+
                 if (result.Succeeded)
                 {
                     if (roles.Contains("ROLE_ADMIN"))
                     {
                         return Redirect("/Industry/Index");
                     }
-                    if (returnUrl == null)
+                    else if (roles.Contains("ROLE_CANDIDATE"))
                     {
-                        if (roles.Contains("ROLE_ADMIN"))
-                        {
-                            return Redirect("/Admin/Industry");
-                        }
-                        else if (roles.Contains("ROLE_CANDIDATE"))
-                        {
-                            return Redirect("/Home/Privacy");
-                        }
-                        else if (roles.Contains("ROLE_COMPANY"))
-                        {
-                            return Redirect("/Home/Privacy");
-                        }
+                        return Redirect("/Home/Index");
                     }
-                    //// Kiểm tra và chuyển hướng người dùng đến giao diện phù hợp dựa trên vai trò
-                    //if (roles.Contains("ROLE_ADMIN"))
-                    //{
-                    //    return Redirect("/Candidate/Index");
-                    //}
-                    //else if (roles.Contains("ROLE_CANDIDATE"))
-                    //{
-                    //    return Redirect("/Home/Privacy");
-                    //}
-                    //else if (roles.Contains("ROLE_COMPANY"))
-                    //{
-                    //    return Redirect("/Home/Privacy");
-                    //}
+                    else if (roles.Contains("ROLE_COMPANY"))
+                    {
+                        return Redirect("/Recruitment/Index");
+                    }
                     else
                     {
                         _logger.LogInformation("Người dùng đã đăng nhập!");
                         return LocalRedirect(returnUrl);
-                    }    
-                    
+                    }
+
                 }
                 if (result.RequiresTwoFactor)
                 {

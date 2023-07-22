@@ -147,7 +147,7 @@
                                         <div class="job-item-default bg-highlight  job-ta" data-job-id="1063461" data-job-position="1" data-box="BoxRecruitmentInCompany">
                                             <div class="avatar">
                                                 <a target="_blank"
-                                                    href="https://www.topcv.vn/viec-lam/chuyen-vien-ho-tro-khach-hang-doanh-nghiep-ha-noi-ho-chi-minh/1063461.html?ta_source=JobListInNormalCompany">
+                                                    href="#">
                                                     <img src="~/@item.Company.Avatar"
                                                         class="w-100" alt="@item.Company.CompanyName"
                                                         title="Chuyên Viên Hỗ Trợ Khách Hàng Doanh Nghiệp (Hà Nội, Hồ Chí Minh)">
@@ -158,10 +158,9 @@
                                                     <div class="title-block">
                                                         <div>
                                                             <h3 class="title">
-                                                                <div class="box-label-top">
-                                                                </div>
+                                                                <div class="box-label-top"></div>
                                                                 <a target="_blank"
-                                                                    href="https://www.topcv.vn/viec-lam/chuyen-vien-ho-tro-khach-hang-doanh-nghiep-ha-noi-ho-chi-minh/1063461.html?ta_source=JobListInNormalCompany">
+                                                                    href="#">
                                                                     <span data-toggle="tooltip" data-container="body" data-placement="top" title=""
                                                                         data-original-title="Chuyên Viên Hỗ Trợ Khách Hàng Doanh Nghiệp (Hà Nội, Hồ Chí Minh)"
                                                                         aria-describedby="tooltip262346">@item.JobDescription
@@ -169,7 +168,7 @@
                                                                 </a>
                                                             </h3>
                                                             <a class="company"
-                                                                href="https://www.topcv.vn/cong-ty/ngan-hang-thuong-mai-co-phan-ky-thuong-viet-nam/16716.html"
+                                                                href="#"
                                                                 data-toggle="tooltip" title="" data-placement="top" target="_blank"
                                                                 data-original-title="NGÂN HÀNG THƯƠNG MẠI CỔ PHẦN KỸ THƯƠNG VIỆT NAM">@item.Company.CompanyName</a>
                                                         </div>
@@ -182,7 +181,7 @@
                                                 <div class="info">
                                                     <div class="label-content">
                                                         <label class="address" data-toggle="tooltip" data-html="true" title="" data-placement="top"
-                                                            data-original-title="<p style='text-align: left'>Hà Nội<br/>Hồ Chí Minh</p>">@item.WorkLocation</label>
+                                                               data-original-title="<p style='text-align: left'>Hà Nội<br/>Hồ Chí Minh</p>">- @item.City: @item.AddressDetail, @item.Ward, @item.District, @item.City</label>
                                                         @if (GetRemainingTime(item.ExpirationDate) == "0") 
                                                         {
                                                             <label class="label label-warning">Tin tuyển dụng hết hạn</label>
@@ -201,7 +200,7 @@
                                                     </div>
                                                     <div class="icon">
                                                         <button
-                                                            data-redirect-to="https://www.topcv.vn/viec-lam/chuyen-vien-ho-tro-khach-hang-doanh-nghiep-ha-noi-ho-chi-minh/1063461.html?ta_source=JobListInNormalCompany"
+                                                            data-redirect-to="#"
                                                             class="btn btn-apply-now">
                                                             <span>Ứng tuyển</span>
                                                         </button>
@@ -245,14 +244,14 @@
                         <div class="box-body">
                             <p>Chia sẻ qua mạng xã hội</p>
                             <div class="box-share">
-                                <a href="http://www.facebook.com/sharer/sharer.php?u=https://www.topcv.vn/cong-ty/to-chuc-giao-duc-fpt/68.html"
+                                <a href="#"
                                     target="_blank"><img
                                         src="https://www.topcv.vn/v4/image/normal-company/share/facebook.png"
                                         alt=""></a>
-                                <a href="https://twitter.com/intent/tweet?url=https://www.topcv.vn/cong-ty/to-chuc-giao-duc-fpt/68.html"
+                                <a href="#"
                                     target="_blank"><img
                                         src="https://www.topcv.vn/v4/image/normal-company/share/twitter.png" alt=""></a>
-                                <a href="https://www.linkedin.com/cws/share?url=https://www.topcv.vn/cong-ty/to-chuc-giao-duc-fpt/68.html"
+                                <a href="#"
                                     target="_blank"><img
                                         src="https://www.topcv.vn/v4/image/normal-company/share/linked.png" alt=""></a>
                             </div>
@@ -284,7 +283,7 @@
                                                     <strong><a class="company-name" asp-controller="Company" asp-action="Detail"
                                                             asp-route-id="@company.CompanyId"
                                                             target="_blank">@company.CompanyName</a></strong>
-                                                    <span class="countJob"><i class="fa-solid fa-circle circle"></i> Đang tuyển @company.Recruitments.Count vị trí</span>
+                                                    <span class="countJob">@*<i class="fa-solid fa-circle circle"></i> Đang tuyển @company.Recruitments.Count vị trí*@</span>
                                                 </div>
                                                 <div class="company-address d-flex">
                                                     <i class="fa-solid fa-circle-location-arrow"></i> <span><span style="color: #999999">Trụ

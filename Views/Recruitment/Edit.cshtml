@@ -35,8 +35,9 @@
             <div class="form-group mb-3">
                 <label class="control-label mb-2">Lĩnh vực cần tuyển <span class="text-danger">*</span></label>
                 <select asp-for="IndustryId" class="form-control" asp-items="ViewBag.IndustryId" id="mySelect">
-                    <option value="0">Chọn ngành nghề</option>
+                    <option value="0">-- Chọn ngành nghề --</option>
                 </select>
+                <span class="text-danger" id="error"></span>
             </div>
             <div class="form-group mb-3">
                 <label class="control-label mb-2">Mô tả công việc <span class="text-danger">*</span></label>
@@ -220,6 +221,29 @@
 
 @section Scripts {
     <script>
+        document.getElementById("mySelect").onchange = function () {
+            var selectValue = document.getElementById("mySelect").value;
+
+            if (selectValue === "0") {
+                document.getElementById("error").innerHTML = "Vui lòng chọn lĩnh vực !"
+            }
+            else {
+                document.getElementById("error").innerHTML = ""
+            }
+        };
+
+        document.getElementById("myForm").onsubmit = function (event) {
+            var selectValue = document.getElementById("mySelect").value;
+
+            if (selectValue === "0") {
+                event.preventDefault();
+                document.getElementById("error").innerHTML = "Vui lòng chọn lĩnh vực !"
+            }
+            else {
+                document.getElementById("error").innerHTML = ""
+            }
+        };
+
         // Bind the event handler to the "cities" select
         document.getElementById("cities").addEventListener("change", function () {
             var selectedCityCode = this.value;

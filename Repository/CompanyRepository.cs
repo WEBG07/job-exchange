@@ -54,9 +54,10 @@ namespace JobExchange.Repository
             return _jobExchangeContext.Companies.Include(c => c.Recruitments).Where(c => c.CompanyName.Contains(name)).ToList();
         }
 
-        public void UpdateCompany(Company company)
+        public void Update(Company company)
         {
-            throw new NotImplementedException();
+            _jobExchangeContext.Companies.Update(company);
+            _jobExchangeContext.SaveChanges();
         }
     }
 }

@@ -121,12 +121,6 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (SignInManager.IsSignedIn(User))
                 {
-@*                    <li class="nav-item">
-                        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                            <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                        </form>
-                    </li>*@
-
                     <li class="navbar-right__item group">
                         <div class="title">
                             <a href="javascript:void(0)">
@@ -140,30 +134,45 @@
                                     <img src="https://www.topcv.vn/images/avatar-default.jpg" onerror="this.src='https://www.topcv.vn/images/avatar-default.jpg'" alt="Avatar">
                                     <div class="caption">
                                         <p class="name">@Account?.AccountName</p>
-                                        <p class="description">Mã ứng viên: <span class="code">#6702689</span></p>
                                         <p class="description">@UserManager.GetUserName(User)</p>
+                                        <p class="description">Chế độ tài khoản: <span class="code" style="color: #00b14f">Đã xác thực</span></p>
                                     </div>
                                 </li>
-                                <li class="navbar-menu__item ">
-                                    <a asp-controller="Industry" asp-action="Index" class="text-sm">
-                                        <i class="icon fa-light fa-screwdriver-wrench"></i>
-                                        Chế độ quản trị viên
-                                    </a>
-                                </li>
-                                <li class="navbar-menu__item ">
-                                    <a asp-controller="candidate" asp-action="index" class="text-sm">
-                                        <i class="icon fa-regular fa-pen-to-square"></i>
-                                        Cài đặt thông tin cá nhân
-                                    </a>
-                                </li>
-                                <li class="navbar-menu__item ">
-                                    <a href="#" class="text-sm">
-                                        <i class="icon fa-regular fa-eye"></i>
-                                        Nhà tuyển dụng xem hồ sơ
-                                    </a>
-                                </li>
+                                @if (@User.IsInRole("ROLE_ADMIN"))
+                                {
+                                    <li class="navbar-menu__item ">
+                                        <a asp-controller="Industry" asp-action="Index" class="text-sm">
+                                            <i class="icon fa-light fa-screwdriver-wrench"></i>
+                                            Chế độ quản trị viên
+                                        </a>
+                                    </li>
+                                }
+                                @if (@User.IsInRole("ROLE_COMPANY"))
+                                {
+                                    <li class="navbar-menu__item ">
+                                        <a asp-controller="Recruitment" asp-action="Index" class="text-sm">
+                                            <i class="icon fa-light fa-screwdriver-wrench"></i>
+                                            Chế độ nhà tuyển dụng
+                                        </a>
+                                    </li>
+                                }
+                                @if (@User.IsInRole("ROLE_CANDIDATE"))
+                                {
+                                    <li class="navbar-menu__item ">
+                                        <a asp-controller="candidate" asp-action="index" class="text-sm">
+                                            <i class="icon fa-regular fa-pen-to-square"></i>
+                                            Cài đặt thông tin cá nhân
+                                        </a>
+                                    </li>
+                                    <li class="navbar-menu__item ">
+                                        <a href="#" class="text-sm">
+                                            <i class="icon fa-regular fa-eye"></i>
+                                            Nhà tuyển dụng xem hồ sơ
+                                        </a>
+                                    </li>
+                                }
                                 <li class="navbar-menu__item  tag-border">
-                                    <a href="#" class="text-sm">
+                                    <a href="/ChangePassword" class="text-sm">
                                         <i class="icon fa-regular fa-lock"></i>
                                         Đổi mật khẩu
                                     </a>
@@ -192,11 +201,6 @@
                             Đăng ký
                         </a>
                     </li>
-                    @*<li class="navbar-right__item">
-                        <a type="button" class="btn btn-dark" href="#" target="_blank">
-                            Đăng tuyển & tìm hồ sơ
-                        </a>
-                    </li>*@
                     <li class="navbar-right__item">
                         <a class="btn btn-dark" asp-area="Identity" asp-page="/Account/RegisterCompany">
                             Đăng tuyển & tìm hồ sơ

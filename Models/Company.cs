@@ -10,7 +10,7 @@ namespace JobExchange.Models
     public partial class Company
     {
         [Key]
-        public string CompanyId { get; set; } = null!;
+        public string? CompanyId { get; set; }
         public string? CompanyName { get; set; }
         public string? Address { get; set; }
         public string? Introduce { get; set; }
@@ -19,15 +19,15 @@ namespace JobExchange.Models
         public string? Avatar { get; set; }
         public string? CoverImage { get; set; }
         public int IndustryId { get; set; }
-        public virtual ICollection<Recruitment> Recruitments { get; set; }
+        public virtual ICollection<Recruitment>? Recruitments { get; set; }
 
         [ForeignKey("IndustryId")]
         [ValidateNever]
-        public Industry Industry { get; set; } = null!;
-        public string AccountId { get; set; } = null!;
+        public Industry? Industry { get; set; }
+        public string? AccountId { get; set; }
 
         [ForeignKey("AccountId")]
         [ValidateNever]
-        public JobExchangeUser JobExchangeUser { get; set; } = null!;
+        public JobExchangeUser? JobExchangeUser { get; set; }
     }
 }
