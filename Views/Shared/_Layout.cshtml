@@ -67,26 +67,26 @@
             </div>
             <ul class="nav navbar-nav navbar-left">
                 <li class="navbar-left__item group active">
-                    <a href="#">
+                    <a>
                         Việc làm
                     </a>
                     <div class="group-hover:menu navbar__item__dropdown-menu">
                         <ul class="nav navbar-menu">
                             <li class="navbar-menu__item  active  tag-border">
-                                <a href="#" class="text-sm">
+                                <a asp-controller="Job" asp-action="Index" class="text-sm">
                                     <i class="icon fa-regular fa-magnifying-glass"></i>
                                     Tìm việc làm
                                 </a>
                             </li>
                             <li class="navbar-menu__item ">
-                                <a href="#" class="text-sm">
+                                <a asp-controller="Job" asp-action="CandidateHistory" class="text-sm">
                                     <i class="icon fa-regular fa-check-to-slot"></i>
                                     Việc làm đã ứng tuyển
                                     
                                 </a>
                             </li>
                             <li class="navbar-menu__item ">
-                                <a href="#" class="text-sm">
+                                <a asp-controller="Job" asp-action="SavedJobs" class="text-sm">
                                     <i class="fa-regular fa-laptop-code icon"></i>
                                     Việc làm đã lưu
                                 </a>
@@ -260,7 +260,6 @@
 
     </footer>
    
-    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/js/account.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
@@ -278,7 +277,7 @@
     }
    
     @await RenderSectionAsync("Scripts", required: false)
-    <script src="~/js/candidate.js" asp-append-version="true"></script>
+    
 
 </body>
 </html>
