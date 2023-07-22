@@ -17,6 +17,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>@ViewData["Title"] - JobExchange</title>
 
+	<link rel="stylesheet" href="~/css/company.min.b8f0b44f77db74bf.css">
+	<link rel="stylesheet" href="~/css/company.detail.min.788394eb39bb5e15.css">
 
 	<link href="~/css/app.css" rel="stylesheet">
 	<link href="~/css/all.min.css" rel="stylesheet">
@@ -74,8 +76,8 @@
                             </li>
 
 							<li class="sidebar-item">
-								<a class="sidebar-link" asp-controller="Recruitment" asp-action="Index">
-									<i class="align-middle" data-feather="user"></i> <span class="align-middle">Thông tin cá nhân</span>
+								<a class="sidebar-link" asp-controller="Company" asp-action="Profile">
+									<i class="align-middle" data-feather="user"></i> <span class="align-middle">Trang cá nhân</span>
 								</a>
 							</li>
 
@@ -113,7 +115,7 @@
 								<span class="text-dark">@Account?.AccountName</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Thông tin cá nhân</a>
+								<a class="dropdown-item" asp-controller="Company" asp-action="Profile"><i class="align-middle me-1" data-feather="user"></i> Trang cá nhân</a>
 								<div class="dropdown-divider"></div>
 
 								<a class="dropdown-item" href="javascript:void(0)" id="logout" onclick="document.getElementById('logoutForm').submit()" style="text-align: center;">Đăng xuất</a>

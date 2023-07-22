@@ -134,6 +134,9 @@ namespace JobExchange.Areas.Identity.Pages.Account
                     company.Address = Input.Address;
                     company.Phone = Input.Phone;
                     company.IndustryId = Input.IndustryId;
+                    company.Avatar = "avatar-default.jpg";
+                    company.CoverImage = "profile_default_cover.jpg";
+                    ViewData["IndustryId"] = new SelectList(_context.Industries, "IndustryId", "IndustryName");
                     _context.Add(company);
                     _context.SaveChanges();
 

@@ -86,15 +86,11 @@ namespace JobExchange.Controllers
                 }
                 else
                 {
-                    // Handle deserialization failure
-                    // Redirect to an error page or return an error message
                     return View("Error");
                 }
             }
             else
             {
-                // Handle missing data.json file
-                // Redirect to an error page or return an error message
                 return View("Error");
             }
         }

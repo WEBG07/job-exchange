@@ -10,7 +10,7 @@ namespace JobExchange.Repository.RepositoryInterfaces
         IEnumerable<Company> SearchCompanies(string name);
         Company GetCompanyById(string companyId);
         void AddCompany(Company company);
-        void UpdateCompany(Company company);
+        void Update(Company company);
         void DeleteCompany(string companyId);
     }
 }
