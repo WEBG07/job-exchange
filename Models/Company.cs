@@ -19,6 +19,7 @@ namespace JobExchange.Models
         public string? Avatar { get; set; }
         public string? CoverImage { get; set; }
         public int IndustryId { get; set; }
+        public virtual ICollection<Recruitment> Recruitments { get; set; }
 
         [ForeignKey("IndustryId")]
         [ValidateNever]

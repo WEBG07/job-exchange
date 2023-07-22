@@ -1,0 +1,82 @@
+@model List<Recruitment>
+@if (Model.Any())
+{
+    @foreach (var item in Model)
+    {
+        <div class="job-item-default bg-highlight  job-ta" data-job-id="1063461" data-job-position="1"
+            data-box="BoxRecruitmentInCompany">
+            <div class="avatar">
+                @if (item.Company != null)
+                {
+                    <a target="_blank"
+                        href="https://www.topcv.vn/viec-lam/chuyen-vien-ho-tro-khach-hang-doanh-nghiep-ha-noi-ho-chi-minh/1063461.html?ta_source=JobListInNormalCompany">
+                        <img src="~/@item.Company.Avatar" class="w-100" alt="@item.Company.CompanyName"
+                            title="Chuyên Viên Hỗ Trợ Khách Hàng Doanh Nghiệp (Hà Nội, Hồ Chí Minh)">
+                    </a>
+                }
+            </div>
+            <div class="body">
+                <div class="body-content">
+                    <div class="title-block">
+                        <div>
+                            <h3 class="title">
+                                <div class="box-label-top">
+                                </div>
+                                <a target="_blank"
+                                    href="https://www.topcv.vn/viec-lam/chuyen-vien-ho-tro-khach-hang-doanh-nghiep-ha-noi-ho-chi-minh/1063461.html?ta_source=JobListInNormalCompany">
+                                    <span data-toggle="tooltip" data-container="body" data-placement="top" title=""
+                                        data-original-title="Chuyên Viên Hỗ Trợ Khách Hàng Doanh Nghiệp (Hà Nội, Hồ Chí Minh)"
+                                        aria-describedby="tooltip262346">@item.JobDescription
+                                    </span>
+                                </a>
+                            </h3>
+                            @if (item.Company != null)
+                            {
+                                <a class="company"
+                                    href="https://www.topcv.vn/cong-ty/ngan-hang-thuong-mai-co-phan-ky-thuong-viet-nam/16716.html"
+                                    data-toggle="tooltip" title="" data-placement="top" target="_blank"
+                                    data-original-title="NGÂN HÀNG THƯƠNG MẠI CỔ PHẦN KỸ THƯƠNG VIỆT NAM">@item.Company.CompanyName
+                                </a>
+                            }
+                        </div>
+                        <label class="title-salary">
+                            <i class="fa-solid fa-circle-dollar"></i>
+                            @item.Salary $
+                        </label>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="label-content">
+                        <label class="address" data-toggle="tooltip" data-html="true" title="" data-placement="top"
+                            data-original-title="<p style='text-align: left'>Hà Nội<br/>Hồ Chí Minh</p>">@item.WorkLocation</label>
+                        <label class="time">
+                            Còn
+                            <strong>?</strong>
+                            ngày để ứng tuyển
+                        </label>
+
+                        <label class="address" data-container="body">
+                            Cập nhật ? giờ trước
+
+                        </label>
+                    </div>
+                    <div class="icon">
+                        <button
+                            data-redirect-to="https://www.topcv.vn/viec-lam/chuyen-vien-ho-tro-khach-hang-doanh-nghiep-ha-noi-ho-chi-minh/1063461.html?ta_source=JobListInNormalCompany"
+                            class="btn btn-apply-now">
+                            <span>Ứng tuyển</span>
+                        </button>
+                        <div class="box-save-job">
+                            <a data-id="1063461"
+                                href="javascript:showLoginPopup('https://www.topcv.vn/get-render-list-job-company/16716?city_id=0&amp;keyword=&amp;limit=6&amp;page=1&amp;slug=ngan-hang-thuong-mai-co-phan-ky-thuong-viet-nam', 'Đăng nhập hoặc Đăng ký để lưu tin tuyển dụng')"
+                                class="save box-save-job-hover" data-toggle="tooltip" title=""
+                                data-original-title="Bạn phải đăng nhập để lưu tin"><i class="fa-regular fa-heart"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+} else {
+    <div class="alert alert-danger">Không có kết quả phù hợp</div>
+}

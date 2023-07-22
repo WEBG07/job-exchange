@@ -11,10 +11,9 @@ namespace JobExchange.Models
     {
         [Key]
         public string CandidateId { get; set; } = null!;
+        [Required]
         public string? FullName { get; set; }
-        [Required(ErrorMessage = "Vui lòng nhập ngày sinh")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Required]
         public DateTime? Birthday { get; set; }
         [Required]
         public string? Gender { get; set; }
@@ -26,5 +25,9 @@ namespace JobExchange.Models
         [ForeignKey("AccountId")]
         [ValidateNever]
         public JobExchangeUser JobExchangeUser { get; set; } = null!;
+        public override string ToString()
+        {
+            return $"FullName: {FullName}, Birthday: {Birthday}, Phone: {Phone}, Gender: {Gender}, AccountId: {AccountId}, CandidateId: {CandidateId}"; ;
+        }
     }
 }
