@@ -12,5 +12,12 @@ namespace JobExchange.Controllers
         {
             return View();
         }
+        public IActionResult CandidateHistory() { 
+            return View();
+        }
+        public IActionResult SavedJobs()
+        {
+            return View();
+        }
     }
 }
