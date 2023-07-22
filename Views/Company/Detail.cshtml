@@ -146,8 +146,7 @@
                                     {
                                         <div class="job-item-default bg-highlight  job-ta" data-job-id="1063461" data-job-position="1" data-box="BoxRecruitmentInCompany">
                                             <div class="avatar">
-                                                <a target="_blank"
-                                                    href="#">
+                                                <a target="_blank" asp-controller="Job" asp-action="DefaultJob" asp-route-id="@item.RecruitmentId">
                                                     <img src="~/@item.Company.Avatar"
                                                         class="w-100" alt="@item.Company.CompanyName"
                                                         title="Chuyên Viên Hỗ Trợ Khách Hàng Doanh Nghiệp (Hà Nội, Hồ Chí Minh)">
@@ -159,16 +158,14 @@
                                                         <div>
                                                             <h3 class="title">
                                                                 <div class="box-label-top"></div>
-                                                                <a target="_blank"
-                                                                    href="#">
+                                                                <a target="_blank" asp-controller="Job" asp-action="DefaultJob" asp-route-id="@item.RecruitmentId">
                                                                     <span data-toggle="tooltip" data-container="body" data-placement="top" title=""
                                                                         data-original-title="Chuyên Viên Hỗ Trợ Khách Hàng Doanh Nghiệp (Hà Nội, Hồ Chí Minh)"
-                                                                        aria-describedby="tooltip262346">@item.JobDescription
+                                                                        aria-describedby="tooltip262346">@item.RecruitmentTitle
                                                                     </span>
                                                                 </a>
                                                             </h3>
-                                                            <a class="company"
-                                                                href="#"
+                                                            <a class="company" asp-controller="Company" asp-action="Detail" asp-route-id="@item.Company.CompanyId"
                                                                 data-toggle="tooltip" title="" data-placement="top" target="_blank"
                                                                 data-original-title="NGÂN HÀNG THƯƠNG MẠI CỔ PHẦN KỸ THƯƠNG VIỆT NAM">@item.Company.CompanyName</a>
                                                         </div>
