@@ -8,5 +8,9 @@ namespace JobExchange.Controllers
         {
             return View();
         }
+        public IActionResult DefaultJob()
+        {
+            return View();
+        }
     }
 }
