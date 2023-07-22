@@ -36,7 +36,7 @@ namespace JobExchange.Repository
 
         public Recruitment? GetById(string id)
         {
-            return _jobExchangeContext.Recruitments.FirstOrDefault(u => u.RecruitmentId == id);
+            return _jobExchangeContext.Recruitments.Include(c => c.Company).FirstOrDefault(u => u.RecruitmentId == id);
         }
 
         public List<Recruitment> Search(string search)
@@ -70,12 +70,16 @@ namespace JobExchange.Repository
         
         public IEnumerable<Recruitment> GetRecruitmentsByCompanyId(string companyId)
         {
-            return _jobExchangeContext.Recruitments.Where(r => r.CompanyId == companyId).ToList();
+            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId).ToList();
+        }
+        public IEnumerable<Recruitment> GetRecruitmentsByIndustryId(int industryId)
+        {
+            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.IndustryId == industryId).ToList();
         }
 
         public IEnumerable<Recruitment> GetRecruitmentsByName(string companyId, string name)
         {
-            return _jobExchangeContext.Recruitments.Include(r => r.Company).Where(r => r.CompanyId == companyId &&  r.JobDescription.Contains(name)).ToList();
+            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId &&  r.JobDescription.Contains(name)).ToList();
         }
     }
 }
