@@ -123,11 +123,11 @@
                 @if (SignInManager.IsSignedIn(User))
                 {
                     var candidate = context.Candidates.FirstOrDefault(c => c.CandidateId == UserManager.GetUserId(User));
-
+                    var avatar = (!string.IsNullOrEmpty(candidate?.Avatar)) ? candidate?.Avatar : "avatar-default.jpg";
                     <li class="navbar-right__item group">
                         <div class="title">
                             <a href="javascript:void(0)">
-                                <img src="~/images/avatar/@candidate?.Avatar" alt="Avatar" id="avatar">
+                                <img src="~/images/avatar/@avatar" alt="Avatar" id="avatar">
                                 @*<span class="fullname">Hello @Account?.AccountName !</span>*@
                                 <span class="fullname">Hello @candidate?.FullName !</span>
                             </a>
@@ -135,7 +135,7 @@
                         <div class="group-hover:menu navbar__item__dropdown-menu">
                             <ul class="nav navbar-menu">
                                 <li class="dropdown-menu__info  tag-border">
-                                    <img src="~/images/avatar/@candidate?.Avatar" alt="Avatar">
+                                    <img src="~/images/avatar/@avatar" alt="Avatar">
                                     <div class="caption">
                                         @*<p class="name">@Account?.AccountName</p>*@
                                         <p class="name" id="fullname">@candidate?.FullName</p>

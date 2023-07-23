@@ -23,7 +23,7 @@
                                 <div class="col-md-3 col-xs-6">
                                     <div style="padding: 5px; position: relative;">
                                         @{
-                                            var avatar = (Model.Avatar != null) ? Model.Avatar : "avatar-default.jpg";
+                                            var avatar = (!string.IsNullOrEmpty(Model.Avatar)) ? Model.Avatar : "avatar-default.jpg";
                                         }
                                         <div class="avatar"
                                              style=" top: -155px; left: 0px; width: 100%; background-size: cover; padding-bottom: 100%; background-image: url(&quot;./images/avatar/@avatar&quot;);">
