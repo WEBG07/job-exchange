@@ -84,7 +84,7 @@ namespace JobExchange.Repository
 
         public IEnumerable<Recruitment> GetRecruitmentsByName(string companyId, string name)
         {
-            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId &&  r.JobDescription.Contains(name)).ToList();
+            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId &&  r.RecruitmentTitle.Contains(name)).ToList();
         }
     }
 }

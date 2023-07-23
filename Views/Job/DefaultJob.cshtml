@@ -1,4 +1,8 @@
 ﻿@using JobExchange.Helper;
+@using JobExchange.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+@inject JobExchangeContext context
+@inject UserManager<JobExchangeUser> UserManager
 @{
     ViewData["Title"] = "DefaultJob";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,7 +19,7 @@
                     Tìm việc làm
                     nhân viên seo
                 </a> <i class="fa-solid fa-angle-right"></i>
-                <span class="text-dark-blue">@Model.Recruitment.RecruitmentTitle (Thu Nhập Từ @Model.Recruitment.Salary
+                <span class="text-dark-blue">@Model.Recruitment.RecruitmentTitle (Thu Nhập Từ @FormatHelper.FormatCurrency(Model.Recruitment.Salary)
                     /Tháng)</span>
             </div>
             <div class="box-white box-detail-job">
@@ -45,12 +49,16 @@
                         <div class="box-apply-current">
                             <div class="text-center">
                                 <p>
-                                    <a href="#"
-                                        class="btn btn-topcv-primary btn-primary-hover btn-apply open-apply-modal"
-                                        data-toggle="modal">
-                                        <i class="fa-regular fa-paper-plane"></i> Ứng tuyển
-                                        ngay
-                                    </a>
+                                    @if (Model.CheckApply == true)
+                                    {
+                                        <button id="btn-apply-job" class="btn btn-topcv-primary btn-primary-hover btn-apply" disabled="">
+                                            <i class="fa-regular fa-check"></i> Đã ứng tuyển
+                                        </button>
+                                    } else {
+                                        <button id="btn-apply-job" class="btn btn-topcv-primary btn-primary-hover btn-apply open-apply-modal">
+                                            <i class="fa-regular fa-paper-plane"></i> Ứng tuyển ngay
+                                        </button>
+                                    }
                                 </p>
                                 <div id="box-save-job-1069099" class="box-save-job  job-notsave ">
                                     <button class="btn btn-save save btn-topcv-text-normal btn-outline-hover"
@@ -166,7 +174,7 @@
                             <p class="box-detail-title">Địa điểm làm việc</p>
                             <div>
                                 <div style="margin-bottom: 10px">
-                                    @Model.Recruitment.City, @Model.Recruitment.District, @Model.Recruitment.Ward
+                                    @Model.Recruitment.City, @Model.Recruitment.District, @Model.Recruitment.Ward, @Model.Recruitment.AddressDetail
                                 </div>
                             </div>
                         </div>
@@ -197,7 +205,7 @@
                                 <div class="">
                                     <div class="">
                                         <div class="d-flex box-btn">
-                                            <a href="#"
+                                            <a href=""
                                                 class="btn btn-topcv-primary btn-primary-hover btn-apply open-apply-modal"
                                                 data-toggle="modal">Ứng tuyển ngay</a>
                                             <div class="box-save-job-1069099 box-save-job  job-notsave ">
@@ -519,3 +527,33 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector('#btn-apply-job').addEventListener('click', function () {
+                var recruitmentId = '@Model.Recruitment.RecruitmentId';
+                var candidateId ='@UserManager.GetUserId(User)';
+                console.log(candidateId);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/Job/ApplyJob', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response == "Success")
+                        {
+                            var applyButton = document.getElementById('btn-apply-job');
+                            applyButton.innerHTML = '<i class="fa-regular fa-check"></i> Đã ứng tuyển';
+                            applyButton.classList.remove('open-apply-modal');
+                            applyButton.disabled = true;
+                        }
+                        toastr.success("Apply job success !");
+                    }
+                };
+                var params = 'candidateId=' + encodeURIComponent(candidateId) + '&recruitmentId=' + encodeURIComponent(recruitmentId);
+                xhr.send(params);
+            })
+        });
+    </script>
+}
