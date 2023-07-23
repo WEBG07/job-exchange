@@ -1,5 +1,6 @@
 ﻿using JobExchange.Models;
 using JobExchange.Repository.RepositoryInterfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -67,6 +68,23 @@ namespace JobExchange.Repository
             _jobExchangeContext.SaveChanges();
 
             return education;
+        }
+        public Education UpdateEdudation(Education education)
+        {
+            _jobExchangeContext.Educations.Update(education);
+            _jobExchangeContext.SaveChanges();
+
+            return education;
+        }
+        public Education DeleteEdudation(int educationId)
+        {
+      
+            Education education = _jobExchangeContext.Educations.SingleOrDefault(e => e.EducationId.Equals(educationId));
+            _jobExchangeContext.Educations.Remove(education);
+            _jobExchangeContext.SaveChanges();
+            return education;
+
+            
         }
     }
 }

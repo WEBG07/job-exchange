@@ -27,5 +27,18 @@ namespace JobExchange.Models
         [ForeignKey("CandidateId")]
         [ValidateNever]
         public Candidate Candidate { get; set; } = null!;
+
+        public override string ToString()
+        {
+            return $"EducationId: {EducationId}, " +
+                   $"SchoolName: {SchoolName}, " +
+                   $"Major: {Major}, " +
+                   $"StartMonth: {StartMonth}, " +
+                   $"StartYear: {StartYear}, " +
+                   $"EndMonth: {EndMonth}, " +
+                   $"EndYear: {EndYear}, " +
+                   $"Description: {Description}, " +
+                   $"CandidateId: {CandidateId}";
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+
     // Profile
     var birthday = new Date($("#text-birthday").text());
     var formattedBirthday = birthday.toLocaleDateString("en-GB");
@@ -91,12 +92,14 @@
     });
 
     //Education
+
+    //Get All
     GetEducation();
     function GetEducation() {
         Loading("education", false);
 
         let candidateId = $("#text-candidateId").val();
-        console.log(candidateId);
+
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "./candidate/GetAllEducation?candidateId=" + candidateId, true);
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -112,8 +115,7 @@
 
                     let html = "";
                     response.forEach(function (item) {
-                        console.log(item);
-                        let date = (item.endMonth == 0 && item.endYear) ? "Hiện tại" : item.endMonth + "/" + item.endYear;
+                        let date = (item.endMonth == 0 || item.endYear == 0) ? "Hiện tại" : item.endMonth + "/" + item.endYear;
                         html += `
                         <li class="list-item">
                             <div class="item">
@@ -150,34 +152,57 @@
 
         xhr.send();
     }
+    $("#iam_studying_here").on("change", function () {
+        checkIamStudyingHere();
+    });
+    $("#add-education").on('click', function () {
+        clearFormEducation();
+    });
+    function checkIamStudyingHere() {
+        const isStudyingHere = $("#iam_studying_here").is(":checked");
+        (isStudyingHere) ? $('#form-update-education #EndDate').hide() : $('#form-update-education #EndDate').show();
+    }
     $('#form-update-education').on('submit', function (e) {
+
         e.preventDefault();
 
         if (checkValidEducation()) {
+            const $formUpdateEducation = $("#form-update-education");
 
-            var data = {
-                SchoolName: $("#form-update-education #SchoolName").val(),
-                Major: $("#form-update-education #Major").val(),
-                StartMonth: parseInt($("#form-update-education #StartMonth").val()),
-                StartYear: parseInt($("#form-update-education #StartYear").val()),
-                EndMonth: parseInt($("#form-update-education #EndMonth").val()),
-                EndYear: parseInt($("#form-update-education #EndYear").val()),
-                Description: $("#form-update-education #Description").val(),
-                CandidateId: $("#form-update-education #CandidateId").val(),
+            const isStudyingHere = $("#iam_studying_here").is(":checked");
 
+            const endMonth = isStudyingHere ? 0 : parseInt($formUpdateEducation.find("#EndMonth").val());
+            const endYear = isStudyingHere ? 0 : parseInt($formUpdateEducation.find("#EndYear").val());
+            const educationId = $formUpdateEducation.find("#EducationId").val();
+
+            let data = {
+                SchoolName: $formUpdateEducation.find("#SchoolName").val(),
+                Major: $formUpdateEducation.find("#Major").val(),
+                StartMonth: parseInt($formUpdateEducation.find("#StartMonth").val()),
+                StartYear: parseInt($formUpdateEducation.find("#StartYear").val()),
+                EndMonth: endMonth,
+                EndYear: endYear,
+                Description: $formUpdateEducation.find("#Description").val(),
+                CandidateId: $formUpdateEducation.find("#CandidateId").val(),
             };
-            console.log(data);
+            
+            
 
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "./candidate/AddEdudation", true);
+            if (educationId == "") {
+                xhr.open("POST", "./candidate/AddEdudation", true);
+            } else {
+                data.EducationId = educationId;
+                xhr.open("POST", "./candidate/UpdateEdudation", true);
+            }
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
                     // Xử lý phản hồi từ server sau khi gửi dữ liệu thành công
-                    console.log(response);
                     GetEducation();
-                    showMessage("Thêm học vấn thành công");
+                    (educationId == "") ? showMessage("Thêm học vấn thành công") : showMessage("Cập nhật học vấn thành công");
+                    
                     $('#modal-update-education').modal('hide');
                     clearFormEducation();
                 } else {
@@ -194,17 +219,55 @@
         return false;
     });
 
+    //update education
     $('#education').on('click', 'button[name=updateEducation]', function () {
+        clearFormEducation();
         $('#modal-update-education').modal('show');
+        $("#form-update-education #EducationId").val($(this).data("education-id"));
         $("#form-update-education #SchoolName").val($(this).data("school-name"));
         $("#form-update-education #Major").val($(this).data("major"));
         $("#form-update-education #StartMonth").val($(this).data("start-month"));
         $("#form-update-education #StartYear").val($(this).data("start-year"));
-        $("#form-update-education #EndMonth").val($(this).data("end-month"));
-        $("#form-update-education #EndYear").val($(this).data("end-year"));
+        if ($(this).data("end-month") != 0) {
+            $("#form-update-education #EndMonth").val($(this).data("end-month"));
+            $("#form-update-education #EndYear").val($(this).data("end-year"));
+        } else {
+            $("#form-update-education #iam_studying_here").prop("checked", true);
+            checkIamStudyingHere();
+        }
         $("#form-update-education #Description").val($(this).data("description"));
 
         $("#form-update-education .btn-red-outline").show();
+    });
+
+    //delete education
+    $("#form-update-education .btn-red-outline").on("click", function () {
+        if (confirm("Bạn có chắc muốn xóa học vấn này?")) {
+            const $formUpdateEducation = $("#form-update-education");
+            const educationId = $formUpdateEducation.find("#EducationId").val();
+            data = {
+                educationId: parseInt(educationId)
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "./candidate/DeleteEducation/"+educationId, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    // Xử lý phản hồi từ server sau khi gửi dữ liệu thành công
+                    GetEducation();
+                    showMessage("Xóa học vấn thành công");
+
+                    $('#modal-update-education').modal('hide');
+                    clearFormEducation();
+                } else {
+                    showMessage("Có lỗi sảy ra!", "error", "Thông báo", "glyphicon-remove", 3000);
+                }
+            };
+
+            xhr.send(JSON.stringify(data));
+          
+        }
     });
 
     const checkValidEducation = () => {
@@ -241,6 +304,9 @@
         $("#form-update-education #EndMonth").val("");
         $("#form-update-education #EndYear").val("");
         $("#form-update-education #Description").val("");
+        $("#form-update-education #iam_studying_here").prop("checked", false);
+        $("#form-update-education .btn-red-outline").hide();
+        checkIamStudyingHere();
     }
 
     function Loading(personal, status) {
