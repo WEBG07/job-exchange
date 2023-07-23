@@ -178,7 +178,7 @@
                                                         @{
                                                             var days = FormatHelper.GetRemainingTime(item.ExpirationDate);
                                                         }
-                                                        @if (days ==0)
+                                                        @if (days <=0)
                                                         {
                                                             <label class="label label-warning">Tin tuyển dụng hết hạn</label>
                                                         }

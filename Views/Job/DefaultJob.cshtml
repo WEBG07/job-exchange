@@ -121,7 +121,7 @@
                                     <div>
                                         <span class="box-item--title">Mức lương </span> <br>
                                         <span class="box-item--content">
-                                            @Model.Recruitment.Salary
+                                            @FormatHelper.FormatCurrency(Model.Recruitment.Salary)
                                         </span>
                                     </div>
                                 </div>
@@ -225,7 +225,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <p>Hạn nộp hồ sơ: 18/08/2023</p>
+                                        <p>Hạn nộp hồ sơ: @Model.Recruitment.ExpirationDate</p>
                                     </div>
                                 </div>
                             </div>
@@ -292,7 +292,7 @@
                                                     <a class="underline-box-job" target="_blank"
                                                         href="https://www.topcv.vn/viec-lam/nhan-vien-sales-online-nganh-dien-may-tai-ha-noi-thu-nhap-den-15-trieu-thang/1070953.html?ta_source=JobListInNormalCompany"
                                                         tabindex="0">
-                                                        @item.RecruitmentTitle (Thu Nhập Đến @item.Salary /Tháng)
+                                                        @item.RecruitmentTitle (Thu Nhập Đến @FormatHelper.FormatCurrency(item.Salary) /Tháng)
                                                     </a>
                                                 </div>
                                                 <div class="icon">
@@ -323,7 +323,7 @@
                                             </div>
                                             <div class="col-job-info">
                                                 <div class="salary text_ellipsis">
-                                                    Tới @item.Salary
+                                                    Tới @FormatHelper.FormatCurrency(item.Salary)
                                                 </div>
                                                 <div class="address text_ellipsis" data-toggle="tooltip" data-html="true"
                                                     title="" data-placement="top" data-container="body"
@@ -335,7 +335,7 @@
                                                 @{
                                                     var days = FormatHelper.GetRemainingTime(item.ExpirationDate);
                                                 }
-                                                @if (days == 0)
+                                                @if (days <= 0)
                                                 {
                                                     <label class="label label-warning">Tin tuyển dụng hết hạn</label>
                                                 }
@@ -400,7 +400,7 @@
                                                                     <span data-toggle="tooltip" data-container="body"
                                                                         data-placement="top" title=""
                                                                         data-original-title="">
-                                                                        @item.RecruitmentTitle (Lương Từ @item.Salary)
+                                                                        @item.RecruitmentTitle (Lương Từ @FormatHelper.FormatCurrency(item.Salary))
                                                                     </span>
                                                                     <span class="icon-verified-employer level-five">
                                                                         <i class="fa-solid fa-circle-check icon-verified-employer-tooltip"
@@ -420,7 +420,7 @@
                                                         </div>
 
                                                         <label class="title-salary">
-                                                            @item.Salary
+                                                            @FormatHelper.FormatCurrency(item.Salary)
                                                         </label>
                                                     </div>
 
@@ -437,7 +437,7 @@
                                                         @{
                                                             var days = FormatHelper.GetRemainingTime(item.ExpirationDate);
                                                         }
-                                                        @if (days ==0)
+                                                        @if (days <=0)
                                                         {
                                                             <label class="label label-warning">Tin tuyển dụng hết hạn</label>
                                                         }
