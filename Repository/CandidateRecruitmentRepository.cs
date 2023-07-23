@@ -25,5 +25,11 @@ namespace JobExchange.Repository
 
             return isApplied;
         }
+
+        public IEnumerable<CandidateRecruitment> GetCandidateRecruitments(string candidateId)
+        {
+            return _jobExchangeContext.CandidateRecruitments .Include(cr => cr.Recruitment)
+                .ThenInclude(cr => cr.Company).Where(cr => cr.CandidateId == candidateId).ToList();
+        }
     }
 }
