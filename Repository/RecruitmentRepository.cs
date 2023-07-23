@@ -34,6 +34,11 @@ namespace JobExchange.Repository
             return _jobExchangeContext.Recruitments.ToList();
         }
 
+        public List<Recruitment> GetAllByCompanyId(string companyId)
+        {
+            return _jobExchangeContext.Recruitments.Where(r => r.CompanyId == companyId).ToList();
+        }
+
         public Recruitment? GetById(string id)
         {
             return _jobExchangeContext.Recruitments.Include(c => c.Company).FirstOrDefault(u => u.RecruitmentId == id);

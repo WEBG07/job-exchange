@@ -68,7 +68,7 @@
                                     <td class="col-1">@STT</td>
                                     <td class="col-5" id="industry-@item.IndustryId">@Html.DisplayFor(modelItem => item.IndustryName)</td>
                                     <td class="col-3">
-                                        <img class="rounded" style="width: 250px;" src="./images/industry/@Html.DisplayFor(modelItem => item.IndustryImage)" alt="@Html.DisplayFor(modelItem => item.IndustryName)" />
+                                        <img class="rounded" style="width: 250px;" src="/images/industry/@Html.DisplayFor(modelItem => item.IndustryImage)" alt="@Html.DisplayFor(modelItem => item.IndustryName)" />
                                     </td>
                                     <td class="table-action col-3">
                                         <a onclick="getIndustryById(@item.IndustryId)" data-bs-toggle="modal" data-bs-target="#myModal">

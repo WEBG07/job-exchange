@@ -28,6 +28,7 @@
     <Folder Include="Views\Manager\Admin\" />
     <Folder Include="Views\Manager\Company\" />
     <Folder Include="wwwroot\images\avatar\" />
+    <Folder Include="wwwroot\images\imagesCompany\" />
     <Folder Include="wwwroot\images\profile-icon-svg\" />
   </ItemGroup>
 

@@ -110,10 +110,10 @@
 }
 
 .company-cover .company-logo .company-image-logo .img-responsive {
-    height: 80%;
+    height: 120%;
     -o-object-fit: contain;
     object-fit: contain;
-    width: 80%
+    width: 120%
 }
 
 .company-cover .company-detail-overview {

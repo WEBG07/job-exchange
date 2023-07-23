@@ -3,6 +3,7 @@
 @using JobExchange.Models;
 @inject SignInManager<JobExchangeUser> SignInManager
 @inject UserManager<JobExchangeUser> UserManager
+@inject JobExchangeContext context
 
 @{
     var Account = await UserManager.GetUserAsync(User) as JobExchangeUser;
@@ -121,19 +122,23 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (SignInManager.IsSignedIn(User))
                 {
+                    var candidate = context.Candidates.FirstOrDefault(c => c.CandidateId == UserManager.GetUserId(User));
+
                     <li class="navbar-right__item group">
                         <div class="title">
                             <a href="javascript:void(0)">
-                                <img src="https://www.topcv.vn/images/avatar-default.jpg" onerror="this.src='https://www.topcv.vn/images/avatar-default.jpg'" alt="Avatar">
-                                <span class="fullname">Hello @Account?.AccountName !</span>
+                                <img src="~/images/avatar/@candidate?.Avatar" alt="Avatar" id="avatar">
+                                @*<span class="fullname">Hello @Account?.AccountName !</span>*@
+                                <span class="fullname">Hello @candidate?.FullName !</span>
                             </a>
                         </div>
                         <div class="group-hover:menu navbar__item__dropdown-menu">
                             <ul class="nav navbar-menu">
                                 <li class="dropdown-menu__info  tag-border">
-                                    <img src="https://www.topcv.vn/images/avatar-default.jpg" onerror="this.src='https://www.topcv.vn/images/avatar-default.jpg'" alt="Avatar">
+                                    <img src="~/images/avatar/@candidate?.Avatar" alt="Avatar">
                                     <div class="caption">
-                                        <p class="name">@Account?.AccountName</p>
+                                        @*<p class="name">@Account?.AccountName</p>*@
+                                        <p class="name" id="fullname">@candidate?.FullName</p>
                                         <p class="description">@UserManager.GetUserName(User)</p>
                                         <p class="description">Chế độ tài khoản: <span class="code" style="color: #00b14f">Đã xác thực</span></p>
                                     </div>

@@ -9,6 +9,18 @@
     var Account = await UserManager.GetUserAsync(User) as JobExchangeUser;
 }
 
+<style>
+    .profile-image:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
+
+        .profile-image:hover .camera-icon {
+            display: block;
+        }
+
+    }
+</style>
 
 <div class="mb-3">
     <h1 class="h3 d-inline align-middle">Trang cá nhân</h1>
@@ -19,13 +31,15 @@
         <div class="container">
             <div class="company-cover-inner">
                 <div class="cover-wrapper">
-                    <img draggable="false" src="~/@Html.DisplayFor(model => model.CoverImage)" alt="" class="img-responsive cover-img"
-                         width="100%">
+                    <input type="file" accept="image/*" id="cover_file" style="display: none;" onchange="chooseCoverFile(this)">
+                    <img draggable="false" src="~/images/companies/@Html.DisplayFor(model => model.CoverImage)" alt="" class="img-responsive cover-img profile-image" id="change-cover"
+                         width="100%" style="object-fit: cover">
                 </div>
                 <div class="company-logo">
+                    <input type="file" accept="image/*" id="avatar_file" style="display: none;" onchange="chooseFile(this)">
                     <div class="company-image-logo">
-                        <img draggable="false" src="~/@Html.DisplayFor(model => model.Avatar)" alt="@Html.DisplayFor(model => model.CompanyName)"
-                             class="img-responsive">
+                        <img src="~/images/companies/@Html.DisplayFor(model => model.Avatar)" alt="@Html.DisplayFor(model => model.CompanyName)"
+                             class="img-responsive profile-image" id="change-avatar">
                     </div>
                 </div>
                 <div class="company-detail-overview">
@@ -74,10 +88,6 @@
                             </div>
                         </div>
                     </div>
-                    <link rel="stylesheet"
-                          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-                          referrerpolicy="no-referrer" />
-
                 </div>
                 <div class="col-md-4">
                     <div id="section-contact">
@@ -119,4 +129,5 @@
 </div>
 
 @section Scripts{
+    <script src="~/js/company.js"></script>
 }
