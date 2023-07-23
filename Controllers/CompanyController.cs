@@ -55,7 +55,7 @@ namespace JobExchange.Controllers
         public IActionResult Detail(string? id)
         {
             var company = _companyRepository.GetCompanyById(id);
-            var recruitments = _recruitmentRepository.GetRecruitmentsByCompanyId(id);
+            var recruitments = _recruitmentRepository.GetRecruitmentsByCompanyId("", id);
             var relatedCompanies = _companyRepository.GetCompaniesRelated(company.IndustryId, id);
             var viewModel = new CompanyViewModel{
                 Company = company,

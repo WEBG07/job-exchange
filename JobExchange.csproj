@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Manager\**" />
+    <Content Remove="Views\Manager\**" />
+    <EmbeddedResource Remove="Views\Manager\**" />
+    <None Remove="Views\Manager\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Abp" Version="8.2.0" />
     <PackageReference Include="MailKit" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.9" />
@@ -26,8 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Manager\Admin\" />
-    <Folder Include="Views\Manager\Company\" />
     <Folder Include="wwwroot\images\avatar\" />
     <Folder Include="wwwroot\images\imagesCompany\" />
     <Folder Include="wwwroot\images\profile-icon-svg\" />

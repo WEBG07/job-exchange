@@ -1,24 +1,35 @@
-﻿using JobExchange.Models;
+using JobExchange.Areas.Identity.Data;
+using System.Security.Claims;
+using JobExchange.Models;
+using JobExchange.Repository;
 using JobExchange.Repository.RepositoryInterfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using JobExchange.DataModel;
-
-
+using Microsoft.EntityFrameworkCore;
 
 namespace JobExchange.Controllers
 {
     public class JobController : Controller
     {
-        private readonly JobExchangeContext _context;
+    
         private readonly IRecruitmentRepository _recruitmentRepository;
-        public JobController(JobExchangeContext context, IRecruitmentRepository recruitmentRepository)
+        private readonly ICandidateRecruitmentRepository _candidateRecruitmentRepository;
+        private readonly ISaveJobRepository _saveJobRepository;
+        private readonly UserManager<JobExchangeUser> _userManager;
+        private readonly JobExchangeContext _context;
+        public JobController(ICandidateRecruitmentRepository candidateRecruitmentRepository, IRecruitmentRepository recruitmentRepository, JobExchangeContext context, ISaveJobRepository saveJobRepository, UserManager<JobExchangeUser> userManager)
         {
             _context = context;
             _recruitmentRepository = recruitmentRepository;
+            _saveJobRepository = saveJobRepository;
+            _userManager = userManager;
+            _candidateRecruitmentRepository = candidateRecruitmentRepository;
+            _context = context;
         }
         public IActionResult Index()
         {
@@ -62,23 +73,88 @@ namespace JobExchange.Controllers
         }
         public IActionResult DefaultJob(string? id)
         {
+            var candidateId=User.FindFirstValue(ClaimTypes.NameIdentifier);
             var recruitment = _recruitmentRepository.GetById(id);
-            var recruitmentsByCompanyId = _recruitmentRepository.GetRecruitmentsByCompanyId(recruitment.CompanyId);
-            var recruitmentsByIndustryId = _recruitmentRepository.GetRecruitmentsByIndustryId(recruitment.IndustryId);
+            var recruitmentsByCompanyId = _recruitmentRepository.GetRecruitmentsByCompanyId(id, recruitment.CompanyId);
+            var recruitmentsByIndustryId = _recruitmentRepository.GetRecruitmentsByIndustryId(id, recruitment.IndustryId);
+            var checkApply = _candidateRecruitmentRepository.checkApplication(candidateId,id);
             var recruitmentViewModel = new RecruitmentViewModel
             {
                 Recruitment = recruitment,
                 RecruitmentsCompanyId = recruitmentsByCompanyId,
-                RecruitmentsIndustryId = recruitmentsByIndustryId
+                RecruitmentsIndustryId = recruitmentsByIndustryId,
+                CheckApply = checkApply
             };
+            bool isSave = _saveJobRepository.ExistsById(_userManager.GetUserId(User), id);
+
+            ViewBag.IsSave = isSave; // Pass the result to the view
             return View(recruitmentViewModel);
         }
-        public IActionResult CandidateHistory() { 
-            return View();
-        }
-        public IActionResult SavedJobs()
+        public IActionResult CandidateHistory()
         {
             return View();
+        }
+
+        public IActionResult Saved()
+        {
+            var saved = _context.SaveRecruitments
+                .Include(r => r.Recruitment)
+                .ThenInclude(r => r.Company)
+                .Where(m => m.CandidateId == _userManager.GetUserId(User)).ToList(); // 1 list
+            //.FirstOrDefault(m => m.CandidateId == _userManager.GetUserId(User)); 1 đối tượng
+            return View(saved);
+
+        }
+
+        [HttpPost]
+        public IActionResult Save(string recruitmentId)
+        {
+            try
+            {
+                SaveRecruitment saveRecruitment = new SaveRecruitment();
+                saveRecruitment.RecruitmentId = recruitmentId;
+                saveRecruitment.CreateDate = DateTime.Now;
+                saveRecruitment.CandidateId = _userManager.GetUserId(User);
+                _saveJobRepository.Save(saveRecruitment);
+                return Ok(saveRecruitment);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult UnSave(string Id)
+        {
+            try
+            {
+                var candidateId = _userManager.GetUserId(User);
+                var saveRecruitment = _saveJobRepository.GetById(candidateId, Id);
+                if (saveRecruitment == null)
+                {
+                    return NotFound();
+                }
+
+                _saveJobRepository.UnSave(saveRecruitment);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPost]
+        public IActionResult ApplyJob(string candidateId, string recruitmentId)
+        {
+            var data = new CandidateRecruitment{
+                RecruitmentId = recruitmentId,
+                CandidateId = candidateId,
+                ApplicationStatus = "Đang chờ xét duyệt",
+                CreatedAt = DateTime.Now,
+            };
+            _candidateRecruitmentRepository.AddCandidateRecruitment(data);
+            return Json("Success");
         }
     }
 }

@@ -20,7 +20,7 @@ builder.Services.AddRouting();
 builder.Services.AddDbContext<JobExchangeContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("JobExchange_Connection")));
 
-builder.Services.AddIdentity<JobExchangeUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<JobExchangeUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<JobExchangeContext>()
     .AddDefaultTokenProviders();
 
@@ -32,10 +32,12 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
+builder.Services.AddScoped<ISaveJobRepository, SaveJobRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IRecruitmentRepository, RecruitmentRepository>();
 builder.Services.AddScoped<IIndustryRepository, IndustryRepository>();
 builder.Services.AddScoped<IRecruitmentRepository, RecruitmentRepository>();
+builder.Services.AddScoped<ICandidateRecruitmentRepository, CandidateRecruitmentRepository>();
 
 // Chuyển hướng người dùng
 builder.Services.ConfigureApplicationCookie(options =>

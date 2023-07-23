@@ -74,18 +74,18 @@ namespace JobExchange.Repository
         //    return results;
         //}
         
-        public IEnumerable<Recruitment> GetRecruitmentsByCompanyId(string companyId)
+        public IEnumerable<Recruitment> GetRecruitmentsByCompanyId(string id, string companyId)
         {
-            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId).ToList();
+            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId && r.RecruitmentId != id).ToList();
         }
-        public IEnumerable<Recruitment> GetRecruitmentsByIndustryId(int industryId)
+        public IEnumerable<Recruitment> GetRecruitmentsByIndustryId(string id, int industryId)
         {
-            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.IndustryId == industryId).ToList();
+            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.IndustryId == industryId && r.RecruitmentId != id).ToList();
         }
 
         public IEnumerable<Recruitment> GetRecruitmentsByName(string companyId, string name)
         {
-            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId &&  r.JobDescription.Contains(name)).ToList();
+            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId &&  r.RecruitmentTitle.Contains(name)).ToList();
         }
         public IEnumerable<Recruitment> GetRecruitments(string filter = null, string value1 = null, string value2 = null)
         {

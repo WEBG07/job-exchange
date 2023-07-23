@@ -19,7 +19,10 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JobExchange.styles.css" asp-append-version="true" />
 
+    <link rel="stylesheet" href="~//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+
     @*<link rel="stylesheet" href="v2/bootstrap/css/bootstrap.min3f71.css?v=1.1.1">*@
+    <link rel="stylesheet" href="~//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=vietnamese" rel="stylesheet">
     <link rel="stylesheet" as="style" href="~/lib/select2/css/select2.min.css" />
     <link rel="stylesheet" href="~/css/app.min.99dbaee6ec838d8e.css">
@@ -87,7 +90,7 @@
                                 </a>
                             </li>
                             <li class="navbar-menu__item ">
-                                <a asp-controller="Job" asp-action="SavedJobs" class="text-sm">
+                                <a asp-controller="Job" asp-action="Saved" class="text-sm">
                                     <i class="fa-regular fa-laptop-code icon"></i>
                                     Việc làm đã lưu
                                 </a>
@@ -129,7 +132,7 @@
                             <a href="javascript:void(0)">
                                 <img src="~/images/avatar/@avatar" alt="Avatar" id="avatar">
                                 @*<span class="fullname">Hello @Account?.AccountName !</span>*@
-                                <span class="fullname">Hello @candidate?.FullName !</span>
+                                <span class="fullname">Hello @candidate.FullName !</span>
                             </a>
                         </div>
                         <div class="group-hover:menu navbar__item__dropdown-menu">
@@ -215,8 +218,10 @@
             </ul>
         </div>
     </nav>
-    <div class="">
+    <div>
+        <partial name="_Notification" />
         <main role="main" class="pb-3">
+            <partial name="_Notification" />
             @RenderBody()
         </main>
     </div>
@@ -271,6 +276,7 @@
    
     <script src="~/js/account.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/toastr.js"></script>
 
     @{
         var messageInfo = TempData["messageInfo"] as Dictionary<string, string>;

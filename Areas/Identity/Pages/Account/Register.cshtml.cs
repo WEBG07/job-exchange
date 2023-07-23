@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using JobExchange.Models;
 using JobExchange.Repository.RepositoryInterfaces;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace JobExchange.Areas.Identity.Pages.Account
 {
@@ -131,6 +132,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
                     candidate.CandidateId = userId;
                     candidate.AccountId = userId;
                     candidate.FullName = user.AccountName;
+                    candidate.Avatar = "avatar-default.jpg";
                     _context.Add(candidate);
                     _context.SaveChanges();
 

@@ -1,18 +1,11 @@
-﻿
+@using JobExchange.Areas.Identity.Data;
+@using JobExchange.Helper;
+@using Microsoft.AspNetCore.Identity;
+@inject JobExchangeContext context
+@inject UserManager<JobExchangeUser> UserManager
 @{
     ViewData["Title"] = "DefaultJob";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@functions {
-    public int GetRemainingTime(DateTime? expirationDate)
-    {
-        if (expirationDate.HasValue)
-        {
-            var remainingTime = expirationDate.Value - DateTime.Now;
-            return remainingTime.Days;
-        }
-        return 0;
-    }
 }
 <link rel="stylesheet" href="https://static.topcv.vn/v4/css/components/desktop/job-detail.min.ee5985fc2d150317.css">
 <link rel="stylesheet" href="https://static.topcv.vn/v4/css/components/desktop/jobs/batch-apply.fa180512a5a7937c.css">
@@ -20,29 +13,34 @@
     <div id="job-detail-page-wraper">
         <div class="container">
             <div class="ctn-breadcrumb-detail">
-                <a href="https://www.topcv.vn/viec-lam" class="text-highlight bold">Trang chủ</a> <i class="fa-solid fa-angle-right"></i>
+                <a href="https://www.topcv.vn/viec-lam" class="text-highlight bold">Trang chủ</a> <i
+                    class="fa-solid fa-angle-right"></i>
                 <a href="https://www.topcv.vn/tim-viec-lam-nhan-vien-seo" class="text-highlight bold">
                     Tìm việc làm
                     nhân viên seo
                 </a> <i class="fa-solid fa-angle-right"></i>
-                <span class="text-dark-blue">@Model.Recruitment.RecruitmentTitle (Thu Nhập Từ @Model.Recruitment.Salary Triệu/Tháng)</span>
+                <span class="text-dark-blue">
+                    @Model.Recruitment.RecruitmentTitle (Thu Nhập Từ @FormatHelper.FormatCurrency(Model.Recruitment.Salary)
+                    /Tháng)
+                </span>
             </div>
             <div class="box-white box-detail-job">
                 <div class="box-header">
-                    <a asp-controller="Company" asp-action="Detail" asp-route-id="@Model.Recruitment.Company.CompanyId" class="company-logo">
+                    <a asp-controller="Company" asp-action="Detail" asp-route-id="@Model.Recruitment.Company.CompanyId"
+                       class="company-logo">
                         <div class="box-company-logo">
-                            <img src="~/@Model.Recruitment.Company.Avatar"
-                                 alt="@Model.Recruitment.Company.CompanyName" class="img-responsive">
+                            <img src="~/images/companies/@Model.Recruitment.Company.Avatar" alt="@Model.Recruitment.Company.CompanyName"
+                                 class="img-responsive">
                         </div>
                     </a>
                     <div class="box-info-action">
                         <div class="box-info-job">
                             <h1 class="job-title text-highlight bold" style="overflow-wrap:break-word;">
-                                <a href="https://www.topcv.vn/tim-viec-lam-nhan-vien-seo" class="text-highlight"
-                                   target="_blank">@Model.Recruitment.RecruitmentTitle
+                                <a href="#" class="text-highlight"
+                                   target="_blank">@Model.Recruitment.RecruitmentTitle</a>
                             </h1>
                             <div class="company-title">
-                                <a href="https://www.topcv.vn/cong-ty/cong-ty-tnhh-dien-may-sakura-viet-nam/124044.html"
+                                <a href="#"
                                    class="text-dark-blue">@Model.Recruitment.Company.CompanyName</a>
                             </div>
 
@@ -53,33 +51,30 @@
                         <div class="box-apply-current">
                             <div class="text-center">
                                 <p>
-                                    <a href="#"
-                                       class="btn btn-topcv-primary btn-primary-hover btn-apply open-apply-modal"
-                                       data-toggle="modal">
-                                        <i class="fa-regular fa-paper-plane"></i> Ứng tuyển
-                                        ngay
-                                    </a>
+                                    @if (Model.CheckApply == true)
+                                    {
+                                        <button id="btn-apply-job" class="btn btn-topcv-primary btn-primary-hover btn-apply" disabled="">
+                                            <i class="fa-regular fa-check"></i> Đã ứng tuyển
+                                        </button>
+                                    } else {
+                                        <button id="btn-apply-job" class="btn btn-topcv-primary btn-primary-hover btn-apply open-apply-modal">
+                                            <i class="fa-regular fa-paper-plane"></i> Ứng tuyển ngay
+                                        </button>
+                                    }
                                 </p>
                                 <div id="box-save-job-1069099" class="box-save-job  job-notsave ">
-                                    <button class="btn btn-save save btn-topcv-text-normal btn-outline-hover"
-                                            data-id="1069099"
-                                            data-title="Nhân Viên SEO - Hà Nội (Thu Nhập Từ 12 - 15 Triệu/Tháng)">
-                                        <span id="save-job-loading" style="display: none;">
-                                            <img loading="lazy" src="https://www.topcv.vn/v3/images/ap-loading.gif"
-                                                 style="width: 20px">
-                                        </span>
-                                        <i class="fa-regular fa-heart"></i> Lưu tin
-                                    </button>
-                                    <button class="btn btn-unsave unsave btn-topcv-primary btn-primary-hover"
-                                            data-toggle="tooltip" title="" data-id="1069099"
-                                            data-title="Nhân Viên SEO - Hà Nội (Thu Nhập Từ 12 - 15 Triệu/Tháng)"
-                                            data-original-title="Bỏ lưu">
-                                        <span id="unsave-job-loading" style="display: none;">
-                                            <img loading="lazy" src="https://www.topcv.vn/v3/images/ap-loading.gif"
-                                                 style="width: 20px">
-                                        </span>
-                                        <i class="fa-regular fa-heart"></i> Đã lưu
-                                    </button>
+                                    @if (ViewBag.IsSave)
+                                    {
+                                        <button id="un-save" class="btn btn-save save btn-topcv-text-normal btn-outline-hover" style="background:#00b14f; color: #fff" onclick="unSave('@Model.Recruitment.RecruitmentId')">
+                                            <i class="fa-regular fa-heart"></i> Đã lưu
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button id="save" class="btn btn-save save btn-topcv-text-normal btn-outline-hover" onclick="saveJob('@Model.Recruitment.RecruitmentId')">
+                                            <i class="fa-regular fa-heart"></i> Lưu tin
+                                        </button>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -87,14 +82,13 @@
                             <div class="text-center">
                                 <p>
                                     <a href="#" class="btn btn-topcv-primary btn-primary-hover open-apply-modal"
-                                       data-toggle="modal">
+                                        data-toggle="modal">
                                         <i class="fa-solid fa-arrow-rotate-right"></i> ỨNG TUYỂN
                                         LẠI
                                     </a>
                                 </p>
                                 <p>
-                                    <a target="_blank"
-                                       href="http://candidate.topcvconnect.com/conversations/new/486164"
+                                    <a target="_blank" href="#"
                                        class="btn btn-connect btn-outline-hover">
                                         <i class="fa-solid fa-comments"></i> NHẮN TIN
                                     </a>
@@ -130,7 +124,7 @@
                                     <div>
                                         <span class="box-item--title">Mức lương </span> <br>
                                         <span class="box-item--content">
-                                            @Model.Recruitment.Salary triệu
+                                            @FormatHelper.FormatCurrency(Model.Recruitment.Salary)
                                         </span>
                                     </div>
                                 </div>
@@ -175,7 +169,7 @@
                             <p class="box-detail-title">Địa điểm làm việc</p>
                             <div>
                                 <div style="margin-bottom: 10px">
-                                    @Model.Recruitment.City, @Model.Recruitment.District, @Model.Recruitment.Ward
+                                    @Model.Recruitment.City, @Model.Recruitment.District, @Model.Recruitment.Ward, @Model.Recruitment.AddressDetail
                                 </div>
                             </div>
                         </div>
@@ -206,33 +200,30 @@
                                 <div class="">
                                     <div class="">
                                         <div class="d-flex box-btn">
-                                            <a href="#"
-                                               class="btn btn-topcv-primary btn-primary-hover btn-apply open-apply-modal"
-                                               data-toggle="modal">Ứng tuyển ngay</a>
-                                            <div class="box-save-job-1069099 box-save-job  job-notsave ">
-                                                <button class="btn btn-save save btn-topcv-text-normal btn-outline-hover"
-                                                        data-id="1069099"
-                                                        data-title="Nhân Viên SEO - Hà Nội (Thu Nhập Từ 12 - 15 Triệu/Tháng)">
-                                                    <span id="save-job-loading" style="display: none;">
-                                                        <img loading="lazy"
-                                                             src="https://www.topcv.vn/v3/images/ap-loading.gif"
-                                                             style="width: 20px">
-                                                    </span>
-                                                    Lưu tin
-                                                </button>
-                                                <button class="btn btn-unsave unsave btn-topcv-primary btn-primary-hover"
-                                                        data-id="1069099"
-                                                        data-title="Nhân Viên SEO - Hà Nội (Thu Nhập Từ 12 - 15 Triệu/Tháng)">
-                                                    <span id="unsave-job-loading" style="display: none;">
-                                                        <img loading="lazy"
-                                                             src="https://www.topcv.vn/v3/images/ap-loading.gif"
-                                                             style="width: 20px">
-                                                    </span>
-                                                    Đã Lưu
-                                                </button>
+                                            <p>
+                                                <a href="#"
+                                                   class="btn btn-topcv-primary btn-primary-hover btn-apply open-apply-modal"
+                                                   data-toggle="modal">
+                                                    <i class="fa-regular fa-paper-plane"></i> Ứng tuyển
+                                                    ngay
+                                                </a>
+                                            </p>
+                                            <div id="box-save-job-1069099" class="box-save-job  job-notsave ">
+                                                @if (ViewBag.IsSave)
+                                                {
+                                                    <button class="btn btn-save save btn-topcv-text-normal btn-outline-hover" style="background:#00b14f; color: #fff" onclick="unSave('@Model.Recruitment.RecruitmentId')">
+                                                        <i class="fa-regular fa-heart"></i> Đã lưu
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-save save btn-topcv-text-normal btn-outline-hover" onclick="saveJob('@Model.Recruitment.RecruitmentId')">
+                                                        <i class="fa-regular fa-heart"></i> Lưu tin
+                                                    </button>
+                                                }
                                             </div>
                                         </div>
-                                        <p>Hạn nộp hồ sơ: 18/08/2023</p>
+                                        <p>Hạn nộp hồ sơ: @Model.Recruitment.ExpirationDate</p>
                                     </div>
                                 </div>
                             </div>
@@ -248,7 +239,7 @@
                 <div class="box-title">
                     <h2 class="box-name">Thông tin @Model.Recruitment.Company.CompanyName</h2>
                     <a asp-controller="Company" asp-action="Detail" asp-route-id="@Model.Recruitment.Company.CompanyId"
-                       target="_blank">Xem trang công ty <i class="fa-solid fa-arrow-right"></i></a>
+                        target="_blank">Xem trang công ty <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <div class="box-info">
                     <div class="box-item box-item__description">
@@ -280,49 +271,48 @@
                 <div class="box-job-company">
                     <div class="box-title">
                         <h2 class="box-name"><i class="fa-solid fa-briefcase"></i> Việc làm cùng công ty</h2>
-                        <a href="https://www.topcv.vn/cong-ty/cong-ty-tnhh-dien-may-sakura-viet-nam/124044.html"
+                        <a href="#"
                            target="_blank">Xem nhiều hơn <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
-                    <div class="row job-company-list transition  job-company-list-slider  slick-initialized slick-slider">
+                    <div
+                        class="row job-company-list transition  job-company-list-slider  slick-initialized slick-slider">
                         <div class="slick-list draggable">
                             <div class="slick-track"
-                                 style="opacity: 1; width: 1122px; transform: translate3d(0px, 0px, 0px);">
-                                 @foreach (var item in @Model.RecruitmentsCompanyId)
-                                 {
+                                style="opacity: 1; width: 1122px; transform: translate3d(0px, 0px, 0px);">
+                                @foreach (var item in @Model.RecruitmentsCompanyId)
+                                {
                                     <div class="item-job job-ta result-job-hover box-job slick-slide slick-current slick-active"
-                                        data-job-id="1070953" data-box="BoxRecruitmentSameCompany" data-slick-index="0"
-                                        aria-hidden="false" style="width: 342px;" tabindex="0">
+                                         data-job-id="1070953" data-box="BoxRecruitmentSameCompany" data-slick-index="0"
+                                         aria-hidden="false" style="width: 342px;" tabindex="0">
                                         <div class="box-item">
                                             <div class="cvo-flex">
                                                 <div class="col-title cvo-flex-grow">
                                                     <a class="underline-box-job" target="_blank"
-                                                    href="https://www.topcv.vn/viec-lam/nhan-vien-sales-online-nganh-dien-may-tai-ha-noi-thu-nhap-den-15-trieu-thang/1070953.html?ta_source=JobListInNormalCompany"
-                                                    tabindex="0">
-                                                        @item.RecruitmentTitle (Thu Nhập Đến @item.Salary Triệu/Tháng)
+                                                        href="https://www.topcv.vn/viec-lam/nhan-vien-sales-online-nganh-dien-may-tai-ha-noi-thu-nhap-den-15-trieu-thang/1070953.html?ta_source=JobListInNormalCompany"
+                                                        tabindex="0">
+                                                        @item.RecruitmentTitle (Thu Nhập Đến @FormatHelper.FormatCurrency(item.Salary) /Tháng)
                                                     </a>
                                                 </div>
                                                 <div class="icon">
                                                     <div id="box-save-job-1070953"
-                                                        class="box-save-job  box-save-job-hover   job-notsave ">
-                                                        <a href="javascript:void(0)" class="btn-save save"
-                                                        data-id="1070953" data-title="Lưu" data-toggle="tooltip"
-                                                        data-placement="top" tabindex="0" data-original-title=""
-                                                        title="">
+                                                         class="box-save-job  box-save-job-hover   job-notsave ">
+                                                        <a href="javascript:void(0)" class="btn-save save" data-id="1070953"
+                                                           data-title="Lưu" data-toggle="tooltip" data-placement="top"
+                                                           tabindex="0" data-original-title="" title="">
                                                             <span id="save-job-loading" style="display: none;">
                                                                 <img src="https://www.topcv.vn/v3/images/ap-loading.gif"
-                                                                    style="width: 20px">
+                                                                     style="width: 20px">
                                                             </span>
                                                             <i class="fa-regular fa-heart"></i>
                                                         </a>
                                                         <a href="javascript:void(0)"
-                                                        class="btn-unsave unsave text-highlight"
-                                                        data-toggle="tooltip" title="" data-id="1070953"
-                                                        data-title="Nhân Viên Sales Online Ngành Điện Máy - Tại Hà Nội (Thu Nhập Đến 15 Triệu/Tháng)"
-                                                        data-placement="top" tabindex="0"
-                                                        data-original-title="Bỏ lưu">
+                                                           class="btn-unsave unsave text-highlight" data-toggle="tooltip"
+                                                           title="" data-id="1070953"
+                                                           data-title="Nhân Viên Sales Online Ngành Điện Máy - Tại Hà Nội (Thu Nhập Đến 15 Triệu/Tháng)"
+                                                           data-placement="top" tabindex="0" data-original-title="Bỏ lưu">
                                                             <span id="unsave-job-loading" style="display: none;">
                                                                 <img src="https://www.topcv.vn/v3/images/ap-loading.gif"
-                                                                    style="width: 20px">
+                                                                     style="width: 20px">
                                                             </span>
                                                             <i class="fa-solid fa-heart"></i>
                                                         </a>
@@ -331,34 +321,38 @@
                                             </div>
                                             <div class="col-job-info">
                                                 <div class="salary text_ellipsis">
-                                                    Tới @item.Salary triệu
+                                                    Tới @FormatHelper.FormatCurrency(item.Salary)
                                                 </div>
-                                                <div class="address text_ellipsis" data-toggle="tooltip"
-                                                    data-html="true" title="" data-placement="top" data-container="body"
-                                                    data-original-title="<p style='text-align: left'>Hà Nội: Thanh Xuân, Cầu Giấy, Hà Đông, Ba Đình, Nam Từ Liêm</p>">
+                                                <div class="address text_ellipsis" data-toggle="tooltip" data-html="true"
+                                                     title="" data-placement="top" data-container="body"
+                                                     data-original-title="<p style='text-align: left'>Hà Nội: Thanh Xuân, Cầu Giấy, Hà Đông, Ba Đình, Nam Từ Liêm</p>">
+
                                                     @item.City, @item.District, @item.Ward
                                                 </div>
                                             </div>
                                             <div class="updated_at">
-                                                @if (GetRemainingTime(item.ExpirationDate) == 0) 
+                                                @{
+                                                    var days = FormatHelper.GetRemainingTime(item.ExpirationDate);
+                                                }
+                                                @if (days <= 0)
                                                 {
-                                                        <label class="label label-warning">Tin tuyển dụng hết hạn</label>
-                                                } 
-                                                else {
-                                                    <label class="time">                                 
+                                                    <label class="label label-warning">Tin tuyển dụng hết hạn</label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="time">
                                                         Còn
-                                                        <strong>@GetRemainingTime(item.ExpirationDate)</strong>
+                                                        <strong>@days</strong>
                                                         ngày để ứng tuyển
                                                     </label>
                                                 }
                                             </div>
                                         </div>
                                     </div>
-                                 }
-                                
+                                }
+
                             </div>
                         </div>
-
 
                     </div>
                 </div>
@@ -373,21 +367,21 @@
                         <div class="col-md-12">
                             <div id="box-relate-jobs" class="box_general">
                                 <link rel="stylesheet"
-                                      href="https://static.topcv.vn/v4/css/components/desktop/jobs/job-list-default.54c1c7011c100262.css">
+                                    href="https://static.topcv.vn/v4/css/components/desktop/jobs/job-list-default.54c1c7011c100262.css">
 
                                 <div class="job-list-default">
                                     @foreach (var item in @Model.RecruitmentsIndustryId)
                                     {
                                         <div class="job-item-default
                                                     bg-highlight  job-ta
-                                                    " data-job-id="1064094" data-job-position="1" data-box="BoxJobSimilar"
-                                            data-jr-id="job-es-v1::1690015675004-b6174e::bfecd576b2f04a5db76c68e8512f6335::1"
-                                            id="featured-suggest-1064094">
+                                                    " data-job-id="1064094" data-job-position="1"
+                                             data-box="BoxJobSimilar"
+                                             data-jr-id="job-es-v1::1690015675004-b6174e::bfecd576b2f04a5db76c68e8512f6335::1"
+                                             id="featured-suggest-1064094">
                                             <div class="avatar">
-                                                <a target="_blank" asp-controller="Job" asp-action="DefaultJob" asp-route-id="@item.RecruitmentId">
-                                                    <img src="~/@item.Company.Avatar"
-                                                        class="w-100" alt="CÔNG TY TNHH VJS VIỆT NAM"
-                                                        title="Content SEO (Lương Từ 8 - 12 Triệu)">
+                                                <a target="_blank" asp-controller="Job" asp-action="DefaultJob"
+                                                   asp-route-id="@item.RecruitmentId">
+                                                    <img src="~/images/companies/@item.Company.Avatar" class="w-100">
                                                 </a>
                                             </div>
                                             <div class="body">
@@ -397,40 +391,31 @@
                                                             <h3 class="title">
                                                                 <div class="box-label-top">
                                                                 </div>
-
-                                                                <a target="_blank"
-                                                                href="https://www.topcv.vn/viec-lam/content-seo-luong-tu-8-12-trieu/1064094.html?ta_source=SuggestSimilarJob&amp;jr_i=job-es-v1%3A%3A1690015675004-b6174e%3A%3Abfecd576b2f04a5db76c68e8512f6335%3A%3A1">
+                                                                <a target="_blank" href="#">
                                                                     <span data-toggle="tooltip" data-container="body"
-                                                                        data-placement="top" title=""
-                                                                        data-original-title="Content SEO (Lương Từ 8 - 12 Triệu)">
-                                                                        @item.RecruitmentTitle (Lương Từ @item.Salary Triệu)
+                                                                          data-placement="top" title=""
+                                                                          data-original-title="">
+                                                                        @item.RecruitmentTitle (Lương Từ @FormatHelper.FormatCurrency(item.Salary))
                                                                     </span>
                                                                     <span class="icon-verified-employer level-five">
                                                                         <i class="fa-solid fa-circle-check icon-verified-employer-tooltip"
-                                                                        data-toggle="tooltip" data-container="body"
-                                                                        data-html="true" title=""
-                                                                        data-placement="top"
-                                                                        data-original-title="
-                    <b>Nhà tuyển dụng</b><span> đã được xác thực:</span><br>
-                    <span><i class='fa-solid fa-circle-check color-green'></i> Đã xác thực email tên miền công ty</span><br>
-                    <span><i class='fa-solid fa-circle-check color-green'></i> Đã xác thực số điện thoại</span><br>
-                    <span><i class='fa-solid fa-circle-check color-green'></i> Đã được duyệt Giấy phép kinh doanh</span><br>
-                    <span><i class='fa-solid fa-circle-check color-green'></i> Tài khoản NTD được tạo tối thiểu 6 tháng</span><br>
-                    <span><i class='fa-solid fa-circle-check color-green'></i> Chưa có lịch sử bị báo cáo tin đăng</span><br>"></i>
+                                                                           data-toggle="tooltip" data-container="body"
+                                                                           data-html="true" title="" data-placement="top"
+                                                                           data-original-title="@item.Company.CompanyName"></i>
                                                                     </span>
                                                                 </a>
                                                             </h3>
                                                             <a class="company"
-                                                            href="https://www.topcv.vn/cong-ty/cong-ty-tnhh-vjs-viet-nam/2725.html"
-                                                            data-toggle="tooltip" title="" data-placement="top"
-                                                            target="_blank"
-                                                            data-original-title="CÔNG TY TNHH VJS VIỆT NAM">
+                                                                href="https://www.topcv.vn/cong-ty/cong-ty-tnhh-vjs-viet-nam/2725.html"
+                                                                data-toggle="tooltip" title="" data-placement="top"
+                                                                target="_blank"
+                                                                data-original-title="@item.Company.CompanyName">
                                                                 @item.Company.CompanyName
                                                             </a>
                                                         </div>
 
                                                         <label class="title-salary">
-                                                            @item.Salary triệu
+                                                            @FormatHelper.FormatCurrency(item.Salary)
                                                         </label>
                                                     </div>
 
@@ -440,18 +425,22 @@
                                                 <div class="info">
                                                     <div class="label-content">
                                                         <label class="address" data-toggle="tooltip" data-html="true"
-                                                            title="" data-placement="top"
-                                                            data-original-title="<p style='text-align: left'>Hà Nội: Ba Đình</p>">
+                                                               title="" data-placement="top"
+                                                               data-original-title="<p style='text-align: left'>Hà Nội: Ba Đình</p>">
                                                             @item.City, @item.District, @item.Ward
                                                         </label>
-                                                        @if (GetRemainingTime(item.ExpirationDate) == 0) 
+                                                        @{
+                                                            var days = FormatHelper.GetRemainingTime(item.ExpirationDate);
+                                                        }
+                                                        @if (days <=0)
                                                         {
-                                                                <label class="label label-warning">Tin tuyển dụng hết hạn</label>
-                                                        } 
-                                                        else {
-                                                            <label class="time">                                 
+                                                            <label class="label label-warning">Tin tuyển dụng hết hạn</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <label class="time">
                                                                 Còn
-                                                                <strong>@GetRemainingTime(item.ExpirationDate)</strong>
+                                                                <strong>@days</strong>
                                                                 ngày để ứng tuyển
                                                             </label>
                                                         }
@@ -462,29 +451,28 @@
                                                         </label>
                                                     </div>
                                                     <div class="icon">
-                                                        <button data-redirect-to="https://www.topcv.vn/viec-lam/content-seo-luong-tu-8-12-trieu/1064094.html?ta_source=SuggestSimilarJob&amp;jr_i=job-es-v1%3A%3A1690015675004-b6174e%3A%3Abfecd576b2f04a5db76c68e8512f6335%3A%3A1"
-                                                                class="btn btn-apply-now">
+                                                        <button data-redirect-to="" class="btn btn-apply-now">
                                                             <span>Ứng tuyển</span>
                                                         </button>
                                                         <div id="box-save-job-1064094"
-                                                            class="box-save-job  box-save-job-hover   job-notsave ">
+                                                             class="box-save-job  box-save-job-hover   job-notsave ">
                                                             <a href="javascript:void(0)" class="btn-save save"
-                                                            data-id="1064094" data-title="Lưu" data-toggle="tooltip"
-                                                            data-placement="top" data-original-title="" title="">
+                                                               data-id="1064094" data-title="Lưu" data-toggle="tooltip"
+                                                               data-placement="top" data-original-title="" title="">
                                                                 <span id="save-job-loading" style="display: none;">
                                                                     <img src="https://www.topcv.vn/v3/images/ap-loading.gif"
-                                                                        style="width: 20px">
+                                                                         style="width: 20px">
                                                                 </span>
                                                                 <i class="fa-regular fa-heart"></i>
                                                             </a>
                                                             <a href="javascript:void(0)"
-                                                            class="btn-unsave unsave text-highlight"
-                                                            data-toggle="tooltip" title="" data-id="1064094"
-                                                            data-title="Content SEO (Lương Từ 8 - 12 Triệu)"
-                                                            data-placement="top" data-original-title="Bỏ lưu">
+                                                                class="btn-unsave unsave text-highlight"
+                                                                data-toggle="tooltip" title="" data-id="1064094"
+                                                                data-title="@item.Company.CompanyName" data-placement="top"
+                                                                data-original-title="Bỏ lưu">
                                                                 <span id="unsave-job-loading" style="display: none;">
                                                                     <img src="https://www.topcv.vn/v3/images/ap-loading.gif"
-                                                                        style="width: 20px">
+                                                                         style="width: 20px">
                                                                 </span>
                                                                 <i class="fa-solid fa-heart"></i>
                                                             </a>
@@ -493,9 +481,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>  
+                                        </div>
                                     }
-
                                 </div>
                                 <script>
                                     $(document).on('click touch', '.btn-apply-now', function (e) {
@@ -526,3 +513,39 @@
         </div>
     </div>
 </div>
+
+<script src="~/js/savejob.js"></script>
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById('.btn-apply').addEventListener('click', function () {
+                confirm("Bạn có muốn ứng tuyển job này?");
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector('#btn-apply-job').addEventListener('click', function () {
+                var recruitmentId = '@Model.Recruitment.RecruitmentId';
+                var candidateId ='@UserManager.GetUserId(User)';
+                console.log(candidateId);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/Job/ApplyJob', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response == "Success")
+                        {
+                            var applyButton = document.getElementById('btn-apply-job');
+                            applyButton.innerHTML = '<i class="fa-regular fa-check"></i> Đã ứng tuyển';
+                            applyButton.classList.remove('open-apply-modal');
+                            applyButton.disabled = true;
+                        }
+                        toastr.success("Apply job success !");
+                    }
+                };
+                var params = 'candidateId=' + encodeURIComponent(candidateId) + '&recruitmentId=' + encodeURIComponent(recruitmentId);
+                xhr.send(params);
+            })
+        });
+    </script>
+}
