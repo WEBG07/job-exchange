@@ -1,4 +1,4 @@
-using JobExchange.Areas.Identity.Data;
+﻿using JobExchange.Areas.Identity.Data;
 using System.Security.Claims;
 using JobExchange.Models;
 using JobExchange.Repository;
@@ -16,7 +16,7 @@ namespace JobExchange.Controllers
 {
     public class JobController : Controller
     {
-    
+
         private readonly IRecruitmentRepository _recruitmentRepository;
         private readonly ICandidateRecruitmentRepository _candidateRecruitmentRepository;
         private readonly ISaveJobRepository _saveJobRepository;
@@ -73,11 +73,11 @@ namespace JobExchange.Controllers
         }
         public IActionResult DefaultJob(string? id)
         {
-            var candidateId=User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var candidateId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var recruitment = _recruitmentRepository.GetById(id);
             var recruitmentsByCompanyId = _recruitmentRepository.GetRecruitmentsByCompanyId(id, recruitment.CompanyId);
             var recruitmentsByIndustryId = _recruitmentRepository.GetRecruitmentsByIndustryId(id, recruitment.IndustryId);
-            var checkApply = _candidateRecruitmentRepository.checkApplication(candidateId,id);
+            var checkApply = _candidateRecruitmentRepository.checkApplication(candidateId, id);
             var recruitmentViewModel = new RecruitmentViewModel
             {
                 Recruitment = recruitment,
@@ -147,7 +147,8 @@ namespace JobExchange.Controllers
         [HttpPost]
         public IActionResult ApplyJob(string candidateId, string recruitmentId)
         {
-            var data = new CandidateRecruitment{
+            var data = new CandidateRecruitment
+            {
                 RecruitmentId = recruitmentId,
                 CandidateId = candidateId,
                 ApplicationStatus = "Đang chờ xét duyệt",
@@ -155,6 +156,7 @@ namespace JobExchange.Controllers
             };
             _candidateRecruitmentRepository.AddCandidateRecruitment(data);
             return Json("Success");
+
         }
     }
 }

@@ -1,4 +1,4 @@
-@using JobExchange.Areas.Identity.Data;
+﻿@using JobExchange.Areas.Identity.Data;
 @using JobExchange.Helper;
 @using Microsoft.AspNetCore.Identity;
 @inject JobExchangeContext context
@@ -520,14 +520,13 @@
 @section Scripts{
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById('.btn-apply').addEventListener('click', function () {
-                confirm("Bạn có muốn ứng tuyển job này?");
-
-        document.addEventListener("DOMContentLoaded", function () {
             document.querySelector('#btn-apply-job').addEventListener('click', function () {
                 var recruitmentId = '@Model.Recruitment.RecruitmentId';
                 var candidateId ='@UserManager.GetUserId(User)';
-                console.log(candidateId);
+                if (!candidateId) {
+                    window.location.href = '/Login';
+                    return;
+                }
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/Job/ApplyJob', true);
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
