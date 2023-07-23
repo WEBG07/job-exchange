@@ -46,14 +46,14 @@
                                 <div class="company-banner">
                                     <a asp-controller="Company" asp-action="Detail" asp-route-id="@company.CompanyId">
                                         <div class="cover-wraper">
-                                        <img src="~/images/companies/@company.CoverImage"
+                                        <img src="~/@company.CoverImage"
                                              alt="@company.CompanyName" class="img-fluid" title="@company.CompanyName">
                                         </div>
                                     </a>
                                     <div class="company-logo">
                                         <a asp-controller="Company" asp-action="Detail" asp-route-id="@company.CompanyId">
                                             <img class="img-fluid"
-                                                src="~/images/companies/@company.Avatar"
+                                                src="~/@company.Avatar"
                                              alt="@company.CompanyName" title="@company.CompanyName">
                                         </a>
                                     </div>
