@@ -76,8 +76,20 @@ namespace JobExchange.Controllers
         [HttpPost]
         public IActionResult AddEdudation([FromBody] Education education)
         {
-            _candidateRepository.AddEdudation(education);
-            return Json(education);
+            var Education = _candidateRepository.AddEdudation(education);
+            return Json(Education);
+        }
+        [HttpPost]
+        public IActionResult UpdateEdudation([FromBody] Education education)
+        {
+            var Education = _candidateRepository.UpdateEdudation(education);
+            return Json(Education);
+        }
+        [HttpPost]
+        public IActionResult DeleteEducation(int Id)
+        {
+            var Education = _candidateRepository.DeleteEdudation(Id);
+            return Json(Education);
         }
     }
 }
