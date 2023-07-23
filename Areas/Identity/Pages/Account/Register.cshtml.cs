@@ -27,6 +27,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<JobExchangeUser> _signInManager;
+        private readonly JobExchangeContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<JobExchangeUser> _userManager;
         private readonly IUserStore<JobExchangeUser> _userStore;
@@ -37,6 +38,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
 
         public RegisterModel(
             UserManager<JobExchangeUser> userManager,
+            JobExchangeContext context,
             RoleManager<IdentityRole> roleManager,
             IUserStore<JobExchangeUser> userStore,
             SignInManager<JobExchangeUser> signInManager,
@@ -45,6 +47,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
             ICandidateRepository candidateRepository)
         {
             _userManager = userManager;
+            _context = context;
             _roleManager = roleManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -127,9 +130,9 @@ namespace JobExchange.Areas.Identity.Pages.Account
                     Candidate candidate = new Candidate();
                     candidate.CandidateId = userId;
                     candidate.AccountId = userId;
-                    candidate.Birthday = DateTime.Now;
                     candidate.FullName = user.AccountName;
-                    _candidateRepository.Create(candidate);
+                    _context.Add(candidate);
+                    _context.SaveChanges();
 
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",

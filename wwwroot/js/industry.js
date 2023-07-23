@@ -111,7 +111,7 @@ function updateIndustry() {
                 //$("tbody #2 td").eq(1).val(res.value.industryName);
                 //$("tbody #2 td img").attr("src", "./images/industry/" + res.value.industryImage);
                 document.getElementById(idUpdate).querySelector("td:nth-child(2)").textContent = res.value.industryName;
-                document.getElementById(idUpdate).querySelector("td:nth-child(3) img").src = "./images/industry/" + res.value.industryImage;
+                document.getElementById(idUpdate).querySelector("td:nth-child(3) img").src = "/images/industry/" + res.value.industryImage;
 
                 document.getElementById("btn-close").click();
             }
@@ -165,7 +165,7 @@ function addRowToTable(id, name, image) {
     imgElement.style.width = "250px";
 
     // Đặt thuộc tính src cho thẻ <img>
-    imgElement.src = "./images/industry/" + image;
+    imgElement.src = "/images/industry/" + image;
 
     // Thêm thẻ <img> vào cell3
     cell3.appendChild(imgElement);
@@ -221,9 +221,12 @@ function searchIndustries() {
                 var STT = 1;
                 STT = i + 1;
                 html += `<tr id="` + industry.industryId + `">
-                    <td>` + STT + `</td>
-                    <td id="industry-@item.IndustryId">`+ industry.industryName + `</td>
-                    <td class="table-action">
+                    <td class="col-1">` + STT + `</td>
+                    <td id="industry-@item.IndustryId" class="col-5">`+ industry.industryName + `</td>
+                     <td class="col-3">
+                         <img class="rounded" style="width: 250px;" src="/images/industry/`+ industry.industryImage + `" alt="` + industry.industryImage + `" />
+                    </td>
+                    <td class="table-action col-3">
                         <a onclick="getIndustryById(` + industry.industryId + `)" data-bs-toggle="modal" data-bs-target="#myModal">
                             <i class="fal fa-pen" style="color: #000000; margin-right: 25px;"></i>
                         </a>

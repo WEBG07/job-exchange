@@ -1,55 +1,49 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using JobExchange.Models;
-using JobExchange.Repository;
-using System.Security.Claims;
 using MimeKit;
+using Microsoft.AspNetCore.Identity;
+using JobExchange.Areas.Identity.Data;
+using JobExchange.Repository.RepositoryInterfaces;
 
 namespace JobExchange.Controllers
 {
     public class CandidateController : Controller
     {
-        private readonly CandidateRepository candidateRepository;
-        public CandidateController(CandidateRepository candidateRepository)
+        private readonly ICandidateRepository _candidateRepository;
+        private readonly UserManager<JobExchangeUser> _userManager;
+        public CandidateController(ICandidateRepository candidateRepository, UserManager<JobExchangeUser> userManager)
         {
-            this.candidateRepository = candidateRepository;
+            _candidateRepository = candidateRepository;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
+            var userId = _userManager.GetUserId(User);
 
- 
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            var userIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            var userId = userIdClaim != null ? userIdClaim.Value : null;
-
-            Candidate? candidate = candidateRepository.GetCandidate(userId);
+            Candidate? candidate = _candidateRepository.GetCandidate(userId);
 
             if (candidate == null)
             {
-                Console.WriteLine("Candidate nulll");
                 return RedirectToAction("Index", "Home");
             }
 
             return View(candidate);
         }
+
         [HttpPost]
         public IActionResult UpdateInfoPersonal([FromBody] Candidate candidate)
         {
-
-            candidateRepository.UpdateInfoPersonal(candidate);
+            _candidateRepository.UpdateInfoPersonal(candidate);
             return Json(candidate);
 
         }
         [HttpPost]
-        public string UploadAvatar(IFormFile avatar_file, string industryName)
+        public string UploadAvatar(IFormFile avatar_file)
         {
-            Industry industry = new Industry();
-            //string industryName = Request.Form["industryName"];
-            Console.WriteLine(industryName);
+
             if (avatar_file != null && avatar_file.Length > 0)
             {
-                var claimsIdentity = User.Identity as ClaimsIdentity;
-                var userIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-                var userId = userIdClaim != null ? userIdClaim.Value : null;
+                var userId = _userManager.GetUserId(User);
 
                 string fileName = userId + Path.GetExtension(Path.GetFileName(avatar_file.FileName));
                 string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "avatar");
@@ -59,12 +53,11 @@ namespace JobExchange.Controllers
                 {
                     avatar_file.CopyTo(stream);
                 }
-                if (candidateRepository.UpdateAvatar(userId, fileName))
+                if (_candidateRepository.UpdateAvatar(userId, fileName))
                 {
                     return fileName;
                 }
                 return "error";
-                // Tiếp tục xử lý và trả về phản hồi tùy ý
 
             }
 
@@ -76,14 +69,14 @@ namespace JobExchange.Controllers
         [HttpPost]
         public IActionResult GetAllEducation([FromQuery] string candidateId)
         {
-            List<Education> educations = candidateRepository.GetAllEducation(candidateId);
+            List<Education> educations = _candidateRepository.GetAllEducation(candidateId);
             return Json(educations);
         }
 
         [HttpPost]
         public IActionResult AddEdudation([FromBody] Education education)
         {
-            candidateRepository.AddEdudation(education);
+            _candidateRepository.AddEdudation(education);
             return Json(education);
         }
     }

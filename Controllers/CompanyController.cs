@@ -1,5 +1,6 @@
 using JobExchange.Areas.Identity.Data;
 using JobExchange.Models;
+using JobExchange.Repository;
 using JobExchange.Repository.RepositoryInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -108,11 +109,64 @@ namespace JobExchange.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return View(company);
+                //return View(company);
                 return NotFound();
             }
             return RedirectToAction(nameof(Profile));
         }
 
+        [HttpPost]
+        public string UploadAvatar(IFormFile avatar_file)
+        {
+            if (avatar_file != null && avatar_file.Length > 0)
+            {
+                var userId = _userManager.GetUserId(User);
+
+                string fileName = userId + Path.GetExtension(Path.GetFileName(avatar_file.FileName));
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "companies");
+                string filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    avatar_file.CopyTo(stream);
+                }
+                if (_companyRepository.UpdateAvatar(userId, fileName))
+                {
+                    return fileName;
+                }
+                return "error";
+
+            }
+
+            return "empty";
+        }
+
+        [HttpPost]
+        public string UploadCover(IFormFile cover_file)
+        {
+            if (cover_file != null && cover_file.Length > 0)
+            {
+                var userId = _userManager.GetUserId(User);
+
+                string coverName = DateTime.Now.Ticks.ToString();
+
+                string fileName = "cover-" + coverName + Path.GetExtension(Path.GetFileName(cover_file.FileName));
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "companies");
+                string filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    cover_file.CopyTo(stream);
+                }
+                if (_companyRepository.UpdateCover(userId, fileName))
+                {
+                    return fileName;
+                }
+                return "error";
+
+            }
+
+            return "empty";
+        }
     }
 }

@@ -11,14 +11,11 @@ namespace JobExchange.Models
     {
         [Key]
         public string CandidateId { get; set; } = null!;
-        [Required]
         public string? FullName { get; set; }
-        [Required]
         public DateTime? Birthday { get; set; }
-        [Required]
         public string? Gender { get; set; }
-        [Required]
         public string? Phone { get; set; }
+        public string? Introduce { get; set; }
         public string? Avatar { get; set; }
         public string AccountId { get; set; } = null!;
 

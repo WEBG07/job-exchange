@@ -59,5 +59,33 @@ namespace JobExchange.Repository
             _jobExchangeContext.Companies.Update(company);
             _jobExchangeContext.SaveChanges();
         }
+
+        public bool UpdateAvatar(string companyId, string filename)
+        {
+            var existingCompany = _jobExchangeContext.Companies.Find(companyId);
+
+            if (existingCompany != null && filename != null)
+            {
+                existingCompany.Avatar = filename;
+
+                _jobExchangeContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateCover(string companyId, string filename)
+        {
+            var existingCompany = _jobExchangeContext.Companies.Find(companyId);
+
+            if (existingCompany != null && filename != null)
+            {
+                existingCompany.CoverImage = filename;
+
+                _jobExchangeContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

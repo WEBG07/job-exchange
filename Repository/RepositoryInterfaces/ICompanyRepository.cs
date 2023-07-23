@@ -12,5 +12,7 @@ namespace JobExchange.Repository.RepositoryInterfaces
         void AddCompany(Company company);
         void Update(Company company);
         void DeleteCompany(string companyId);
+        public bool UpdateAvatar(string companyId, string filename);
+        public bool UpdateCover(string companyId, string filename);
     }
 }

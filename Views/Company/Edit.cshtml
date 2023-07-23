@@ -23,12 +23,12 @@
             <div class="container">
                 <div class="company-cover-inner">
                     <div class="cover-wrapper">
-                        <img draggable="false" src="" alt="" class="img-responsive cover-img"
+                        <img draggable="false" src="~/images/companies/@Html.DisplayFor(model => model.CoverImage)" alt="" class="img-responsive cover-img"
                              width="100%">
                     </div>
                     <div class="company-logo">
                         <div class="company-image-logo">
-                            <img draggable="false" src=""
+                            <img draggable="false" src="~/images/companies/@Html.DisplayFor(model => model.Avatar)"
                                  class="img-responsive">
                         </div>
                     </div>
@@ -71,10 +71,10 @@
                                 <span><i class="align-middle me-2" data-feather="save" style="color: #00b14f;"></i></span>
                                 Lưu thay đổi
                             </button>
-                            <button type="submit" class="btn btn-follow" style="width: fit-content; padding-right: 44px;">
+                            <a asp-controller="Company" asp-action="Profile" class="btn btn-follow" style="width: fit-content; padding-right: 44px;">
                                 <span><i class="align-middle me-2" data-feather="arrow-left" style="color: #00b14f;"></i></span>
                                 Quay lại
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

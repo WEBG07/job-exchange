@@ -2,6 +2,7 @@
 using JobExchange.Models;
 using JobExchange.Repository;
 using JobExchange.Repository.RepositoryInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,8 @@ using System.Security.Claims;
 
 namespace JobExchange.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "ROLE_ADMIN")]
     public class IndustryController : Controller
     {
         private readonly IIndustryRepository _industryRepository;

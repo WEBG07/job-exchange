@@ -42,7 +42,7 @@ namespace JobExchange.Controllers
             int pageSize = size > 0 ? size : 10;
             int pageNumber = page > 0 ? page : 1;
 
-            var recruitments = _recruitmentRepository.GetAll();
+            var recruitments = _recruitmentRepository.GetAllByCompanyId(_userManager.GetUserId(User));
             var pagedList = new PagedList<Recruitment>(recruitments, pageNumber, pageSize);
             return View(pagedList);
         }
