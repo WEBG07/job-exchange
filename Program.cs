@@ -37,6 +37,7 @@ builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IRecruitmentRepository, RecruitmentRepository>();
 builder.Services.AddScoped<IIndustryRepository, IndustryRepository>();
 builder.Services.AddScoped<IRecruitmentRepository, RecruitmentRepository>();
+builder.Services.AddScoped<ICandidateRecruitmentRepository, CandidateRecruitmentRepository>();
 
 // Chuyển hướng người dùng
 builder.Services.ConfigureApplicationCookie(options =>
