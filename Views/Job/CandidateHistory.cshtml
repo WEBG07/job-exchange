@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "CandidateHistory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://static.topcv.vn/v4/components/desktop/history-apply.fab26c2bd7442ba9.css">
+    <div id="main">
+        <div id="history-apply">
+            <div class="container">
+                <div id="chat-app" class="row">
+                    <div class="col-md-12">
+
+                        <div class="box-group">
+                            <div class="box-group-header-applied box-group-header">
+                                <div class="box-group-title">
+                                    Công việc đã ứng tuyển
+                                </div>
+                                <div class="box-filter-status" id="boxStatusFilter">
+                                    <select id="statusFilterSelect" name="apply_status" >
+                                        <option value="0">Trạng thái</option>
+                                        <option value="1">Đã ứng tuyển</option>
+                                        <option value="2">NTD đã xem hồ sơ</option>
+                                        <option value="3">Hồ sơ phù hợp</option>
+                                        <option value="4">Hồ sơ chưa phù hợp</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="box-group-body">
+                                <div class="empty-job">
+                                    <div class="image-empty">
+                                        <img src="https://www.topcv.vn/v4/image/history-apply/empty.png"
+                                            alt="empty apply">
+                                    </div>
+                                    <h3 class="title">Bạn chưa ứng tuyển công việc nào!</h3>
+                                    <div class="caption">
+                                        <p>
+                                            Bạn chưa ứng tuyển công việc nào!
+                                        </p>
+                                        <p>
+                                            Bắt đầu sự nghiệp mơ ước với hàng nghìn việc làm chất lượng tại TopCV
+                                        </p>
+                                    </div>
+                                    <div class="btn-action">
+                                        <a href="https://www.topcv.vn/viec-lam" target="_blank"
+                                            class="btn btn-primary btn-primary-hover">Tìm việc ngay</a>
+                                    </div>
+                                </div>
+                                <div class="feed-jobs">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
