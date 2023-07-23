@@ -18,8 +18,8 @@ namespace JobExchange.Controllers
         public IActionResult DefaultJob(string? id)
         {
             var recruitment = _recruitmentRepository.GetById(id);
-            var recruitmentsByCompanyId = _recruitmentRepository.GetRecruitmentsByCompanyId(recruitment.CompanyId);
-            var recruitmentsByIndustryId = _recruitmentRepository.GetRecruitmentsByIndustryId(recruitment.IndustryId);
+            var recruitmentsByCompanyId = _recruitmentRepository.GetRecruitmentsByCompanyId(id, recruitment.CompanyId);
+            var recruitmentsByIndustryId = _recruitmentRepository.GetRecruitmentsByIndustryId(id, recruitment.IndustryId);
             var recruitmentViewModel = new RecruitmentViewModel
             {
                 Recruitment = recruitment,
