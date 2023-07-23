@@ -25,7 +25,7 @@
                     Tìm việc làm
                     nhân viên seo
                 </a> <i class="fa-solid fa-angle-right"></i>
-                <span class="text-dark-blue">@Model.Recruitment.RecruitmentTitle (Thu Nhập Từ @Model.Recruitment.Salary Triệu/Tháng)</span>
+                <span class="text-dark-blue">@Model.Recruitment.RecruitmentTitle (Thu Nhập Từ @Model.Recruitment.Salary /Tháng)</span>
             </div>
             <div class="box-white box-detail-job">
                 <div class="box-header">
@@ -130,7 +130,7 @@
                                     <div>
                                         <span class="box-item--title">Mức lương </span> <br>
                                         <span class="box-item--content">
-                                            @Model.Recruitment.Salary triệu
+                                            @Model.Recruitment.Salary
                                         </span>
                                     </div>
                                 </div>
@@ -212,7 +212,7 @@
                                             <div class="box-save-job-1069099 box-save-job  job-notsave ">
                                                 <button class="btn btn-save save btn-topcv-text-normal btn-outline-hover"
                                                         data-id="1069099"
-                                                        data-title="Nhân Viên SEO - Hà Nội (Thu Nhập Từ 12 - 15 Triệu/Tháng)">
+                                                        data-title="@Model.Company.CompanyName">
                                                     <span id="save-job-loading" style="display: none;">
                                                         <img loading="lazy"
                                                              src="https://www.topcv.vn/v3/images/ap-loading.gif"
@@ -222,7 +222,7 @@
                                                 </button>
                                                 <button class="btn btn-unsave unsave btn-topcv-primary btn-primary-hover"
                                                         data-id="1069099"
-                                                        data-title="Nhân Viên SEO - Hà Nội (Thu Nhập Từ 12 - 15 Triệu/Tháng)">
+                                                        data-title="@Model.Company.CompanyName">
                                                     <span id="unsave-job-loading" style="display: none;">
                                                         <img loading="lazy"
                                                              src="https://www.topcv.vn/v3/images/ap-loading.gif"
@@ -298,7 +298,7 @@
                                                     <a class="underline-box-job" target="_blank"
                                                     href="https://www.topcv.vn/viec-lam/nhan-vien-sales-online-nganh-dien-may-tai-ha-noi-thu-nhap-den-15-trieu-thang/1070953.html?ta_source=JobListInNormalCompany"
                                                     tabindex="0">
-                                                        @item.RecruitmentTitle (Thu Nhập Đến @item.Salary Triệu/Tháng)
+                                                        @item.RecruitmentTitle (Thu Nhập Đến @item.Salary /Tháng)
                                                     </a>
                                                 </div>
                                                 <div class="icon">
@@ -331,7 +331,7 @@
                                             </div>
                                             <div class="col-job-info">
                                                 <div class="salary text_ellipsis">
-                                                    Tới @item.Salary triệu
+                                                    Tới @item.Salary
                                                 </div>
                                                 <div class="address text_ellipsis" data-toggle="tooltip"
                                                     data-html="true" title="" data-placement="top" data-container="body"
@@ -399,24 +399,18 @@
                                                                 </div>
 
                                                                 <a target="_blank"
-                                                                href="https://www.topcv.vn/viec-lam/content-seo-luong-tu-8-12-trieu/1064094.html?ta_source=SuggestSimilarJob&amp;jr_i=job-es-v1%3A%3A1690015675004-b6174e%3A%3Abfecd576b2f04a5db76c68e8512f6335%3A%3A1">
+                                                                href="#">
                                                                     <span data-toggle="tooltip" data-container="body"
                                                                         data-placement="top" title=""
-                                                                        data-original-title="Content SEO (Lương Từ 8 - 12 Triệu)">
-                                                                        @item.RecruitmentTitle (Lương Từ @item.Salary Triệu)
+                                                                        data-original-title="">
+                                                                        @item.RecruitmentTitle (Lương Từ @item.Salary)
                                                                     </span>
                                                                     <span class="icon-verified-employer level-five">
                                                                         <i class="fa-solid fa-circle-check icon-verified-employer-tooltip"
                                                                         data-toggle="tooltip" data-container="body"
                                                                         data-html="true" title=""
                                                                         data-placement="top"
-                                                                        data-original-title="
-                    <b>Nhà tuyển dụng</b><span> đã được xác thực:</span><br>
-                    <span><i class='fa-solid fa-circle-check color-green'></i> Đã xác thực email tên miền công ty</span><br>
-                    <span><i class='fa-solid fa-circle-check color-green'></i> Đã xác thực số điện thoại</span><br>
-                    <span><i class='fa-solid fa-circle-check color-green'></i> Đã được duyệt Giấy phép kinh doanh</span><br>
-                    <span><i class='fa-solid fa-circle-check color-green'></i> Tài khoản NTD được tạo tối thiểu 6 tháng</span><br>
-                    <span><i class='fa-solid fa-circle-check color-green'></i> Chưa có lịch sử bị báo cáo tin đăng</span><br>"></i>
+                                                                           data-original-title="@item.Company.CompanyName"></i>
                                                                     </span>
                                                                 </a>
                                                             </h3>
@@ -424,13 +418,13 @@
                                                             href="https://www.topcv.vn/cong-ty/cong-ty-tnhh-vjs-viet-nam/2725.html"
                                                             data-toggle="tooltip" title="" data-placement="top"
                                                             target="_blank"
-                                                            data-original-title="CÔNG TY TNHH VJS VIỆT NAM">
+                                                               data-original-title="@item.Company.CompanyName">
                                                                 @item.Company.CompanyName
                                                             </a>
                                                         </div>
 
                                                         <label class="title-salary">
-                                                            @item.Salary triệu
+                                                            @item.Salary
                                                         </label>
                                                     </div>
 
@@ -462,7 +456,7 @@
                                                         </label>
                                                     </div>
                                                     <div class="icon">
-                                                        <button data-redirect-to="https://www.topcv.vn/viec-lam/content-seo-luong-tu-8-12-trieu/1064094.html?ta_source=SuggestSimilarJob&amp;jr_i=job-es-v1%3A%3A1690015675004-b6174e%3A%3Abfecd576b2f04a5db76c68e8512f6335%3A%3A1"
+                                                        <button data-redirect-to=""
                                                                 class="btn btn-apply-now">
                                                             <span>Ứng tuyển</span>
                                                         </button>
@@ -480,7 +474,7 @@
                                                             <a href="javascript:void(0)"
                                                             class="btn-unsave unsave text-highlight"
                                                             data-toggle="tooltip" title="" data-id="1064094"
-                                                            data-title="Content SEO (Lương Từ 8 - 12 Triệu)"
+                                                               data-title="@item.Company.CompanyName"
                                                             data-placement="top" data-original-title="Bỏ lưu">
                                                                 <span id="unsave-job-loading" style="display: none;">
                                                                     <img src="https://www.topcv.vn/v3/images/ap-loading.gif"
