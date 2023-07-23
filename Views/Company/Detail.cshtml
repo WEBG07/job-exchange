@@ -1,15 +1,5 @@
 @model CompanyViewModel
-@functions {
-    public string GetRemainingTime(DateTime? expirationDate)
-    {
-        if (expirationDate.HasValue)
-        {
-            var remainingTime = expirationDate.Value - DateTime.Now;
-            return $"{remainingTime.Days}";
-        }
-        return "0";
-    }
-}
+@using JobExchange.Helper;
 @{
     ViewData["Title"] = "Detail Company Page";
 }
@@ -28,12 +18,12 @@
         <div class="container">
             <div class="company-cover-inner">
                 <div class="cover-wrapper">
-                    <img draggable="false" src="~/images/companies/@Model.Company.CoverImage" alt="" class="img-responsive cover-img"
+                    <img draggable="false" src="~/@Model.Company.CoverImage" alt="" class="img-responsive cover-img"
                          width="100%">
                 </div>
                 <div class="company-logo">
                     <div class="company-image-logo">
-                        <img draggable="false" src="~/images/companies/@Model.Company.Avatar" alt="@Model.Company.CompanyName"
+                        <img draggable="false" src="~/@Model.Company.Avatar" alt="@Model.Company.CompanyName"
                              class="img-responsive">
                     </div>
                 </div>
@@ -152,7 +142,7 @@
                                         <div class="job-item-default bg-highlight  job-ta" data-job-id="1063461" data-job-position="1" data-box="BoxRecruitmentInCompany">
                                             <div class="avatar">
                                                 <a target="_blank" asp-controller="Job" asp-action="DefaultJob" asp-route-id="@item.RecruitmentId">
-                                                    <img src="~/images/companies/@item.Company.Avatar"
+                                                    <img src="~/@item.Company.Avatar"
                                                          class="w-100" alt="@item.Company.CompanyName"
                                                          title="Chuyên Viên Hỗ Trợ Khách Hàng Doanh Nghiệp (Hà Nội, Hồ Chí Minh)">
                                                 </a>
@@ -177,7 +167,7 @@
                                                         </div>
                                                         <label class="title-salary">
                                                             <i class="fa-solid fa-circle-dollar"></i>
-                                                            @item.Salary $
+                                                                @FormatHelper.FormatCurrency(item.Salary)
                                                         </label>
                                                     </div>
                                                 </div>
@@ -185,7 +175,10 @@
                                                     <div class="label-content">
                                                         <label class="address" data-toggle="tooltip" data-html="true" title="" data-placement="top"
                                                                data-original-title="<p style='text-align: left'>Hà Nội<br/>Hồ Chí Minh</p>">- @item.City: @item.AddressDetail, @item.Ward, @item.District, @item.City</label>
-                                                        @if (GetRemainingTime(item.ExpirationDate) == "0")
+                                                        @{
+                                                            var days = FormatHelper.GetRemainingTime(item.ExpirationDate);
+                                                        }
+                                                        @if (days <=0)
                                                         {
                                                             <label class="label label-warning">Tin tuyển dụng hết hạn</label>
                                                         }
@@ -193,7 +186,7 @@
                                                         {
                                                             <label class="time">
                                                                 Còn
-                                                                <strong>@GetRemainingTime(item.ExpirationDate)</strong>
+                                                                <strong>@days</strong>
                                                                 ngày để ứng tuyển
                                                             </label>
                                                         }
@@ -242,7 +235,7 @@
                                         <div class="result-search-companies">
                                             <div class="result-search-company" style="background: WHITE;">
                                                 <a asp-controller="Company" asp-action="Detail" asp-route-id="@company.CompanyId" class="logo">
-                                                    <img src="~/images/companies/@company.Avatar" alt="@company.CompanyName" title="@company.CompanyName"
+                                                    <img src="~/@company.Avatar" alt="@company.CompanyName" title="@company.CompanyName"
                                                          class="img-responsive">
                                                 </a>
                                                 <div class="result-search-company-info">
@@ -321,30 +314,27 @@
 </div>
 @section Scripts{
     <script>
-        $(document).ready(function () {
-            $('.btn-search-job-company').click(function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector('.btn-search-job-company').addEventListener('click', function () {
                 var companyId = '@Model.Company.CompanyId';
-                var name = $('#job-listing-name').val();
+                var name = document.getElementById('job-listing-name').value;
 
-                if (name == '') {
+                if (name === '') {
                     alert("Please enter job");
                     return false;
                 }
 
-                $.ajax({
-                    url: '/Company/Recruitments',
-                    type: 'POST',
-                    data: {
-                        companyId,
-                        name,
-                    },
-                    success: function (data) {
-                        $('.job-list-default').html('');
-                        $('.job-list-default').html(data);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/Company/Recruitments', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        document.querySelector('.job-list-default').innerHTML = '';
+                        document.querySelector('.job-list-default').innerHTML = xhr.responseText;
                     }
-                })
-
-            })
+                };
+                xhr.send('companyId=' + encodeURIComponent(companyId) + '&name=' + encodeURIComponent(name));
+            });
         });
     </script>
 }

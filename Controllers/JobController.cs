@@ -1,4 +1,5 @@
-﻿using JobExchange.Areas.Identity.Data;
+using JobExchange.Areas.Identity.Data;
+using System.Security.Claims;
 using JobExchange.Models;
 using JobExchange.Repository;
 using JobExchange.Repository.RepositoryInterfaces;
@@ -10,31 +11,37 @@ namespace JobExchange.Controllers
 {
     public class JobController : Controller
     {
+    
         private readonly IRecruitmentRepository _recruitmentRepository;
+        private readonly ICandidateRecruitmentRepository _candidateRecruitmentRepository;
         private readonly ISaveJobRepository _saveJobRepository;
         private readonly UserManager<JobExchangeUser> _userManager;
         private readonly JobExchangeContext _context;
-        public JobController(IRecruitmentRepository recruitmentRepository, JobExchangeContext context, ISaveJobRepository saveJobRepository, UserManager<JobExchangeUser> userManager)
+        public JobController(ICandidateRecruitmentRepository candidateRecruitmentRepository, IRecruitmentRepository recruitmentRepository, JobExchangeContext context, ISaveJobRepository saveJobRepository, UserManager<JobExchangeUser> userManager)
         {
             _recruitmentRepository = recruitmentRepository;
             _saveJobRepository = saveJobRepository;
             _userManager = userManager;
+            _candidateRecruitmentRepository = candidateRecruitmentRepository;
             _context = context;
-        }
+}
         public IActionResult Index()
         {
             return View();
         }
         public IActionResult DefaultJob(string? id)
         {
+            var candidateId=User.FindFirstValue(ClaimTypes.NameIdentifier);
             var recruitment = _recruitmentRepository.GetById(id);
-            var recruitmentsByCompanyId = _recruitmentRepository.GetRecruitmentsByCompanyId(recruitment.CompanyId);
-            var recruitmentsByIndustryId = _recruitmentRepository.GetRecruitmentsByIndustryId(recruitment.IndustryId);
+            var recruitmentsByCompanyId = _recruitmentRepository.GetRecruitmentsByCompanyId(id, recruitment.CompanyId);
+            var recruitmentsByIndustryId = _recruitmentRepository.GetRecruitmentsByIndustryId(id, recruitment.IndustryId);
+            var checkApply = _candidateRecruitmentRepository.checkApplication(candidateId,id);
             var recruitmentViewModel = new RecruitmentViewModel
             {
                 Recruitment = recruitment,
                 RecruitmentsCompanyId = recruitmentsByCompanyId,
-                RecruitmentsIndustryId = recruitmentsByIndustryId
+                RecruitmentsIndustryId = recruitmentsByIndustryId,
+                CheckApply = checkApply
             };
             bool isSave = _saveJobRepository.ExistsById(_userManager.GetUserId(User), id);
 
@@ -94,6 +101,18 @@ namespace JobExchange.Controllers
             {
                 return BadRequest();
             }
+        }
+        [HttpPost]
+        public IActionResult ApplyJob(string candidateId, string recruitmentId)
+        {
+            var data = new CandidateRecruitment{
+                RecruitmentId = recruitmentId,
+                CandidateId = candidateId,
+                ApplicationStatus = "Đang chờ xét duyệt",
+                CreatedAt = DateTime.Now,
+            };
+            _candidateRecruitmentRepository.AddCandidateRecruitment(data);
+            return Json("Success");
         }
     }
 }
