@@ -136,7 +136,7 @@
                         <button class="btn btn-topcv btn-search-job">Tìm kiếm</button>
                     </div>
                 </form>
-                <div class="box-work-market">
+                @*<div class="box-work-market">
                     <div class="header">
                         <i class="fa-regular fa-calendar-star"></i>
                         <span>
@@ -172,7 +172,7 @@
                             </div>
                         </div>
                     </a>
-                </div>
+                </div>*@
             </div>
             <img class="img-responsive img-robot" src="~/images/icon-header-svg/robot.png" alt="">
             <img class="img-responsive img-bg-left" src="~/images/icon-header-svg/bg-left.png" alt="">
@@ -193,17 +193,7 @@
                             </h2>
                         </div>
                         <div class="box-header__tool">
-                            <span class="see-more">
-                                <a href="viec-lam-tot-nhat.html" target="_blank">
-                                    Xem tất cả
-                                </a>
-                            </span>
-                            <span class="btn-feature-jobs-pre btn-slick-arrow">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
-                            <span class="btn-feature-jobs-next btn-slick-arrow">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </span>
+                            
                         </div>
                     </div>
                     <div class="box-filter">
@@ -216,781 +206,150 @@
                                     </span>
                                 </div>
                                 <select id="filter-feature-job" class="form-control js-option-filter">
-                                    <option value="cities">Địa điểm</option>
-                                    <option value="salary">Mức lương</option>
-                                    <option value="experience">Kinh nghiệm</option>
-                                    <option value="categoriesJob">Ngành nghề</option>
+                                    <option value="City">Địa điểm</option>
+                                    <option value="Salary">Mức lương</option>
+                                    <option value="Experience">Kinh nghiệm</option>
+                                    <option value="Industry">Ngành nghề</option>
                                 </select>
                             </div>
                         </div>
                         <div class="box-smart-filter box-smart-feature-jobs">
-                            <div class="box-smart-location" v-if="Object.keys(listSmartBox).length > 0">
-                                <div class="prev-location btn-slick-arrow">
-                                    <i class="fa-solid fa-angle-left"></i>
-                                </div>
-                                <div class="box-smart-list-location">
-                                    <div v-for="(item, index) in listSmartBox[optionFilter].option"
-                                         :key="`smart-city-${index}`" class="box-smart-item"
-                                         :class="{ 'active': selectSmartBox == index }" :data-city_id="index">
-                                        {{ item }}
+                            <div class="box-smart-location" id="City">
+                                <div class="box-smart-list-location row">
+                                    <style>
+                                        .hi {
+                                            display: flex;
+                                            justify-items: center;
+                                            align-items: center;
+                                            gap: 1rem;
+                                        }
+                                    </style>
+                                    <div class="col-md-6 col-sm-12 row hi">
+                                        
+                                        <div class="col-md-4 col-sm-12 ">
+                                            <label class="control-label mb-2">Tỉnh / Thành phố<span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <select id="cities" class="form-control">
+                                                <option value=''>-- Chọn tỉnh/thành phố --</option>
+                                                 @foreach (var data in ViewBag.City)
+                                                {
+                                                <option value="@data.name">@data.name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 row hi">
+                                        <div class="col-md-4 col-sm-12">
+                                            <label class="control-label mb-2">Quận / Huyện<span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <select id="districts" class="form-control col-md-6 col-md-12">
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="next-location btn-slick-arrow">
-                                    <i class="fa-solid fa-angle-right"></i>
+                            </div>
+                            <script>
+                                let filterCities = document.getElementById("cities");
+                                filterCities.addEventListener("change", function (e) {
+                                    var selectedCityCode = this.value;
+                                    var districtsSelect = document.getElementById("districts");
+
+                                    // Clear the previous options
+                                    districtsSelect.innerHTML = "<option value=''>-- Chọn quận/huyện --</option>";
+
+                                    // Find the selected city data from the Model
+                                    var selectedCityData = @Html.Raw(Json.Serialize(ViewBag.City)) // Pass the Model as JSON to the JavaScript
+
+                                        selectedCityData.forEach(function (cityData) {
+                                            if (cityData.name == selectedCityCode) {
+                                                // Populate the "districts" select with the districts of the selected city
+                                                cityData.districts.forEach(function (district) {
+                                                    var option = document.createElement("option");
+                                                    option.value = district.name;
+                                                    option.text = district.name;
+                                                    districtsSelect.appendChild(option);
+                                                });
+                                            }
+                                        });
+                                });
+                            </script>
+                            <div class="row" id="Salary">
+                                <div class="col-md-6 col-sm-12">
+                                    <select id="salaries" class="form-control col-md-6 col-md-12">
+                                        <option value="">Tất cả</option>
+                                        <option value="0-3">Dưới 3 triệu</option>
+                                        <option value="3-10">Từ 3-10 triệu</option>
+                                        <option value="10-20">Từ 10-20 triệu</option>
+                                        <option value="20-30">Từ 20-30 triệu</option>
+                                        <option value="30-1000">Trên 30 triệu</option>
+                                        @*<option value="tt">Thỏa thuận</option>*@
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" id="Experience">
+                                <div class="col-md-6 col-sm-12">
+                                    <select id="experiences" class="form-control col-md-6 col-md-12">
+                                        <option value="">Tất cả</option>
+                                        <option value="0-0">Chưa có kinh nghiệm</option>
+                                        <option value="0-1">1 năm trở xuống</option>
+                                        <option value="1-2">2 năm</option>
+                                        <option value="2-3">3 năm</option>
+                                        <option value="3-5">Từ 4 - 5 năm</option>
+                                        <option value="5-99">Trên 5 năm</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" id="Industry">
+                                <div class="col-md-6 col-sm-12">
+                                    <select id="industryes" asp-items="ViewBag.IndustryId" class="form-control col-md-6 col-md-12">
+                                        <option value="">Tất cả</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="loadingg" v-if="isLoading"
+                    <div class="loadingg" 
                         style="min-height: 735px; margin-bottom: 60px; display: grid; grid-template-columns: repeat(3, 1fr);">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="v4/image/loading/job-box.svg" class="img-responsive" width="340px" height="108px">
-                    </div> -->
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
+                    </div>
 
                     <section>
                         <div id="carousel-job" class="carousel slide" data-ride="carousel" data-interval="20000">
                             <!-- Indicators -->
-                            <ol class="carousel-indicators">
+                            @*<ol class="carousel-indicators">
                                 <li data-target="#carousel-job" data-slide-to="0" class="active"></li>
                                 <li data-target="#carousel-job" data-slide-to="1"></li>
                                 <li data-target="#carousel-job" data-slide-to="2"></li>
-                            </ol>
+                            </ol>*@
 
                             <!-- Wrapper for slides -->
-                            <div class="carousel-inner" role="listbox">
-                                <div class="item active">
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div data-job-id="526118" data-job-position="526118"
-                                         class="col-md-4 col-sm-6 feature-job job-ta">
-                                        <div class="feature-job-item">
-                                            <div class="cvo-flex">
-                                                <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                   target="_blank" tabindex="0">
-                                                    <div class="box-company-logo">
-                                                        <div class="avatar">
-                                                            <img src="https://cdn-new.topcv.vn/unsafe/200x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-cong-nghe-windsoft-viet-nam-5f6474533ba21.jpg"
-                                                                 alt="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                                 class="img-responsive">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <div class="col-title cvo-flex-grow">
-                                                    <a href="https://www.topcv.vn/viec-lam/nhan-vien-kinh-doanh-san-pham-phan-mem-cong-nghe-luong-cung-9-trieu-hoa-hong/526118.html?ta_source=BoxFeatureJob"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="title text_ellipsis"
-                                                       data-original-title="Nhân Viên Kinh Doanh Sản Phẩm Phần Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)"
-                                                       tabindex="0">
-                                                        <strong class="job_title">
-                                                            Nhân Viên Kinh Doanh Sản Phẩm Phần
-                                                            Mềm Công Nghệ (Lương Cứng 9 Triệu + Hoa Hồng)
-                                                        </strong>
-                                                    </a>
-                                                    <a href="https://www.topcv.vn/cong-ty/cong-ty-co-phan-cong-nghe-windsoft-viet-nam/43103.html"
-                                                       target="_blank" data-toggle="tooltip" title=""
-                                                       data-placement="top" data-container="body"
-                                                       class="text-silver company text_ellipsis company_name"
-                                                       data-original-title="Công ty cổ phần Công nghệ Windsoft Việt Nam"
-                                                       tabindex="0">
-                                                        Công ty cổ phần Công nghệ Windsoft Việt Nam
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <div class="col-job-info">
-                                                    <div class="salary">
-                                                        <span class="text_ellipsis">6 - 10 triệu</span>
-                                                    </div>
-                                                    <div data-html="true" data-toggle="tooltip" title=""
-                                                         data-placement="top" data-container="body" class="address"
-                                                         data-original-title="<p style='text-align: left'>Hà Nội<br/>Hải Phòng: Hải An<br/>Hồ Chí Minh: Tân Bình</p>">
-                                                        <span class="text_ellipsis">Hà Nội &amp; 2 nơi khác</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-like">
-                                                    <button data-id="526118" class="btn-outline-hover save-job"
-                                                            tabindex="0">
-                                                        <i class="fa-regular fa-heart icon-first"></i>
-                                                        <i class="fa-solid fa-heart icon-last"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <div class="carousel-inner" role="listbox" id="list-job">
+                                
                             </div>
-                            <div class="feature-job-page">
+                            <div class="feature-job-page" id="feature-job-page">
                                 <div class="content">
                                     <a class="" href="#carousel-job" role="button" data-slide="prev">
                                         <span class="btn-feature-jobs-pre btn-slick-arrow">
@@ -999,9 +358,8 @@
                                     </a>
 
                                     <div class="feature-job-page__text">
-                                        <p class="slick-pagination">
-                                            <span class="hight-light">1</span> / 2
-                                            trang
+                                        <p class="slick-pagination" id="pagination-job">
+                                            
                                         </p>
                                     </div>
                                     <a href="#carousel-job" role="button" data-slide="next">
@@ -1040,19 +398,19 @@
                 </div>
                 <div class="row loading" style="display: none;">
                     <div class="col-md-3">
-                        <img src="https://www.topcv.vn/v4/image/loading/top-company.svg"
+                        <img src="~/images/icon-header-svg/top-company.svg"
                              width="260px" alt="Loading Job Content" height="304px">
                     </div>
                     <div class="col-md-3">
-                        <img src="https://www.topcv.vn/v4/image/loading/top-company.svg"
+                        <img src="~/images/icon-header-svg/top-company.svg"
                              width="260px" alt="Loading Job Content" height="304px">
                     </div>
                     <div class="col-md-3">
-                        <img src="https://www.topcv.vn/v4/image/loading/top-company.svg"
+                        <img src="~/images/icon-header-svg/top-company.svg"
                              width="260px" alt="Loading Job Content" height="304px">
                     </div>
                     <div class="col-md-3">
-                        <img src="https://www.topcv.vn/v4/image/loading/top-company.svg"
+                        <img src="~/images/icon-header-svg/top-company.svg"
                              width="260px" alt="Loading Job Content" height="304px">
                     </div>
                 </div>
@@ -1520,3 +878,4 @@
 
     </div>
 </div>
+<script src="~/js/job.js" asp-append-version="true"/>

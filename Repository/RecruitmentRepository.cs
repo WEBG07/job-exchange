@@ -3,6 +3,7 @@ using JobExchange.Models;
 using JobExchange.Repository.RepositoryInterfaces;
 using MailKit.Search;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace JobExchange.Repository
@@ -85,6 +86,39 @@ namespace JobExchange.Repository
         public IEnumerable<Recruitment> GetRecruitmentsByName(string companyId, string name)
         {
             return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId &&  r.JobDescription.Contains(name)).ToList();
+        }
+        public IEnumerable<Recruitment> GetRecruitments(string filter = null, string value1 = null, string value2 = null)
+        {
+            var recruitments = _jobExchangeContext.Recruitments.Include(r => r.Industry).Include(r => r.Company);
+            if (!string.IsNullOrEmpty(filter))
+            {
+                if (filter.Equals("districts"))
+                {
+                    return recruitments.Where(r => r.District.Contains(value1)).ToList();
+                }
+                if (filter.Equals("salaries"))
+                {
+                    int intValue1 = int.Parse(value1) * 1000000;
+                    int intValue2 = int.Parse(value2) * 1000000;
+                    return recruitments.Where(r => r.Salary >= intValue1 && r.Salary <= intValue2).ToList();
+                }
+                if (filter.Equals("experiences"))
+                {
+                    int intValue1 = int.Parse(value1);
+                    int intValue2 = int.Parse(value2);
+                    return recruitments.Where(r => r.Experience > intValue1 && r.Experience <= intValue2).ToList();
+                }
+                if (filter.Equals("industryes"))
+                {
+                    int intValue1 = int.Parse(value1);
+                    return recruitments.Where(r => r.IndustryId == intValue1).ToList();
+                }
+            }
+
+            recruitments.ToList();
+            return recruitments;
+
+
         }
     }
 }
