@@ -28,12 +28,12 @@
         <div class="container">
             <div class="company-cover-inner">
                 <div class="cover-wrapper">
-                    <img draggable="false" src="~/@Model.Company.CoverImage" alt="" class="img-responsive cover-img"
+                    <img draggable="false" src="~/images/companies/@Model.Company.CoverImage" alt="" class="img-responsive cover-img"
                         width="100%">
                 </div>
                 <div class="company-logo">
                     <div class="company-image-logo">
-                        <img draggable="false" src="~/@Model.Company.Avatar" alt="@Model.Company.CompanyName"
+                        <img draggable="false" src="~/images/companies/@Model.Company.Avatar" alt="@Model.Company.CompanyName"
                             class="img-responsive">
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                                 <span class="company-subdetail-info-icon">
                                     <i class="fa-solid fa-users"></i>
                                 </span>
-                                <span class="company-subdetail-info-text">695 người theo dõi</span>
+                                <span class="company-subdetail-info-text">@Model.Company.Scale</span>
                             </div>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                                         <div class="job-item-default bg-highlight  job-ta" data-job-id="1063461" data-job-position="1" data-box="BoxRecruitmentInCompany">
                                             <div class="avatar">
                                                 <a target="_blank" asp-controller="Job" asp-action="DefaultJob" asp-route-id="@item.RecruitmentId">
-                                                    <img src="~/@item.Company.Avatar"
+                                                    <img src="~/images/companies/@item.Company.Avatar"
                                                         class="w-100" alt="@item.Company.CompanyName"
                                                         title="Chuyên Viên Hỗ Trợ Khách Hàng Doanh Nghiệp (Hà Nội, Hồ Chí Minh)">
                                                 </a>
@@ -216,10 +216,59 @@
                             </div>
                         </div>
                     </div>
+                    
                     <link rel="stylesheet"
                         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
                         referrerpolicy="no-referrer" />
+                    
+                    <div id="section-top-company-field">
+                        <h3 class="title">
+                            Top công ty cùng lĩnh vực
+                        </h3>
+                        <div class="box-result-search-companies" style="background: White">
+                            <div class=" box-result box-white">
+                                <div class="result-search-companies">
+                                    @if (@Model.RelatedCompanies.Count() > 0)
+                                    {
+                                        @foreach (var company in @Model.RelatedCompanies)
+                                        {
+                                            <div class="result-search-company">
+                                                <a asp-controller="Company" asp-action="Detail" asp-route-id="@company.CompanyId" class="logo">
+                                                    <img src="~/images/companies/@company.Avatar" alt="@company.CompanyName" title="@company.CompanyName"
+                                                         class="img-responsive">
+                                                </a>
+                                                <div class="result-search-company-info">
+                                                    <div class="title">
+                                                        <strong>
+                                                            <a class="company-name" asp-controller="Company" asp-action="Detail"
+                                                               asp-route-id="@company.CompanyId"
+                                                               target="_blank">@company.CompanyName</a>
+                                                        </strong>
+                                                        <span class="countJob">@*<i class="fa-solid fa-circle circle"></i> Đang tuyển @company.Recruitments.Count vị trí*@</span>
+                                                    </div>
+                                                    <div class="company-address d-flex">
+                                                        <i class="fa-solid fa-circle-location-arrow"></i> <span>
+                                                            <span style="color: #999999">
+                                                                Trụ
+                                                                sở chính:
+                                                            </span>@company.Address
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div style="clear: both"></div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p>Không có công ty nào.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    
                 </div>
                 <div class="col-md-4">
                     <div id="section-contact">
@@ -251,50 +300,6 @@
                                 <a href="#"
                                     target="_blank"><img
                                         src="https://www.topcv.vn/v4/image/normal-company/share/linked.png" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="box-result-search-companies">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-9">
-                        <div class=" box-result box-white">
-                            <div class="result-search-companies">
-                                <h3 class="title">
-                                    Top công ty cùng lĩnh vực
-                                </h3>
-                                @if (@Model.RelatedCompanies.Count() > 0)
-                                {
-                                    @foreach (var company in @Model.RelatedCompanies)
-                                    {
-                                        <div class="result-search-company">
-                                            <a asp-controller="Company" asp-action="Detail" asp-route-id="@company.CompanyId" class="logo">
-                                                <img src="~/@company.Avatar" alt="@company.CompanyName" title="@company.CompanyName"
-                                                    class="img-responsive">
-                                            </a>
-                                            <div class="result-search-company-info">
-                                                <div class="title">
-                                                    <strong><a class="company-name" asp-controller="Company" asp-action="Detail"
-                                                            asp-route-id="@company.CompanyId"
-                                                            target="_blank">@company.CompanyName</a></strong>
-                                                    <span class="countJob">@*<i class="fa-solid fa-circle circle"></i> Đang tuyển @company.Recruitments.Count vị trí*@</span>
-                                                </div>
-                                                <div class="company-address d-flex">
-                                                    <i class="fa-solid fa-circle-location-arrow"></i> <span><span style="color: #999999">Trụ
-                                                            sở chính: </span>@company.Address</span>
-                                                </div>
-                                            </div>
-                                            <div style="clear: both"></div>
-                                        </div>
-                                    }
-                                }
-                                else
-                                {
-                                    <p>Không có công ty nào.</p>
-                                }
                             </div>
                         </div>
                     </div>

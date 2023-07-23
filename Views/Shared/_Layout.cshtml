@@ -129,7 +129,7 @@
                             <a href="javascript:void(0)">
                                 <img src="~/images/avatar/@candidate?.Avatar" alt="Avatar" id="avatar">
                                 @*<span class="fullname">Hello @Account?.AccountName !</span>*@
-                                <span class="fullname">Hello @candidate?.FullName !</span>
+                                <span class="fullname">Hello @candidate.FullName !</span>
                             </a>
                         </div>
                         <div class="group-hover:menu navbar__item__dropdown-menu">
@@ -215,7 +215,7 @@
             </ul>
         </div>
     </nav>
-    <div class="">
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

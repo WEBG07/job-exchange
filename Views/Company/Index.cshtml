@@ -15,7 +15,7 @@
                     </li>
                 </ul>
                 <div class="caption">
-                    <h1 class="title">Khám phá 100.000+ công ty nổi bật</h1>
+                    <h1 class="title">Khám phá 100+ công ty nổi bật</h1>
                     <p class="description">Tra cứu thông tin công ty và tìm kiếm nơi làm việc tốt nhất dành cho
                         bạn</p>
                 </div>
@@ -46,15 +46,15 @@
                                 <div class="company-banner">
                                     <a asp-controller="Company" asp-action="Detail" asp-route-id="@company.CompanyId">
                                         <div class="cover-wraper">
-                                            <img src="~/@company.CoverImage"
-                                                alt="@company.CompanyName" class="img-fluid">
+                                        <img src="~/images/companies/@company.CoverImage"
+                                             alt="@company.CompanyName" class="img-fluid" title="@company.CompanyName">
                                         </div>
                                     </a>
                                     <div class="company-logo">
                                         <a asp-controller="Company" asp-action="Detail" asp-route-id="@company.CompanyId">
                                             <img class="img-fluid"
-                                                src="~/@company.Avatar"
-                                                alt="TỔ CHỨC GIÁO DỤC FPT">
+                                                src="~/images/companies/@company.Avatar"
+                                             alt="@company.CompanyName" title="@company.CompanyName">
                                         </a>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
                                             target="_blank">@company.CompanyName</a>
                                     </h3>
                                     <div class="company-description">
-                                        <p>" @company.Introduce"</p>
+                                        <p>"@company.Introduce"</p>
                                     </div>
                                 </div>
                             </div>
