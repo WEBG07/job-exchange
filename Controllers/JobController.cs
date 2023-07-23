@@ -92,7 +92,8 @@ namespace JobExchange.Controllers
         }
         public IActionResult CandidateHistory()
         {
-            return View();
+            var candidateRecruitments = _candidateRecruitmentRepository.GetCandidateRecruitments(_userManager.GetUserId(User));
+            return View(candidateRecruitments);
         }
 
         public IActionResult Saved()
@@ -156,7 +157,6 @@ namespace JobExchange.Controllers
             };
             _candidateRecruitmentRepository.AddCandidateRecruitment(data);
             return Json("Success");
-
         }
     }
 }
