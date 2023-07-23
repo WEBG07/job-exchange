@@ -8,6 +8,6 @@ namespace JobExchange.Models
         public Recruitment Recruitment { get; set; }
         public IEnumerable<Recruitment> RecruitmentsCompanyId { get; set; }
         public IEnumerable<Recruitment> RecruitmentsIndustryId { get; set; }
-
+        public bool CheckApply { get; set; }
     }
 }
