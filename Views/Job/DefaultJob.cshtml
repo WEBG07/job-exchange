@@ -1,4 +1,4 @@
-@using JobExchange.Areas.Identity.Data;
+﻿@using JobExchange.Areas.Identity.Data;
 @using JobExchange.Helper;
 @using Microsoft.AspNetCore.Identity;
 @inject JobExchangeContext context
@@ -202,11 +202,9 @@
                                     <div class="">
                                         <div class="d-flex box-btn">
                                             <p>
-                                                <a href="#"
-                                                   class="btn btn-topcv-primary btn-primary-hover btn-apply open-apply-modal"
+                                                <a href="#" class="btn btn-topcv-primary btn-primary-hover btn-apply open-apply-modal"
                                                    data-toggle="modal">
-                                                    <i class="fa-regular fa-paper-plane"></i> Ứng tuyển
-                                                    ngay
+                                                    <i class="fa-regular fa-paper-plane"></i> Ứng tuyển ngay
                                                 </a>
                                             </p>
                                             <div id="box-save-job-1069099" class="box-save-job  job-notsave ">
@@ -520,14 +518,13 @@
 @section Scripts{
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById('.btn-apply').addEventListener('click', function () {
-                confirm("Bạn có muốn ứng tuyển job này?");
-
-        document.addEventListener("DOMContentLoaded", function () {
             document.querySelector('#btn-apply-job').addEventListener('click', function () {
                 var recruitmentId = '@Model.Recruitment.RecruitmentId';
                 var candidateId ='@UserManager.GetUserId(User)';
-                console.log(candidateId);
+                if (!candidateId) {
+                    window.location.href = '/Login';
+                    return;
+                }
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/Job/ApplyJob', true);
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');

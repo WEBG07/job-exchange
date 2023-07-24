@@ -9,6 +9,7 @@ namespace JobExchange.Repository.RepositoryInterfaces
         IEnumerable<CompanyWithRecruitmentCount> GetTopCompaniesWithRecruitmentCount();
         IEnumerable<Company> GetCompaniesRelated(int industryId, string companyId);
         IEnumerable<Company> SearchCompanies(string name);
+        IEnumerable<Company> SearchAjaxCompanies(string name);
         Company GetCompanyById(string companyId);
         void AddCompany(Company company);
         void Update(Company company);
