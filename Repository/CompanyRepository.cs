@@ -49,6 +49,11 @@ namespace JobExchange.Repository
             return _jobExchangeContext.Companies.OrderByDescending(c => c.Recruitments.Count()).Take(5).ToList();
         }
 
+        public IEnumerable<Company> SearchAjaxCompanies(string name)
+        {
+            return _jobExchangeContext.Companies.Where(c => c.CompanyName.Contains(name)).ToList();
+        }
+
         public IEnumerable<Company> SearchCompanies(string name)
         {
             return _jobExchangeContext.Companies.Include(c => c.Recruitments).Where(c => c.CompanyName.Contains(name)).ToList();

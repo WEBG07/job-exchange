@@ -71,6 +71,12 @@ namespace JobExchange.Controllers
             return PartialView("_Recruitments", recruitments);
         }
 
+        public IActionResult SearchCompanyAjax(string companyName)
+        {
+            var companies = _companyRepository.SearchAjaxCompanies(companyName);
+            return PartialView("_SearchCompanyAjax", companies);
+        }
+
         public IActionResult Profile()
         {
             var companyId = _userManager.GetUserId(User);
