@@ -5,9 +5,6 @@
 @inject UserManager<JobExchangeUser> UserManager
 @inject JobExchangeContext context
 
-@{
-    var Account = await UserManager.GetUserAsync(User) as JobExchangeUser;
-}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -146,14 +143,30 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (SignInManager.IsSignedIn(User))
                 {
+                    var Account = await UserManager.GetUserAsync(User) as JobExchangeUser;
                     var candidate = context.Candidates.FirstOrDefault(c => c.CandidateId == UserManager.GetUserId(User));
+                    var company = context.Companies.FirstOrDefault(c => c.CompanyId == UserManager.GetUserId(User));
                     var avatar = (!string.IsNullOrEmpty(candidate?.Avatar)) ? candidate?.Avatar : "avatar-default.jpg";
+                    var avatarCompany = (!string.IsNullOrEmpty(candidate?.Avatar)) ? company?.Avatar : "avatar-default.jpg";
                     <li class="navbar-right__item group">
                         <div class="title">
                             <a href="javascript:void(0)">
-                                <img src="~/images/avatar/@avatar" alt="Avatar" id="avatar">
-                                @*<span class="fullname">Hello @Account?.AccountName !</span>*@
-                                <span class="fullname">Hello @candidate.FullName !</span>
+                                @if (@User.IsInRole("ROLE_CANDIDATE"))
+                                {
+                                    <img src="~/images/avatar/@avatar" alt="Avatar" id="avatar">
+                                    <span class="fullname">Hello @candidate.FullName !</span>
+                                }
+                                else if (@User.IsInRole("ROLE_COMPANY"))
+                                {
+                                    <img src="~/images/companies/@avatarCompany" alt="Avatar" id="avatar">
+                                    <span class="fullname">Hello @Account.AccountName !</span>
+                                }
+                                else
+                                {
+                                    <img src="~/images/avatar-default.jpg" alt="Avatar" id="avatar">
+                                    <span class="fullname">Hello @Account.AccountName !</span>
+                                    
+                                }
                             </a>
                         </div>
                         <div class="group-hover:menu navbar__item__dropdown-menu">
@@ -162,7 +175,16 @@
                                     <img src="~/images/avatar/@avatar" alt="Avatar">
                                     <div class="caption">
                                         @*<p class="name">@Account?.AccountName</p>*@
-                                        <p class="name" id="fullname">@candidate?.FullName</p>
+
+                                        @if (@User.IsInRole("ROLE_CANDIDATE"))
+                                        {
+                                            <p class="name" id="fullname">@candidate?.FullName</p>
+                                        }
+                                        else
+                                        {
+                                            <span class="fullname">Hello @Account.AccountName !</span>
+
+                                        }
                                         <p class="description">@UserManager.GetUserName(User)</p>
                                         <p class="description">Chế độ tài khoản: <span class="code" style="color: #00b14f">Đã xác thực</span></p>
                                     </div>

@@ -27,9 +27,9 @@
                 <label class="d-flex">
                     <form asp-controller="Industry" asp-action="Index">
                         <select name="size" onchange="this.form.submit()" id="pageSizeSelect" style="width:fit-content" aria-controls="datatables-reponsive" class="form-select form-select-sm">
+                            <option value="5" selected="@(Model.PageSize == 5)">5</option>
                             <option value="10" selected="@(Model.PageSize == 10)">10</option>
                             <option value="20" selected="@(Model.PageSize == 20)">20</option>
-                            <option value="50" selected="@(Model.PageSize == 50)">50</option>
                         </select>
                     </form>
                 </label>

@@ -85,29 +85,11 @@ namespace JobExchange.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                var roles = await _userManager.GetRolesAsync(user);
-
 
                 if (result.Succeeded)
                 {
-                    if (roles.Contains("ROLE_ADMIN"))
-                    {
-                        return Redirect("/Industry/Index");
-                    }
-                    else if (roles.Contains("ROLE_CANDIDATE"))
-                    {
-                        return Redirect("/Home/Index");
-                    }
-                    else if (roles.Contains("ROLE_COMPANY"))
-                    {
-                        return Redirect("/Recruitment/Index");
-                    }
-                    else
-                    {
-                        _logger.LogInformation("Người dùng đã đăng nhập!");
-                        return LocalRedirect(returnUrl);
-                    }
-
+                    _logger.LogInformation("Người dùng đã đăng nhập!");
+                    return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -120,7 +102,7 @@ namespace JobExchange.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Nỗ lực đăng nhập không hợp lệ!");
+                    ModelState.AddModelError(string.Empty, "Tài khoản hoặc mật khẩu không chính xác hoặc tài khoản chưa xác thực!");
                     return Page();
                 }
             }

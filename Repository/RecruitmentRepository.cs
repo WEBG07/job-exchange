@@ -55,6 +55,16 @@ namespace JobExchange.Repository
             return results.ToList();
         }
 
+        public List<Recruitment> SearchByCompanyAdmin(string companyId, string search)
+        {
+            var results = _jobExchangeContext.Recruitments.Where(
+        recruitment => recruitment.RecruitmentTitle.Contains(search) && recruitment.CompanyId == companyId
+            || recruitment.Slug.Contains(search) && recruitment.CompanyId == companyId
+            || recruitment.Industry.IndustryName.Contains(search) && recruitment.CompanyId == companyId);
+            //.OrderByDescending(recruitment => recruitment.CreatedAt).Take(10);
+            return results.ToList();
+        }
+
         public void Update(Recruitment recruitment)
         {
             _jobExchangeContext.Recruitments.Update(recruitment);

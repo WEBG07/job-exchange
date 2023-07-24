@@ -85,26 +85,26 @@
                                     <div class="job-item-default
                                  bg-highlight  job-ta" data-job-id="1068374" data-job-position="2" data-box="BoxSearchResult">
                                         <div class="avatar">
-                                            <a target="_blank">
+                                            <a asp-controller="Job" asp-action="DefaultJob" asp-route-id="@item.Recruitment.RecruitmentId" target="_blank">
                                                 <img src="~/images/companies/@item.Recruitment.Company.Avatar" class="w-100" alt="@item.Recruitment.Company.CompanyName" title="@item.Recruitment.RecruitmentTitle">
                                             </a>
                                         </div>
                                         <div class="body">
                                             <div class="title-block">
                                                 <h3 class="title">
-                                                    <a target="_blank" class="highlight">
+                                                    <a asp-controller="Job" asp-action="DefaultJob" asp-route-id="@item.Recruitment.RecruitmentId" target="_blank" class="highlight">
                                                         <span>@item.Recruitment.RecruitmentTitle</span>
                                                     </a>
                                                 </h3>
                                                 <label class="title-salary"> @FormatHelper.FormatCurrency(item.Recruitment.Salary)</label>
                                             </div>
-                                            <a class="company" data-toggle="tooltip" title="" data-placement="top" data-container="body" target="_blank" data-original-title="@item.Recruitment.Company.CompanyName">
+                                            <a asp-controller="Company" asp-action="Detail" asp-route-id="@item.Recruitment.CompanyId" class="company" data-toggle="tooltip" title="" data-placement="top" data-container="body" target="_blank" data-original-title="@item.Recruitment.Company.CompanyName">
                                                 @item.Recruitment.Company.CompanyName
                                             </a>
                                             <label class="time_save_job">Đã lưu: @item.CreateDate</label>
                                             <div class="info">
                                                 <div class="label-content">
-                                                    <label class="address" data-toggle="tooltip" data-html="true" title="" data-placement="top" data-container="body" data-original-title="<p style='text-align: left'>@item.Recruitment.City</p>">
+                                                    <label class="address" data-toggle="tooltip" data-html="true" title="">
                                                         @item.Recruitment.District, @item.Recruitment.City
                                                     </label>
                                                 </div>
