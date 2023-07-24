@@ -1,10 +1,15 @@
-using JobExchange.Areas.Identity.Data;
+﻿using JobExchange.Areas.Identity.Data;
 using System.Security.Claims;
 using JobExchange.Models;
 using JobExchange.Repository;
 using JobExchange.Repository.RepositoryInterfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using JobExchange.DataModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobExchange.Controllers
@@ -13,28 +18,82 @@ namespace JobExchange.Controllers
     {
         private readonly IRecruitmentRepository _recruitmentRepository;
         private readonly ICandidateRecruitmentRepository _candidateRecruitmentRepository;
+        private readonly ICompanyRepository _companyRepository;
         private readonly ISaveJobRepository _saveJobRepository;
         private readonly UserManager<JobExchangeUser> _userManager;
         private readonly JobExchangeContext _context;
-        public JobController(ICandidateRecruitmentRepository candidateRecruitmentRepository, IRecruitmentRepository recruitmentRepository, JobExchangeContext context, ISaveJobRepository saveJobRepository, UserManager<JobExchangeUser> userManager)
+        public JobController(ICandidateRecruitmentRepository candidateRecruitmentRepository, IRecruitmentRepository recruitmentRepository, ICompanyRepository companyRepository , JobExchangeContext context, ISaveJobRepository saveJobRepository, UserManager<JobExchangeUser> userManager)
         {
+            _context = context;
             _recruitmentRepository = recruitmentRepository;
+            _companyRepository = companyRepository;
             _saveJobRepository = saveJobRepository;
             _userManager = userManager;
             _candidateRecruitmentRepository = candidateRecruitmentRepository;
             _context = context;
-}
+        }
         public IActionResult Index()
         {
-            return View();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data.json");
+
+            if (System.IO.File.Exists(filePath))
+            {
+                var jsonData = System.IO.File.ReadAllText(filePath);
+                var data = System.Text.Json.JsonSerializer.Deserialize<List<ProvinceDataModel>>(jsonData);
+
+                // Check if the deserialization was successful and data is not null
+                if (data != null)
+                {
+                    ViewData["IndustryId"] = new SelectList(_context.Industries, "IndustryId", "IndustryName");
+                    ViewBag.City = data;
+                    return View();
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+        //GetRecruitments
+        [HttpPost]
+        public IActionResult GetRecruitments(string filter = null, string value1 = null, string value2 = null)
+        {
+            var recruitments = _recruitmentRepository.GetRecruitments(filter, value1, value2);
+
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore // Bỏ qua vòng lặp tự tham chiếu
+            };
+
+            string json = JsonConvert.SerializeObject(recruitments, Formatting.Indented, settings);
+            return Content(json, "application/json");
+        }
+        //GetTopCompanies
+        [HttpPost]
+        public IActionResult GetTopCompaniesWithRecruitmentCount()
+        {
+            var companyTop = _companyRepository.GetTopCompaniesWithRecruitmentCount();
+           
+
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore // Bỏ qua vòng lặp tự tham chiếu
+            };
+
+            string json = JsonConvert.SerializeObject(companyTop, Formatting.Indented, settings);
+            return Content(json, "application/json");
         }
         public IActionResult DefaultJob(string? id)
         {
-            var candidateId=User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var candidateId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var recruitment = _recruitmentRepository.GetById(id);
             var recruitmentsByCompanyId = _recruitmentRepository.GetRecruitmentsByCompanyId(id, recruitment.CompanyId);
             var recruitmentsByIndustryId = _recruitmentRepository.GetRecruitmentsByIndustryId(id, recruitment.IndustryId);
-            var checkApply = _candidateRecruitmentRepository.checkApplication(candidateId,id);
+            var checkApply = _candidateRecruitmentRepository.checkApplication(candidateId, id);
             var recruitmentViewModel = new RecruitmentViewModel
             {
                 Recruitment = recruitment,
@@ -49,7 +108,8 @@ namespace JobExchange.Controllers
         }
         public IActionResult CandidateHistory()
         {
-            return View();
+            var candidateRecruitments = _candidateRecruitmentRepository.GetCandidateRecruitments(_userManager.GetUserId(User));
+            return View(candidateRecruitments);
         }
 
         public IActionResult Saved()
@@ -104,7 +164,8 @@ namespace JobExchange.Controllers
         [HttpPost]
         public IActionResult ApplyJob(string candidateId, string recruitmentId)
         {
-            var data = new CandidateRecruitment{
+            var data = new CandidateRecruitment
+            {
                 RecruitmentId = recruitmentId,
                 CandidateId = candidateId,
                 ApplicationStatus = "Đang chờ xét duyệt",

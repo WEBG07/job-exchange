@@ -14,7 +14,7 @@ namespace JobExchange.Models
         public string? RecruitmentId { get; set; }
 
         [Required(ErrorMessage = "Không được để trống!")]
-        public string RecruitmentTitle { get; set; } = null!;
+        public string RecruitmentTitle { get; set; }
 
         [Required(ErrorMessage = "Không được để trống!")]
         [Range(1, 2000000000, ErrorMessage = "Lương phải lớn hơn 0")]

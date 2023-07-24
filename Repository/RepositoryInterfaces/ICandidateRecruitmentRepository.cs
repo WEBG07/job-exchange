@@ -6,5 +6,6 @@ namespace JobExchange.Repository
     {
         public CandidateRecruitment AddCandidateRecruitment(CandidateRecruitment candidateRecruitment);
         public bool checkApplication(string candidateId, string recruitmentId);
+        public IEnumerable<CandidateRecruitment> GetCandidateRecruitments(string candidateId);
     }
 }

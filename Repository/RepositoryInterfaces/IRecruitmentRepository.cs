@@ -15,6 +15,7 @@ namespace JobExchange.Repository.RepositoryInterfaces
         IEnumerable<Recruitment> GetRecruitmentsByIndustryId(string id, int industryId);
         IEnumerable<Recruitment> GetRecruitmentsByName(string companyId,string name);
         public List<Recruitment> SearchByCompanyAdmin(string companyId, string search);
+        IEnumerable<Recruitment> GetRecruitments(string filter = null, string value1 = null, string value2 = null);
     }
 }
 

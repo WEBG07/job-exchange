@@ -13,7 +13,7 @@ namespace JobExchange.Models
 
         [Required(ErrorMessage = "Không được để trống!")]
         [Display(Name = "Tên ngành nghề")]
-        public string IndustryName { get; set; } = null!;
+        public string IndustryName { get; set; }
 
 		[DataType(DataType.Upload)]
 		[FileExtensions(Extensions = "png, jpg", ErrorMessage = "Bạn chỉ có thể thêm file *.png hoặc *.jpg")]

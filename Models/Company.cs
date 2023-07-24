@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace JobExchange.Models
 {
@@ -19,6 +20,8 @@ namespace JobExchange.Models
         public string? Avatar { get; set; }
         public string? CoverImage { get; set; }
         public int IndustryId { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<Recruitment>? Recruitments { get; set; }
 
         [ForeignKey("IndustryId")]
