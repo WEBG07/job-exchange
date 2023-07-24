@@ -61,7 +61,7 @@ namespace JobExchange.Controllers
         [HttpPost]
         public IActionResult GetRecruitments(string filter = null, string value1 = null, string value2 = null, string value3 = null)
         {
-            var recruitments = _recruitmentRepository.GetRecruitments(filter, value1, value2);
+            var recruitments = _recruitmentRepository.GetRecruitments(filter, value1, value2, value3);
 
             JsonSerializerSettings settings = new JsonSerializerSettings
             {

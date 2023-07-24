@@ -178,17 +178,9 @@
         }
         if (value2 == null && value3 == null){
             getRecruitments("districts", e.target.value);
-            console.log("test");
         } else {
             getRecruitments("districtsSalary", e.target.value, value2, value3);
         }
-        // if (e.target.value != null && value2 != null && value3 != null) {
-        //     console.log(1);
-        //     getRecruitments("districtsSalary", e.target.value, value2, value3);
-        // } else {
-        //     console.log(2)
-        //     getRecruitments("districts", e.target.value);
-        // }
     });
     filterSalary.addEventListener("change", function(e) {
         let result= e.target.value.split("-");
@@ -200,14 +192,11 @@
         if (result.length >= 2) {
             value3 = result[1].trim() || null;
         }
-        // if (filterDistricts.value != null && value2 != null && value3 != null) {
-        //     console.log(3);
-        //     console.log(`value1:${filterDistricts.value}, value2:${value2}, value3:${value3}`);
-        //     getRecruitments("districtsSalary", filterDistricts.value, value2, value3);
-        // } else {
-        //     console.log(4);
-        //     getRecruitments("salaries", value2, value3);
-        // }
+        if (filterDistricts.value != '' ) {
+            getRecruitments("districtsSalary", filterDistricts.value, value2, value3);
+        } else {
+            getRecruitments("salaries", value2, value3);
+        }
         
     })
     filterSalarys.addEventListener("change", function (e) {
