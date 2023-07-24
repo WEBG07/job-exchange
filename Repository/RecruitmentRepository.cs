@@ -1,4 +1,5 @@
 
+using JobExchange.DataModel;
 using JobExchange.Models;
 using JobExchange.Repository.RepositoryInterfaces;
 using MailKit.Search;
@@ -42,7 +43,7 @@ namespace JobExchange.Repository
 
         public Recruitment? GetById(string id)
         {
-            return _jobExchangeContext.Recruitments.Include(c => c.Company).FirstOrDefault(u => u.RecruitmentId == id);
+            return _jobExchangeContext.Recruitments.Include(c => c.Industry).Include(c => c.Company).FirstOrDefault(u => u.RecruitmentId == id);
         }
 
         public List<Recruitment> Search(string search)
@@ -74,9 +75,55 @@ namespace JobExchange.Repository
         //    return results;
         //}
         
-        public IEnumerable<Recruitment> GetRecruitmentsByCompanyId(string id, string companyId)
+        public IEnumerable<Recruitment> GetRecruitmentsByCompanyId(string recruitmentId, string companyId)
         {
-            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId && r.RecruitmentId != id).ToList();
+            return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId && r.RecruitmentId != recruitmentId).ToList();
+            
+        }
+        public IEnumerable<object> GetRecruitmentsByCompanyId(string recruitmentId, string companyId, string candidateId)
+        {
+            //return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId && r.RecruitmentId != id).ToList();
+            var recruitments = _jobExchangeContext.Recruitments
+            .GroupJoin(
+                _jobExchangeContext.SaveRecruitments,
+                r => r.RecruitmentId,
+                sr => sr.RecruitmentId,
+                (r, srs) => new { Recruitment = r, SaveRecruitments = srs }
+            )
+            .SelectMany(
+                rs => rs.SaveRecruitments.DefaultIfEmpty(),
+                (rs, s) => new { Recruitment = rs.Recruitment, SaveRecruitment = s }
+            )
+            .Where(rss => rss.Recruitment.CompanyId == companyId
+                     && (rss.SaveRecruitment == null || rss.SaveRecruitment.CandidateId == candidateId)
+                     && rss.Recruitment.RecruitmentId != recruitmentId)
+            .Select(rss => new { Recruitment = rss.Recruitment, SaveRecruitment = rss.SaveRecruitment })
+            .ToList();
+
+            return recruitments;
+        }
+        public IEnumerable<object> GetRecruitmentsByCompanyId(string recruitmentId, string companyId, string candidateId, int limit)
+        {
+            //return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId && r.RecruitmentId != id).ToList();
+            var recruitments = _jobExchangeContext.Recruitments
+            .GroupJoin(
+                _jobExchangeContext.SaveRecruitments,
+                r => r.RecruitmentId,
+                sr => sr.RecruitmentId,
+                (r, srs) => new { Recruitment = r, SaveRecruitments = srs }
+            )
+            .SelectMany(
+                rs => rs.SaveRecruitments.DefaultIfEmpty(),
+                (rs, s) => new { Recruitment = rs.Recruitment, SaveRecruitment = s }
+            )
+            .Where(rss => rss.Recruitment.CompanyId == companyId
+                     && (rss.SaveRecruitment == null || rss.SaveRecruitment.CandidateId == candidateId)
+                     && rss.Recruitment.RecruitmentId != recruitmentId)
+            .Select(rss => new { Recruitment = rss.Recruitment, SaveRecruitment = rss.SaveRecruitment })
+            .Take(limit)
+            .ToList();
+
+            return recruitments;
         }
         public IEnumerable<Recruitment> GetRecruitmentsByIndustryId(string id, int industryId)
         {

@@ -1,3 +1,4 @@
+using JobExchange.DataModel;
 using JobExchange.Models;
 
 namespace JobExchange.Repository.RepositoryInterfaces
@@ -11,7 +12,9 @@ namespace JobExchange.Repository.RepositoryInterfaces
         public List<Recruitment> GetAll();
         public List<Recruitment> GetAllByCompanyId(string companyId);
         public List<Recruitment> Search(string search);
-        IEnumerable<Recruitment> GetRecruitmentsByCompanyId(string id, string companyId);
+        IEnumerable<Recruitment> GetRecruitmentsByCompanyId(string recruitmentId, string companyId);
+        IEnumerable<object> GetRecruitmentsByCompanyId(string recruitmentId, string companyId, string candidateId);
+        IEnumerable<object> GetRecruitmentsByCompanyId(string recruitmentId, string companyId, string candidateId, int limit);
         IEnumerable<Recruitment> GetRecruitmentsByIndustryId(string id, int industryId);
         IEnumerable<Recruitment> GetRecruitmentsByName(string companyId,string name);
         IEnumerable<Recruitment> GetRecruitments(string filter = null, string value1 = null, string value2 = null);

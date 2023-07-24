@@ -1,5 +1,5 @@
 ﻿
-function saveJob(id) {
+function saveJob(id, buttonSave = null) {
 
     var saveJobData = {
         recruitmentId: id
@@ -9,14 +9,38 @@ function saveJob(id) {
     xhr.open('POST', '/Job/Save?recruitmentId=' + id, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            /*toastr.success("Lưu tin thành công!");*/
-            location.reload();
+            //console.log(buttonSave.parentNode);
+            //var parent = buttonSave.closest('.div-parent-save-job');
+            var parent;
+            var html = '';
+            if (buttonSave != null) {
+                parent = buttonSave.parentNode;
+                html = `
+                 <a href="javascript:void(0)" onclick="unSave('${id}', this)"
+                    class="btn-unsave text-highlight" 
+                    data-placement="top" data-original-title="Bỏ lưu">
+                                                      
+                    <i class="fa-solid fa-heart"></i>
+                </a>
+                `;
+                parent.innerHTML = html;
+            } else {
+                parent = document.querySelectorAll('.div-parent-save-job');
+                html = `
+                <button id="un-save" class="btn btn-save save btn-topcv-text-normal btn-outline-hover" style="background:#00b14f; color: #fff" onclick="unSave('${id}')">
+                    <i class="fa-regular fa-heart"></i> Đã lưu
+                </button>
+                `;
+                for (var i = 0; i < parent.length; i++) {
+                    parent[i].innerHTML = html;
+                }
+            }
         }
     };
     xhr.send(saveJobData);
 }
 
-function unSave(id) {
+function unSave(id, buttonUnSave = null) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", '/Job/UnSave/' + id);
     // Set the request headers
@@ -24,7 +48,28 @@ function unSave(id) {
     xhr.onload = function () {
         if (this.readyState == 4 && this.status == 200) {
             /*toastr.success("Bỏ lưu thành công")*/
-            location.reload();
+            var parent;
+            var html = "";
+            if (buttonUnSave != null) {
+                parent = buttonUnSave.parentNode;
+                html = `
+                <a href="javascript:void(0)" class="btn-save save" onclick="saveJob('${id}', this)">
+                    <i class="fa-regular fa-heart"></i>
+                </a>
+                `;
+                parent.innerHTML = html;
+            } else {
+                parent = document.querySelectorAll('.div-parent-save-job');
+                html = `
+                <button id="save" class="btn btn-save save btn-topcv-text-normal btn-outline-hover" onclick="saveJob('${id}')">
+                    <i class="fa-regular fa-heart"></i> Lưu tin
+                </button>
+                `;
+                for (var i = 0; i < parent.length; i++) {
+                    parent[i].innerHTML = html;
+                }
+            }
+            
         } else {
             toastr.error("Mã lỗi: " + xhr.status);
         }
@@ -35,6 +80,8 @@ function unSave(id) {
 
     xhr.send();
 }
+
+
 
 //    // Show a confirmation dialog
 //    var confirmDelete = confirm("Bạn có chắc muốn xóa ngành nghề này?");

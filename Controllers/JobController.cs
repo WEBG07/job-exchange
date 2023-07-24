@@ -92,7 +92,7 @@ namespace JobExchange.Controllers
         {
             var candidateId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var recruitment = _recruitmentRepository.GetById(id);
-            var recruitmentsByCompanyId = _recruitmentRepository.GetRecruitmentsByCompanyId(id, recruitment.CompanyId);
+            var recruitmentsByCompanyId = _recruitmentRepository.GetRecruitmentsByCompanyId(id, recruitment.CompanyId, _userManager.GetUserId(User), 3);
             var recruitmentsByIndustryId = _recruitmentRepository.GetRecruitmentsByIndustryId(id, recruitment.IndustryId);
             var checkApply = _candidateRecruitmentRepository.checkApplication(candidateId, id);
             var recruitmentViewModel = new RecruitmentViewModel
@@ -106,6 +106,13 @@ namespace JobExchange.Controllers
 
             ViewBag.IsSave = isSave; // Pass the result to the view
             return View(recruitmentViewModel);
+            //JsonSerializerSettings settings = new JsonSerializerSettings
+            //{
+            //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore // Bỏ qua vòng lặp tự tham chiếu
+            //};
+
+            //string json = JsonConvert.SerializeObject(recruitmentViewModel, Formatting.Indented, settings);
+            //return Content(json, "application/json");
         }
         public IActionResult CandidateHistory()
         {
