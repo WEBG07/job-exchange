@@ -19,13 +19,15 @@ namespace JobExchange.Controllers
     
         private readonly IRecruitmentRepository _recruitmentRepository;
         private readonly ICandidateRecruitmentRepository _candidateRecruitmentRepository;
+        private readonly ICompanyRepository _companyRepository;
         private readonly ISaveJobRepository _saveJobRepository;
         private readonly UserManager<JobExchangeUser> _userManager;
         private readonly JobExchangeContext _context;
-        public JobController(ICandidateRecruitmentRepository candidateRecruitmentRepository, IRecruitmentRepository recruitmentRepository, JobExchangeContext context, ISaveJobRepository saveJobRepository, UserManager<JobExchangeUser> userManager)
+        public JobController(ICandidateRecruitmentRepository candidateRecruitmentRepository, IRecruitmentRepository recruitmentRepository, ICompanyRepository companyRepository , JobExchangeContext context, ISaveJobRepository saveJobRepository, UserManager<JobExchangeUser> userManager)
         {
             _context = context;
             _recruitmentRepository = recruitmentRepository;
+            _companyRepository = companyRepository;
             _saveJobRepository = saveJobRepository;
             _userManager = userManager;
             _candidateRecruitmentRepository = candidateRecruitmentRepository;
@@ -69,6 +71,21 @@ namespace JobExchange.Controllers
             };
 
             string json = JsonConvert.SerializeObject(recruitments, Formatting.Indented, settings);
+            return Content(json, "application/json");
+        }
+        //GetTopCompanies
+        [HttpPost]
+        public IActionResult GetTopCompaniesWithRecruitmentCount()
+        {
+            var companyTop = _companyRepository.GetTopCompaniesWithRecruitmentCount();
+           
+
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore // Bỏ qua vòng lặp tự tham chiếu
+            };
+
+            string json = JsonConvert.SerializeObject(companyTop, Formatting.Indented, settings);
             return Content(json, "application/json");
         }
         public IActionResult DefaultJob(string? id)

@@ -3,7 +3,9 @@
     getFilterJob("City");
 
     loadingJob(false);
+    loadingCompany(false);
     getRecruitments();
+    getCompanyTop();
     function getRecruitments(filter = null, value1 = null, value2 = null) { 
 
         var xhr = new XMLHttpRequest();
@@ -141,19 +143,7 @@
         let currentJobPage = document.getElementById("current-job-page");
         currentJobPage.innerText = activeIndex + 1;
     }
-    // Đăng ký sự kiện 'slid.bs.carousel' cho thẻ Carousel
-    //let carouselJob = document.getElementById("carousel-job");
-    //carouselJob.addEventListener("slide.bs.carousel", handleCarouselSlideJob);
 
-    //// Hàm xử lý khi Carousel chuyển màn
-    //function handleCarouselSlideJob(event) {
-    //    let activeSlide = event.relatedTarget; // Lấy slide hiện tại
-    //    let activeIndex = Array.from(activeSlide.parentElement.children).indexOf(activeSlide);
-
-    //    // Cập nhật paginationJob dựa trên activeIndex (trang hiện tại)
-    //   //updatePagination(activeIndex);
-    //    console.log(activeIndex);
-    //}
     let filterFeatureJob = document.getElementById("filter-feature-job");
     filterFeatureJob.addEventListener("change", function (e) {
         let filter = e.target.value;
@@ -204,6 +194,15 @@
             $(".loadingg").show();
         }
     }
+    function loadingCompany(status) {
+        $("#loading-company").hide();
+        $("#carousel-company").hide();
+        if (status) {
+            $("#carousel-company").show();
+        } else {
+            $("#loading-company").show();
+        }
+    }
     function formatSalary(salary) {
         if (isNaN(salary)) {
             return "0 triệu";
@@ -223,4 +222,70 @@
         }
     }
 
+    ///company
+    function getCompanyTop() {
+        var xhr = new XMLHttpRequest();
+        loadingCompany(false);
+        xhr.open("POST", "./Job/GetTopCompaniesWithRecruitmentCount", true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    let listCompany = document.getElementById("list-company");
+                    console.log(response);
+                    if (response.length <= 0) {
+                        let html = `<h4 class="text-center">Không có công ty nào trên hệ thống</h4>`;
+                        listJob.innerHTML = html;
+                        featureJobPage.hidden = true;
+                        loadingCompany(true);
+                        return;
+                    }
+
+                    let quantityCompany = response.length;
+                    let number = 4;
+                    let paging = Math.ceil(quantityCompany / number)
+
+                    listCompany.innerHTML = "";
+
+
+                    for (let i = 0; i < paging; i++) {
+                        let startIndex = i * number;
+                        let endIndex = Math.min(startIndex + number, quantityCompany);
+
+                        let html = `<div class="item ${(i == 0) ? 'active' : ''}">`;
+
+                        for (let j = startIndex; j < endIndex; j++) {
+                            let item = response[j];
+                            html += `
+                                <div class="" style="width: 270px; margin-right: 20px;">
+                                    <div class="top-company--item">
+                                        <a href="../Company/Detail/${item.Company.CompanyId}">
+                                            <img src="../Images/companies/${item.Company.Avatar}" alt="Logo">
+                                        </a>
+                                        <a href="../Company/Detail/${item.Company.CompanyId}"
+                                           data-toggle="tooltip" title="${item.Company.CompanyName}">
+                                            <h4 class="top-company__title">${item.Company.CompanyName}</h4>
+                                        </a>
+                                        <label for="" class="top-company__badge">${item.RecruitmentCount} việc làm</label>
+                                        <div data-id="31515" class="top-company__wrap-btn follow">
+                                            
+                                        </div>
+                                    </div>
+                                </div>`
+                        }
+                        html += `</div>`;
+                        listCompany.insertAdjacentHTML("beforeend", html);
+
+                    }
+                    loadingCompany(true);
+
+                } else {
+                    console.error("Request error:", xhr.status, xhr.statusText);
+                    showMessage("Có lỗi sảy ra!", "error", "Thông báo", "glyphicon-remove", 3000);
+                }
+            }
+        };
+        
+        xhr.send();
+    }
 });

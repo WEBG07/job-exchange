@@ -6,6 +6,7 @@ namespace JobExchange.Repository.RepositoryInterfaces
     {
         IEnumerable<Company> GetAllCompanies();
         IEnumerable<Company> GetTopCompanies();
+        IEnumerable<CompanyWithRecruitmentCount> GetTopCompaniesWithRecruitmentCount();
         IEnumerable<Company> GetCompaniesRelated(int industryId, string companyId);
         IEnumerable<Company> SearchCompanies(string name);
         Company GetCompanyById(string companyId);

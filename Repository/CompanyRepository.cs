@@ -1,4 +1,4 @@
-using JobExchange.Models;
+﻿using JobExchange.Models;
 using JobExchange.Repository.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,7 +46,19 @@ namespace JobExchange.Repository
 
         public IEnumerable<Company> GetTopCompanies()
         {
-            return _jobExchangeContext.Companies.OrderByDescending(c => c.Recruitments.Count()).Take(5).ToList();
+            return _jobExchangeContext.Companies.OrderByDescending(c => c.Recruitments.Count()).Take(12).ToList();
+        }
+        public IEnumerable<CompanyWithRecruitmentCount> GetTopCompaniesWithRecruitmentCount()
+        {
+            return _jobExchangeContext.Companies
+            .Select(c => new CompanyWithRecruitmentCount
+            {
+                Company = c,
+                RecruitmentCount = c.Recruitments.Count()
+            })
+            .OrderByDescending(c => c.RecruitmentCount)
+            .Take(12)
+            .ToList();
         }
 
         public IEnumerable<Company> SearchCompanies(string name)
