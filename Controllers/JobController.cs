@@ -59,7 +59,7 @@ namespace JobExchange.Controllers
         }
         //GetRecruitments
         [HttpPost]
-        public IActionResult GetRecruitments(string filter = null, string value1 = null, string value2 = null)
+        public IActionResult GetRecruitments(string filter = null, string value1 = null, string value2 = null, string value3 = null)
         {
             var recruitments = _recruitmentRepository.GetRecruitments(filter, value1, value2);
 

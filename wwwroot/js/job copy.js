@@ -4,7 +4,7 @@
 
     loadingJob(false);
     getRecruitments();
-    function getRecruitments(filter = null, value1 = null, value2 = null, value3 = null) { 
+    function getRecruitments(filter = null, value1 = null, value2 = null) { 
 
         var xhr = new XMLHttpRequest();
         
@@ -16,7 +16,7 @@
                     let listJob = document.getElementById("list-job");
                     let featureJobPage = document.getElementById("feature-job-page");
                     let paginationJob = document.getElementById("pagination-job");
-                    
+                    console.log(response);
                     if (response.length <= 0) {
                         let html = `<h4 class="text-center">Không tìm thấy công việc ở điều kiện này. Vui lòng thử lại</h4>`;
                         listJob.innerHTML = html;
@@ -50,7 +50,7 @@
                                                 target="_blank" tabindex="0">
                                                 <div class="box-company-logo">
                                                     <div class="avatar">
-                                                        <img src="../${item.Company.Avatar}"
+                                                        <img src="../images/companies/${item.Company.Avatar}"
                                                                 alt="${item.Company.CompanyName}"
                                                                 class="img-responsive">
                                                     </div>
@@ -86,7 +86,7 @@
                                                         data-placement="top" data-container="body" class="address"
                                                         data-original-title="
                                                         <p style='text-align: left'>${item.City} - ${item.District}</p>">
-                                                    <span class="text_ellipsis">${item.City} - ${item.District}</span>
+                                                    <span class="text_ellipsis"></span>
                                                 </div>
                                             </div>
                                             <div class="col-like">
@@ -110,6 +110,7 @@
 
                     //pagination
                     let html = `<span class="hight-light" id="current-job-page">1</span> / ${paging} trang`;
+                    console.log(paging);
                     paginationJob.innerHTML = html;
 
                     //"beforebegin": Trước thẻ element.
@@ -128,7 +129,6 @@
             formData.append('filter', filter);
             formData.append('value1', value1);
             formData.append('value2', value2);
-            formData.append('value3', value3);
         }
         xhr.send(formData);
     }
@@ -164,52 +164,11 @@
     let filterSalarys = document.getElementById("salaries");
     let filterExperiences = document.getElementById("experiences");
     let filterIndustryes = document.getElementById("industryes");
-    const filterSalary = document.getElementById("salary-district")
 
     filterDistricts.addEventListener("change", function (e) {
-        let result = filterSalary.value.split("-");
-        let value2 = null;
-        let value3 = null;
-        if (result.length >= 1) {
-            value2 = result[0].trim() || null;
-        }
-        if (result.length >= 2) {
-            value3 = result[1].trim() || null;
-        }
-        if (value2 == null && value3 == null){
-            getRecruitments("districts", e.target.value);
-            console.log("test");
-        } else {
-            getRecruitments("districtsSalary", e.target.value, value2, value3);
-        }
-        // if (e.target.value != null && value2 != null && value3 != null) {
-        //     console.log(1);
-        //     getRecruitments("districtsSalary", e.target.value, value2, value3);
-        // } else {
-        //     console.log(2)
-        //     getRecruitments("districts", e.target.value);
-        // }
+        console.log(e.target.value);
+        getRecruitments("districts", e.target.value);
     });
-    filterSalary.addEventListener("change", function(e) {
-        let result= e.target.value.split("-");
-        let value2 = null;
-        let value3 = null;
-        if (result.length >= 1) {
-            value2 = result[0].trim() || null;
-        }
-        if (result.length >= 2) {
-            value3 = result[1].trim() || null;
-        }
-        // if (filterDistricts.value != null && value2 != null && value3 != null) {
-        //     console.log(3);
-        //     console.log(`value1:${filterDistricts.value}, value2:${value2}, value3:${value3}`);
-        //     getRecruitments("districtsSalary", filterDistricts.value, value2, value3);
-        // } else {
-        //     console.log(4);
-        //     getRecruitments("salaries", value2, value3);
-        // }
-        
-    })
     filterSalarys.addEventListener("change", function (e) {
         let value = e.target.value;
         let result = value.split("-");

@@ -87,7 +87,7 @@ namespace JobExchange.Repository
         {
             return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId &&  r.RecruitmentTitle.Contains(name)).ToList();
         }
-        public IEnumerable<Recruitment> GetRecruitments(string filter = null, string value1 = null, string value2 = null)
+        public IEnumerable<Recruitment> GetRecruitments(string filter = null, string value1 = null, string value2 = null, string value3 =null)
         {
             var recruitments = _jobExchangeContext.Recruitments.Include(r => r.Industry).Include(r => r.Company);
             if (!string.IsNullOrEmpty(filter))
@@ -112,6 +112,12 @@ namespace JobExchange.Repository
                 {
                     int intValue1 = int.Parse(value1);
                     return recruitments.Where(r => r.IndustryId == intValue1).ToList();
+                }
+                if (filter.Equals("districtsSalary"))
+                {
+                    int intValue4 = int.Parse(value2) * 1000000;
+                    int intValue5 = int.Parse(value3) * 1000000;
+                    return recruitments.Where(r => r.Salary >= intValue4 && r.Salary <= intValue5 && r.District.Contains(value1)).ToList();
                 }
             }
 

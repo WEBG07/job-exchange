@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobExchange.Migrations
 {
     [DbContext(typeof(JobExchangeContext))]
-    [Migration("20230720074502_db_JobExchange")]
+    [Migration("20230722143519_db_JobExchange")]
     partial class db_JobExchange
     {
         /// <inheritdoc />
@@ -74,6 +74,7 @@ namespace JobExchange.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
@@ -169,7 +170,6 @@ namespace JobExchange.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AccountId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
@@ -227,15 +227,19 @@ namespace JobExchange.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Major")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SchoolName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StartMonth")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("StartYear")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("EducationId");
@@ -410,6 +414,7 @@ namespace JobExchange.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AddressDetail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Benefit")
@@ -419,43 +424,50 @@ namespace JobExchange.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("District")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Experience")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ExpirationDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("GenderRequirement")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("HiringCount")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("IndustryId")
                         .HasColumnType("int");
 
                     b.Property<string>("JobDescription")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PositionLevel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RecruitmentTitle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Salary")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Slug")
@@ -468,9 +480,11 @@ namespace JobExchange.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Ward")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WorkType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RecruitmentId");
@@ -802,9 +816,7 @@ namespace JobExchange.Migrations
                 {
                     b.HasOne("JobExchange.Areas.Identity.Data.JobExchangeUser", "JobExchangeUser")
                         .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountId");
 
                     b.HasOne("JobExchange.Models.Industry", "Industry")
                         .WithMany()
@@ -875,10 +887,8 @@ namespace JobExchange.Migrations
             modelBuilder.Entity("JobExchange.Models.Recruitment", b =>
                 {
                     b.HasOne("JobExchange.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Recruitments")
+                        .HasForeignKey("CompanyId");
 
                     b.HasOne("JobExchange.Models.Industry", "Industry")
                         .WithMany()
@@ -966,6 +976,11 @@ namespace JobExchange.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("JobExchange.Models.Company", b =>
+                {
+                    b.Navigation("Recruitments");
                 });
 #pragma warning restore 612, 618
         }

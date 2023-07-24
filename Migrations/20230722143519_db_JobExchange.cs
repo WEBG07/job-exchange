@@ -177,7 +177,7 @@ namespace JobExchange.Migrations
                 columns: table => new
                 {
                     CandidateId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -228,7 +228,7 @@ namespace JobExchange.Migrations
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CoverImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IndustryId = table.Column<int>(type: "int", nullable: false),
-                    AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    AccountId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -237,8 +237,7 @@ namespace JobExchange.Migrations
                         name: "FK_Companies_AspNetUsers_AccountId",
                         column: x => x.AccountId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Companies_Industries_IndustryId",
                         column: x => x.IndustryId,
@@ -302,10 +301,10 @@ namespace JobExchange.Migrations
                 {
                     EducationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SchoolName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StartMonth = table.Column<int>(type: "int", nullable: true),
-                    StartYear = table.Column<int>(type: "int", nullable: true),
+                    SchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Major = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartMonth = table.Column<int>(type: "int", nullable: false),
+                    StartYear = table.Column<int>(type: "int", nullable: false),
                     EndMonth = table.Column<int>(type: "int", nullable: true),
                     EndYear = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -425,19 +424,19 @@ namespace JobExchange.Migrations
                 columns: table => new
                 {
                     RecruitmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RecruitmentTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Salary = table.Column<int>(type: "int", nullable: true),
-                    WorkType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RecruitmentTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salary = table.Column<int>(type: "int", nullable: false),
+                    WorkType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GenderRequirement = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HiringCount = table.Column<int>(type: "int", nullable: true),
-                    PositionLevel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HiringCount = table.Column<int>(type: "int", nullable: false),
+                    PositionLevel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Experience = table.Column<int>(type: "int", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressDetail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JobDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddressDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JobDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CandidateRequirement = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Benefit = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -445,7 +444,7 @@ namespace JobExchange.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IndustryId = table.Column<int>(type: "int", nullable: false),
-                    CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -454,8 +453,7 @@ namespace JobExchange.Migrations
                         name: "FK_Recruitments_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "CompanyId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CompanyId");
                     table.ForeignKey(
                         name: "FK_Recruitments_Industries_IndustryId",
                         column: x => x.IndustryId,

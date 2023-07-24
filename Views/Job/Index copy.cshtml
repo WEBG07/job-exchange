@@ -249,22 +249,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-12 row hi">
-                                        <div class="col-md-4 col-sm-12">
-                                            <label class="control-label mb-2">Mức Lương<span class="text-danger">*</span></label>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <select id="salary-district" class="form-control col-md-6 col-md-12">
-                                                <option value="">Tất cả</option>
-                                                <option value="0-3">Dưới 3 triệu</option>
-                                                <option value="3-10">Từ 3-10 triệu</option>
-                                                <option value="10-20">Từ 10-20 triệu</option>
-                                                <option value="20-30">Từ 20-30 triệu</option>
-                                                <option value="30-1000">Trên 30 triệu</option>
-                                                @*<option value="tt">Thỏa thuận</option>*@
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <script>
@@ -292,7 +276,19 @@
                                         });
                                 });
                             </script>
-                            
+                            <div class="row" id="Salary">
+                                <div class="col-md-6 col-sm-12">
+                                    <select id="salaries" class="form-control col-md-6 col-md-12">
+                                        <option value="">Tất cả</option>
+                                        <option value="0-3">Dưới 3 triệu</option>
+                                        <option value="3-10">Từ 3-10 triệu</option>
+                                        <option value="10-20">Từ 10-20 triệu</option>
+                                        <option value="20-30">Từ 20-30 triệu</option>
+                                        <option value="30-1000">Trên 30 triệu</option>
+                                        @*<option value="tt">Thỏa thuận</option>*@
+                                    </select>
+                                </div>
+                            </div>
                             <div class="row" id="Experience">
                                 <div class="col-md-6 col-sm-12">
                                     <select id="experiences" class="form-control col-md-6 col-md-12">
