@@ -221,7 +221,7 @@ namespace JobExchange.Controllers
         [HttpGet]
         public IActionResult Search(string search)
         {
-            var results = _recruitmentRepository.Search(search);
+            var results = _recruitmentRepository.SearchByCompanyAdmin(_userManager.GetUserId(User), search);
             try
             {
                 return Ok(results);

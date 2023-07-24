@@ -31,7 +31,7 @@ namespace JobExchange.Controllers
         // GETALL
         public ActionResult Index(int page, int size)
         {
-            int pageSize = size > 0 ? size : 10;
+            int pageSize = size > 0 ? size : 5;
             int pageNumber = page > 0 ? page : 1;
 
             var industries = _industryRepository.GetAll();

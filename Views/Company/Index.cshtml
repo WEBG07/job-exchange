@@ -46,14 +46,14 @@
                                 <div class="company-banner">
                                     <a asp-controller="Company" asp-action="Detail" asp-route-id="@company.CompanyId">
                                         <div class="cover-wraper">
-                                        <img src="~/@company.CoverImage"
+                                        <img src="~/images/companies/@company.CoverImage"
                                              alt="@company.CompanyName" class="img-fluid" title="@company.CompanyName">
                                         </div>
                                     </a>
                                     <div class="company-logo">
                                         <a asp-controller="Company" asp-action="Detail" asp-route-id="@company.CompanyId">
                                             <img class="img-fluid"
-                                                src="~/@company.Avatar"
+                                                src="~/images/companies/@company.Avatar"
                                              alt="@company.CompanyName" title="@company.CompanyName">
                                         </a>
                                     </div>
@@ -74,3 +74,13 @@
         </div>
     </div>
 </div>
+
+<style>
+    .company-description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+    }
+</style>
