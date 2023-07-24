@@ -11,7 +11,6 @@ namespace JobExchange.Controllers
 {
     public class JobController : Controller
     {
-    
         private readonly IRecruitmentRepository _recruitmentRepository;
         private readonly ICandidateRecruitmentRepository _candidateRecruitmentRepository;
         private readonly ISaveJobRepository _saveJobRepository;
