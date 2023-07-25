@@ -173,7 +173,7 @@ function addRowToTable(id, name, image) {
     var cell4 = row.insertCell(3);
     cell4.classList.add("table-action");
     cell4.classList.add("col-3");
-    cell4.innerHTML = `<a href="#"><i class="fal fa-pen" style="color: #000000; margin-right: 25px;"></i></a>
+    cell4.innerHTML = `<a onclick="getIndustryById(` + id + `)"><i class="fal fa-pen" style="color: #000000; margin-right: 25px;"></i></a>
         <a onclick="deleteIndustry(` + id + `)"><i class="fal fa-trash" style="color: #000000;"></i></a>`;
 }
 

@@ -41,12 +41,22 @@
                             <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true"
                                    placeholder="Mật khẩu">
                             <div class="input-group-prepend">
-                                <button type="button" tabindex="-1"
+                                <button type="button" tabindex="-1" onclick="showPass()"
                                         class="input-group-text toggle-password"></button>
                             </div>
                         </div>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
+                    <script>
+                        function showPass (){
+                            const passwordField = document.getElementById("Input_Password");
+                            if (passwordField.type === "password") {
+                                passwordField.type = "text";
+                            } else {
+                                passwordField.type = "password";
+                            }
+                        }
+                    </script>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="checkbox">

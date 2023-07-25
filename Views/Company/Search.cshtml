@@ -23,7 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-9">
-                    <div class=" box-result box-white">
+                    <div class=" box-result box-white" style="margin-top: 25px;">
                         @if (ViewData["Count"].ToString() == "0")
                         {
                             <p class="count">Không tìm thấy thông tin công ty phù hợp với yêu cầu của bạn. Dưới đây là các công ty nổi bật có thể bạn sẽ quan tâm.</p>
@@ -39,7 +39,7 @@
                                     <div class="result-search-company">
                                         <a asp-controller="Company" asp-action="Detail" asp-route-id="@company.CompanyId"
                                             class="logo">
-                                            <img src="~/@company.Avatar"
+                                            <img src="~/images/companies/@company.Avatar"
                                                 alt="@company.CompanyName" title="@company.CompanyName"
                                                 class="img-responsive">
                                         </a>

@@ -21,19 +21,33 @@ namespace JobExchange.Controllers
         private readonly ICompanyRepository _companyRepository;
         private readonly ISaveJobRepository _saveJobRepository;
         private readonly UserManager<JobExchangeUser> _userManager;
+        private readonly SignInManager<JobExchangeUser> _signInManager;
         private readonly JobExchangeContext _context;
-        public JobController(ICandidateRecruitmentRepository candidateRecruitmentRepository, IRecruitmentRepository recruitmentRepository, ICompanyRepository companyRepository , JobExchangeContext context, ISaveJobRepository saveJobRepository, UserManager<JobExchangeUser> userManager)
+        public JobController(SignInManager<JobExchangeUser> signInManager, ICandidateRecruitmentRepository candidateRecruitmentRepository, IRecruitmentRepository recruitmentRepository, ICompanyRepository companyRepository , JobExchangeContext context, ISaveJobRepository saveJobRepository, UserManager<JobExchangeUser> userManager)
         {
             _context = context;
             _recruitmentRepository = recruitmentRepository;
             _companyRepository = companyRepository;
             _saveJobRepository = saveJobRepository;
             _userManager = userManager;
+            _signInManager = signInManager;
             _candidateRecruitmentRepository = candidateRecruitmentRepository;
             _context = context;
         }
         public IActionResult Index()
         {
+            if (_signInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("ROLE_ADMIN"))
+                {
+                    return RedirectToAction("Index", "Industry");
+                }
+                else if (User.IsInRole("ROLE_COMPANY"))
+                {
+                    return RedirectToAction("Index", "Recruitment");
+                }
+            }
+
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data.json");
 
             if (System.IO.File.Exists(filePath))
@@ -111,13 +125,7 @@ namespace JobExchange.Controllers
 
             ViewBag.IsSave = isSave; // Pass the result to the view
             return View(recruitmentViewModel);
-            //JsonSerializerSettings settings = new JsonSerializerSettings
-            //{
-            //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore // Bỏ qua vòng lặp tự tham chiếu
-            //};
-
-            //string json = JsonConvert.SerializeObject(recruitmentViewModel, Formatting.Indented, settings);
-            //return Content(json, "application/json");
+           
         }
         public IActionResult CandidateHistory()
         {
