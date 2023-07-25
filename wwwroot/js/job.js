@@ -1,15 +1,15 @@
 ﻿$(document).ready(function () {
-    hideAddFilter();
+    //hideAddFilter();
     getFilterJob("City");
 
     loadingJob(false);
     loadingCompany(false);
     getRecruitments();
     getCompanyTop();
-    function getRecruitments(filter = null, value1 = null, value2 = null) { 
+    function getRecruitments(filter = null, value1 = null, value2 = null) {
 
         var xhr = new XMLHttpRequest();
-        
+
         xhr.open("POST", "./Job/GetRecruitments", true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
@@ -29,12 +29,12 @@
                     featureJobPage.hidden = false;
 
                     let quantityJob = response.length;
-                    let number = 3;
+                    let number = 9;
                     let paging = Math.ceil(quantityJob / number)
-                    
+
                     listJob.innerHTML = "";
 
-                    
+
                     for (let i = 0; i < paging; i++) {
                         let startIndex = i * number;
                         let endIndex = Math.min(startIndex + number, quantityJob);
@@ -48,78 +48,82 @@
                                 <div class="col-md-4 col-sm-6 feature-job job-ta">
                                     <div class="feature-job-item">
                                         <div class="cvo-flex">
-                                            <a href="../Job/DefaultJob/${item.RecruitmentId}"
+                                            <a href="../Job/DefaultJob/${item.Recruitment.RecruitmentId}"
                                                 target="_blank" tabindex="0">
                                                 <div class="box-company-logo">
                                                     <div class="avatar">
-                                                        <img src="../images/companies/${item.Company.Avatar}"
-                                                                alt="${item.Company.CompanyName}"
+                                                        <img src="../images/companies/${item.Recruitment.Company.Avatar}"
+                                                                alt="${item.Recruitment.Company.CompanyName}"
                                                                 class="img-responsive">
                                                     </div>
                                                 </div>
                                             </a>
                                             <div class="col-title cvo-flex-grow">
-                                                <a href="../Job/DefaultJob/${item.RecruitmentId}"
+                                                <a href="../Job/DefaultJob/${item.Recruitment.RecruitmentId}"
                                                     target="_blank" data-toggle="tooltip" title=""
                                                     data-placement="top" data-container="body"
                                                     class="title text_ellipsis"
-                                                    data-original-title="${item.RecruitmentTitle}"
+                                                    data-original-title="${item.Recruitment.RecruitmentTitle}"
                                                     tabindex="0">
                                                     <strong class="job_title">
-                                                        ${item.RecruitmentTitle}
+                                                        ${item.Recruitment.RecruitmentTitle}
                                                     </strong>
                                                 </a>
-                                                <a href="../Company/Detail/${item.CompanyId}"
+                                                <a href="../Company/Detail/${item.Recruitment.CompanyId}"
                                                     target="_blank" data-toggle="tooltip" title=""
                                                     data-placement="top" data-container="body"
                                                     class="text-silver company text_ellipsis company_name"
-                                                    data-original-title="${item.Company.CompanyName}"
+                                                    data-original-title="${item.Recruitment.Company.CompanyName}"
                                                     tabindex="0">
-                                                    ${item.Company.CompanyName}
+                                                    ${item.Recruitment.Company.CompanyName}
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="box-footer">
                                             <div class="col-job-info">
                                                 <div class="salary">
-                                                    <span class="text_ellipsis">${formatSalary(item.Salary)}</span>
+                                                    <span class="text_ellipsis">${formatSalary(item.Recruitment.Salary)}</span>
                                                 </div>
                                                 <div data-html="true" data-toggle="tooltip" title=""
                                                         data-placement="top" data-container="body" class="address"
-                                                        data-original-title="
-                                                        <p style='text-align: left'>${item.City} - ${item.District}</p>">
+                                                        data-original-title="">
+                                                        ${item.Recruitment.City}
                                                     <span class="text_ellipsis"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-like">
-                                                <button data-id="526118" class="btn-outline-hover save-job"
-                                                        tabindex="0">
-                                                    <i class="fa-regular fa-heart icon-first"></i>
-                                                    <i class="fa-solid fa-heart icon-last"></i>
-                                                </button>
-                                            </div>
+                                            <div class="col-like">`;
+                            if ($("#isLogin").val() == "true") {
+                                if (item.SaveRecruitment == null) {
+
+                                    html += `<a href="javascript:void(0)" class="btn-save save" onclick="saveJob('${item.Recruitment.RecruitmentId}', this)"> <i class="fa-regular fa-heart"></i> </a>`;
+                                } else {
+                                    html += ` <a href="javascript:void(0)" onclick="unSave('${item.Recruitment.RecruitmentId}', this)" class="btn-unsave text-highlight" ><i class="fa-solid fa-heart"></i> </a>`;
+
+                                }
+                            }
+                                       
+                                        html += `</div>
                                         </div>
 
                                     </div>
-
                                 </div>`
                         }
                         html += `</div>`;
                         listJob.insertAdjacentHTML("beforeend", html);
-                    
+
                     }
                     loadingJob(true);
 
                     //pagination
                     let html = `<span class="hight-light" id="current-job-page">1</span> / ${paging} trang`;
-                    console.log(paging);
+                    //console.log(paging);
                     paginationJob.innerHTML = html;
 
                     //"beforebegin": Trước thẻ element.
                     //"afterbegin": Bên trong thẻ element, trước tất cả các thẻ con của nó.
                     //"beforeend": Bên trong thẻ element, sau tất cả các thẻ con của nó.
                     //"afterend": Sau thẻ element.
-                    
+
                 } else {
                     console.error("Request error:", xhr.status, xhr.statusText);
                     showMessage("Có lỗi sảy ra!", "error", "Thông báo", "glyphicon-remove", 3000);
@@ -156,7 +160,7 @@
     let filterIndustryes = document.getElementById("industryes");
 
     filterDistricts.addEventListener("change", function (e) {
-        console.log(e.target.value);
+        //console.log(e.target.value);
         getRecruitments("districts", e.target.value);
     });
     filterSalarys.addEventListener("change", function (e) {
@@ -252,12 +256,12 @@
                         let startIndex = i * number;
                         let endIndex = Math.min(startIndex + number, quantityCompany);
 
-                        let html = `<div class="item ${(i == 0) ? 'active' : ''}">`;
+                        let html = `<div class="row item ${(i == 0) ? 'active' : ''}" >`;
 
                         for (let j = startIndex; j < endIndex; j++) {
                             let item = response[j];
                             html += `
-                                <div class="" style="width: 270px; margin-right: 20px;">
+                                <div class="col-md-3 col-sm-6" style="width: 270px; margin-right: 20px;">
                                     <div class="top-company--item">
                                         <a href="../Company/Detail/${item.Company.CompanyId}">
                                             <img src="../Images/companies/${item.Company.Avatar}" alt="Logo">
@@ -285,7 +289,16 @@
                 }
             }
         };
-        
+
         xhr.send();
     }
+    $('#frm-search-job').on("submit", function () {
+        var inputSearchText = $('#frm-search-job #keyword').val();
+        getRecruitments("title", inputSearchText);
+
+        var targetElement = document.getElementById('box-feature-jobs');
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
 });

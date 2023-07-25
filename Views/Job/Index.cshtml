@@ -1,4 +1,8 @@
-﻿
+﻿@using JobExchange.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<JobExchangeUser> SignInManager
+@inject UserManager<JobExchangeUser> UserManager
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,14 +18,14 @@
                         nghiệp uy tín tại Việt Nam
                     </p>
                 </div>
-                <form id="frm-search-job" method="GET" onsubmit="return false;">
-                    <div class="group-search">
+                <form id="frm-search-job" method="GET" onsubmit="return false;" class="row">
+                    <div class="group-search col-md-8 col-sm-12" style="width: 100%">
                         <div class="item item-search">
                             <img class="icon" src="~/images/icon-header-svg/search-icon.svg" alt="">
-                            <input class="form-controlui-autocomplete-input" value=""
+                            <input class="form-controlui-autocomplete-input" value="" style="width: 100%;"
                                    placeholder="Tên công việc, vị trí ứng tuyển..." id="keyword" autocomplete="off">
                         </div>
-                        <div class="item search-city">
+                        @*<div class="item search-city">
                             <img class="icon" src="~/images/icon-header-svg/location-icon.svg" alt="">
                             <select name="city" id="city" class="form-control select2">
                                 <option value="">Tất cả tỉnh/thành phố</option>
@@ -95,9 +99,10 @@
                                 <option value="68">Yên Bái</option>
                                 <option value="100">Nước Ngoài</option>
                             </select>
-                        </div>
+                        </div>*@
                     </div>
-                    <div class="group">
+                   
+                   @* <div class="group">
                         <div class="item">
                             <div class="icon">
                                 <i class="fa-light fa-circle-star"></i>
@@ -131,9 +136,9 @@
                                 <option value="127">Thoả thuận</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="col-button">
-                        <button class="btn btn-topcv btn-search-job">Tìm kiếm</button>
+                    </div>*@
+                    <div class="col-button col-md-4 col-sm-12">
+                        <button class="btn btn-topcv btn-search-job" id="search-job">Tìm kiếm</button>
                     </div>
                 </form>
                 @*<div class="box-work-market">
@@ -184,7 +189,15 @@
         </div>
         <!-- Job -->
         <section id="list-feature-jobs">
-            <div class="container">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <input id="isLogin" value="true" hidden />
+
+            } else
+            {
+                <input id="isLogin" value="false" hidden />
+            }
+            <div class="container" >
                 <section class="box_general" id="box-feature-jobs">
                     <div class="box-header">
                         <div class="box-header__title">
@@ -214,7 +227,7 @@
                             </div>
                         </div>
                         <div class="box-smart-filter box-smart-feature-jobs">
-                            <div class="box-smart-location" id="City">
+                            <div class="box-smart-location" id="City" hidden>
                                 <div class="box-smart-list-location row">
                                     <style>
                                         .hi {
@@ -276,7 +289,7 @@
                                         });
                                 });
                             </script>
-                            <div class="row" id="Salary">
+                            <div class="row" id="Salary" hidden>
                                 <div class="col-md-6 col-sm-12">
                                     <select id="salaries" class="form-control col-md-6 col-md-12">
                                         <option value="">Tất cả</option>
@@ -289,7 +302,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row" id="Experience">
+                            <div class="row" id="Experience" hidden>
                                 <div class="col-md-6 col-sm-12">
                                     <select id="experiences" class="form-control col-md-6 col-md-12">
                                         <option value="">Tất cả</option>
@@ -302,7 +315,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row" id="Industry">
+                            <div class="row" id="Industry" hidden>
                                 <div class="col-md-6 col-sm-12">
                                     <select id="industryes" asp-items="ViewBag.IndustryId" class="form-control col-md-6 col-md-12">
                                         <option value="">Tất cả</option>
@@ -313,18 +326,6 @@
                     </div>
                     <div class="loadingg" 
                         style="min-height: 735px; margin-bottom: 60px; display: grid; grid-template-columns: repeat(3, 1fr);">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
-                        <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
                         <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
                         <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
                         <img src="~/images/icon-header-svg/job-box.svg" class="img-responsive" width="340px" height="108px">
@@ -415,7 +416,7 @@
                     </div>
                 </div>
                 <div id="carousel-company" class="carousel slide" data-ride="carousel" data-interval="5000">
-                    <div class="carousel-inner" role="listbox" id="list-company">
+                    <div class="carousel-inner mt-20" role="listbox" id="list-company">
                         
                     </div>
 
@@ -656,4 +657,5 @@
 
     </div>
 </div>
+<script src="~/js/savejob.js" asp-append-version="true"></script>
 <script src="~/js/job.js" asp-append-version="true"/>

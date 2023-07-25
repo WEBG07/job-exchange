@@ -62,13 +62,19 @@ namespace JobExchange.Controllers
         [HttpPost]
         public IActionResult GetRecruitments(string filter = null, string value1 = null, string value2 = null)
         {
-            var recruitments = _recruitmentRepository.GetRecruitments(filter, value1, value2);
+            dynamic recruitments;
+            if (string.IsNullOrEmpty(_userManager.GetUserId(User)))
+            {
+                recruitments = _recruitmentRepository.GetRecruitments(12, filter, value1, value2);
+            } else
+            {
+                recruitments = _recruitmentRepository.GetRecruitments(_userManager.GetUserId(User), 12, filter, value1, value2);
+            }
 
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore // Bỏ qua vòng lặp tự tham chiếu
             };
-
             string json = JsonConvert.SerializeObject(recruitments, Formatting.Indented, settings);
             return Content(json, "application/json");
         }

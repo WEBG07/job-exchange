@@ -5,6 +5,7 @@ using JobExchange.Repository.RepositoryInterfaces;
 using MailKit.Search;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace JobExchange.Repository
@@ -144,31 +145,118 @@ namespace JobExchange.Repository
         {
             return _jobExchangeContext.Recruitments.Include(c => c.Company).Where(r => r.CompanyId == companyId &&  r.RecruitmentTitle.Contains(name)).ToList();
         }
-        public IEnumerable<Recruitment> GetRecruitments(string filter = null, string value1 = null, string value2 = null)
+
+        public IEnumerable<object> GetRecruitments(string candidateId, int limit, string filter = null, string value1 = null, string value2 = null)
         {
-            var recruitments = _jobExchangeContext.Recruitments.Include(r => r.Industry).Include(r => r.Company);
+            //var recruitments = _jobExchangeContext.Recruitments.Include(r => r.Industry).Include(r => r.Company);
+
+            var recruitments = _jobExchangeContext.Recruitments.Include(r => r.Industry).Include(r => r.Company)
+            .GroupJoin(
+                _jobExchangeContext.SaveRecruitments,
+                r => r.RecruitmentId,
+                sr => sr.RecruitmentId,
+                (r, srs) => new { Recruitment = r, SaveRecruitments = srs }
+            )
+            .SelectMany(
+                rs => rs.SaveRecruitments.DefaultIfEmpty(),
+                (rs, s) => new { Recruitment = rs.Recruitment, SaveRecruitment = s }
+            )
+            .Where(rss => rss.SaveRecruitment == null || rss.SaveRecruitment.CandidateId == candidateId)
+            .Select(rss => new { Recruitment = rss.Recruitment, SaveRecruitment = rss.SaveRecruitment })
+            .Take(limit);
+             
+
+
             if (!string.IsNullOrEmpty(filter))
             {
                 if (filter.Equals("districts"))
                 {
-                    return recruitments.Where(r => r.District.Contains(value1)).ToList();
+                    return recruitments.Where(r => r.Recruitment.District.Contains(value1)).ToList();
                 }
-                if (filter.Equals("salaries"))
+                if (filter.Equals("salaries") && !string.IsNullOrEmpty(value1) && !string.IsNullOrEmpty(value2))
                 {
                     int intValue1 = int.Parse(value1) * 1000000;
                     int intValue2 = int.Parse(value2) * 1000000;
-                    return recruitments.Where(r => r.Salary >= intValue1 && r.Salary <= intValue2).ToList();
+                    return recruitments.Where(r => r.Recruitment.Salary >= intValue1 && r.Recruitment.Salary <= intValue2).ToList();
                 }
-                if (filter.Equals("experiences"))
+                if (filter.Equals("experiences") && !string.IsNullOrEmpty(value1) && !string.IsNullOrEmpty(value2))
                 {
                     int intValue1 = int.Parse(value1);
                     int intValue2 = int.Parse(value2);
-                    return recruitments.Where(r => r.Experience > intValue1 && r.Experience <= intValue2).ToList();
+                    if (intValue1 == 0)
+                    {
+                        return recruitments.Where(r => r.Recruitment.Experience == intValue1).ToList();
+
+                    }
+                    return recruitments.Where(r => r.Recruitment.Experience > intValue1 && r.Recruitment.Experience <= intValue2).ToList();
                 }
-                if (filter.Equals("industryes"))
+                if (filter.Equals("industryes") && !string.IsNullOrEmpty(value1))
                 {
                     int intValue1 = int.Parse(value1);
-                    return recruitments.Where(r => r.IndustryId == intValue1).ToList();
+                    return recruitments.Where(r => r.Recruitment.IndustryId == intValue1).ToList();
+                }
+                if (filter.Equals("title") && !string.IsNullOrEmpty(value1))
+                {
+                    return recruitments.Where(r => r.Recruitment.RecruitmentTitle.Contains(value1)).ToList();
+                }
+            }
+
+            recruitments.ToList();
+            return recruitments;
+
+
+        }
+        public IEnumerable<object> GetRecruitments(int limit, string filter = null, string value1 = null, string value2 = null)
+        {
+            var recruitments = _jobExchangeContext.Recruitments.Include(r => r.Industry).Include(r => r.Company)
+            .GroupJoin(
+                _jobExchangeContext.SaveRecruitments,
+                r => r.RecruitmentId,
+                sr => sr.RecruitmentId,
+                (r, srs) => new { Recruitment = r, SaveRecruitments = srs }
+            )
+            .SelectMany(
+                rs => rs.SaveRecruitments.DefaultIfEmpty(),
+                (rs, s) => new { Recruitment = rs.Recruitment, SaveRecruitment = s }
+            )
+            .Where(rss => rss.SaveRecruitment == null)
+            .Select(rss => new { Recruitment = rss.Recruitment, SaveRecruitment = rss.SaveRecruitment })
+            .Take(limit);
+
+
+
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                if (filter.Equals("districts"))
+                {
+                    return recruitments.Where(r => r.Recruitment.District.Contains(value1)).ToList();
+                }
+                if (filter.Equals("salaries") && !string.IsNullOrEmpty(value1) && !string.IsNullOrEmpty(value2))
+                {
+                    int intValue1 = int.Parse(value1) * 1000000;
+                    int intValue2 = int.Parse(value2) * 1000000;
+                    return recruitments.Where(r => r.Recruitment.Salary >= intValue1 && r.Recruitment.Salary <= intValue2).ToList();
+                }
+                if (filter.Equals("experiences") && !string.IsNullOrEmpty(value1) && !string.IsNullOrEmpty(value2))
+                {
+                    int intValue1 = int.Parse(value1);
+                    int intValue2 = int.Parse(value2);
+                    if (intValue1 == 0)
+                    {
+                        return recruitments.Where(r => r.Recruitment.Experience == intValue1).ToList();
+
+                    }
+                    return recruitments.Where(r => r.Recruitment.Experience > intValue1 && r.Recruitment.Experience <= intValue2).ToList();
+                }
+                if (filter.Equals("industryes") && !string.IsNullOrEmpty(value1))
+                {
+                    int intValue1 = int.Parse(value1);
+                    return recruitments.Where(r => r.Recruitment.IndustryId == intValue1).ToList();
+                }
+                if (filter.Equals("title") && !string.IsNullOrEmpty(value1))
+                {
+                    return recruitments.Where(r => r.Recruitment.RecruitmentTitle.Contains(value1)).ToList();
                 }
             }
 
@@ -179,3 +267,4 @@ namespace JobExchange.Repository
         }
     }
 }
+

@@ -20,7 +20,7 @@
 
     @*<link rel="stylesheet" href="v2/bootstrap/css/bootstrap.min3f71.css?v=1.1.1">*@
     <link rel="stylesheet" href="~//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=vietnamese" rel="stylesheet">
+    <link href="~/css/fonts.googleapis.com_css_family_Roboto.css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=vietnamese" rel="stylesheet">
     <link rel="stylesheet" as="style" href="~/lib/select2/css/select2.min.css" />
     <link rel="stylesheet" href="~/css/app.min.99dbaee6ec838d8e.css">
     <link rel="stylesheet" href="~/css/index.min.9bda2482a644ab4e.css">
@@ -233,7 +233,7 @@
                                         <i class="icon fa-regular fa-arrow-right-from-bracket"></i>
                                         Đăng xuất
                                     </a>
-                                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="POST">
+                                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Job", new { area = "" })" method="POST">
                                     </form>
                                 </li>
                             </ul>

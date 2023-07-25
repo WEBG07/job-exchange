@@ -16,10 +16,10 @@ namespace JobExchange.Repository.RepositoryInterfaces
         IEnumerable<object> GetRecruitmentsByCompanyId(string recruitmentId, string companyId, string candidateId);
         IEnumerable<object> GetRecruitmentsByCompanyId(string recruitmentId, string companyId, string candidateId, int limit);
         public List<Recruitment> SearchByCompanyAdmin(string companyId, string search);
-        IEnumerable<Recruitment> GetRecruitmentsByCompanyId(string id, string companyId);
         IEnumerable<Recruitment> GetRecruitmentsByIndustryId(string id, int industryId);
         IEnumerable<Recruitment> GetRecruitmentsByName(string companyId,string name);
-        IEnumerable<Recruitment> GetRecruitments(string filter = null, string value1 = null, string value2 = null);
+        IEnumerable<object> GetRecruitments(string candidateId, int limit, string filter = null, string value1 = null, string value2 = null);
+        IEnumerable<object> GetRecruitments(int limit, string filter = null, string value1 = null, string value2 = null);
     }
 }
 

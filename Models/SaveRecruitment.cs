@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,10 +18,12 @@ namespace JobExchange.Models
 
         [ForeignKey("CandidateId")]
         [ValidateNever]
+        [JsonIgnore]
         public Candidate? Candidate { get; set; }
 
         [ForeignKey("RecruitmentId")]
         [ValidateNever]
+        [JsonIgnore]
         public Recruitment? Recruitment { get; set; }
     }
 }
